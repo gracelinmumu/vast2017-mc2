@@ -58,6 +58,12 @@ var config = {
     var: 'chai',
     path: '/plugins/mocha/chai.js',
     chunk: [ 'index.test' ]
+  }, {
+    package: 'jquery',
+    var: 'window.$',
+    path: '/node_modules/jquery/dist/jquery.min.js',
+    chunk: [ 'index' ],
+    CDN: false
   } ],
   // 变量提供, 对于一些非模块化的包, 为了解决模块化引入时包依赖加载的问题, 需要将该包暴露到全局变量
   // 比如`'$': 'jquery'`, 全局变量为`$`, 包名为`jquery`, 有些时候为了可靠性还需要暴露几种常见的名称
