@@ -63,17 +63,16 @@
 <style lang="less" scoped>
   @import "../commons/base.vars.less";
 
-  @bottom: 500px;
   #App {
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
     .top {
-      height: calc(~"100% -" @bottom);
+      height: 60%;
     }
     .bottom {
-      height: 400px;
+      height: 39%
     }
     .time-line {
       height: 100%;
