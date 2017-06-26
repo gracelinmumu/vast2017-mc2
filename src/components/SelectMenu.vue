@@ -51,33 +51,23 @@
 
 </template>
 <script>
+  import {month, sensor, chemical, factory} from '../vuex/getters'
+  import {switchMonth, switchChemical, switchFactory, switchSensor} from '../vuex/actions'
   export default {
+    vuex: {
+      getters: { month, sensor, chemical, factory },
+      actions: { switchMonth, switchChemical, switchFactory, switchSensor }
+    },
     data () {
       return {
         monthOpts: [ 'M4', 'M8', 'M12' ],
         factoryOpts: [ 'F1', 'F2', 'F3', 'F4' ],
         chemicalOpts: [ 'C1', 'C2', 'C3', 'C4' ],
         sensorOpts: [ 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9' ],
-        correlationOpts: [ 'Pearson', 'Spearman' ],
-        month: 'M12',
-        chemical: 'C2',
-        factory: 'F4',
-        sensor: 'S3'
+        correlationOpts: [ 'Pearson', 'Spearman' ]
       }
     },
     methods: {
-      switchMonth (m) {
-        this.month = m
-      },
-      switchChemical (c) {
-        this.chemical = c
-      },
-      switchSensor (s) {
-        this.sensor = s
-      },
-      switchFactory (f) {
-        this.factory = f
-      }
     }
   }
 </script>
@@ -87,14 +77,12 @@
     border-left: 3px solid #1fa2d6;
     font-weight: bold;
   }
-
   .top {
     padding: 10px;
     button {
       margin-left: 2px;
     }
   }
-
   .bottom {
     margin-top: 10px;
     padding: 10px;
