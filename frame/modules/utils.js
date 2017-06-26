@@ -1,5 +1,5 @@
 import { info } from './logs'
-import skyfutils from '../../skyfutils.js'
+import skyfutils from '../../plugins/skyfutils.js'
 
 const utils = skyfutils.install({ env: 'browser', globalInstall: false, prefix: 'u' })
 

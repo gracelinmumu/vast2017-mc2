@@ -6,7 +6,7 @@ var gulp = require('gulp')
 var gulpUtil = require('gulp-util')
 var gulpUglify = require('gulp-uglify')
 var gulpCleanCss = require('gulp-clean-css')
-var skyFUtils = require('../src/commons/skyfutils.js').install({ env: 'node', globalInstall: false })
+var skyFUtils = require('../plugins/skyfutils.js').install({ env: 'node', globalInstall: false })
 
 /**
  * 启动Banner
