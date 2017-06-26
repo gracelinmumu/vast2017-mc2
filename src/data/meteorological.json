@@ -1,0 +1,3537 @@
+[
+  {
+    "Date": "2004/1/16 0:00",
+    "Direction": 190.5,
+    "Speed": 4
+  },
+  {
+    "Date": "2004/1/16 3:00",
+    "Direction": 203.3,
+    "Speed": 5
+  },
+  {
+    "Date": "2004/1/16 6:00",
+    "Direction": 201.1,
+    "Speed": 5.2
+  },
+  {
+    "Date": "2004/1/16 9:00",
+    "Direction": 204.9,
+    "Speed": 4.1
+  },
+  {
+    "Date": "2004/1/16 12:00",
+    "Direction": 207,
+    "Speed": 3.6
+  },
+  {
+    "Date": "2004/1/16 15:00",
+    "Direction": 207.1,
+    "Speed": 3
+  },
+  {
+    "Date": "2004/1/16 18:00",
+    "Direction": 243.8,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2004/1/16 21:00",
+    "Direction": 262.1,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/2/16 0:00",
+    "Direction": 262.3,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/2/16 3:00",
+    "Direction": 271.8,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/2/16 6:00",
+    "Direction": 279.8,
+    "Speed": 1.5
+  },
+  {
+    "Date": "2004/2/16 9:00",
+    "Direction": 272.3,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2004/2/16 12:00",
+    "Direction": 203.3,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2004/2/16 15:00",
+    "Direction": 188.6,
+    "Speed": 2.1
+  },
+  {
+    "Date": "2004/2/16 18:00",
+    "Direction": 199.9,
+    "Speed": 2.7
+  },
+  {
+    "Date": "2004/2/16 21:00",
+    "Direction": 225,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/3/16 0:00",
+    "Direction": 274.7,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/3/16 3:00",
+    "Direction": 298.9,
+    "Speed": 2.2
+  },
+  {
+    "Date": "2004/3/16 6:00",
+    "Direction": 316.9,
+    "Speed": 2.1
+  },
+  {
+    "Date": "2004/3/16 9:00",
+    "Direction": 328.3,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2004/3/16 12:00",
+    "Direction": 324.8,
+    "Speed": 4.3
+  },
+  {
+    "Date": "2004/3/16 15:00",
+    "Direction": 313.1,
+    "Speed": 4.6
+  },
+  {
+    "Date": "2004/3/16 18:00",
+    "Direction": 295.2,
+    "Speed": 5.2
+  },
+  {
+    "Date": "2004/3/16 21:00",
+    "Direction": 296.4,
+    "Speed": 5.6
+  },
+  {
+    "Date": "2004/4/16 0:00",
+    "Direction": 299.4,
+    "Speed": 4.3
+  },
+  {
+    "Date": "2004/4/16 3:00",
+    "Direction": 302,
+    "Speed": 4
+  },
+  {
+    "Date": "2004/4/16 6:00",
+    "Direction": 295.7,
+    "Speed": 2
+  },
+  {
+    "Date": "2004/4/16 9:00",
+    "Direction": 292.1,
+    "Speed": 1.4
+  },
+  {
+    "Date": "2004/4/16 12:00",
+    "Direction": 292.5,
+    "Speed": 1.4
+  },
+  {
+    "Date": "2004/4/16 15:00",
+    "Direction": 325.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2004/4/16 18:00",
+    "Direction": 358.4,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2004/4/16 21:00",
+    "Direction": 344.1,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2004/5/16 0:00",
+    "Direction": 341.7,
+    "Speed": 1.7
+  },
+  {
+    "Date": "2004/5/16 3:00",
+    "Direction": 351.6,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2004/5/16 6:00",
+    "Direction": 1.3,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2004/5/16 9:00",
+    "Direction": 353.9,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2004/5/16 12:00",
+    "Direction": 347.3,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2004/5/16 15:00",
+    "Direction": 318.4,
+    "Speed": 3
+  },
+  {
+    "Date": "2004/5/16 18:00",
+    "Direction": 312.9,
+    "Speed": 3.6
+  },
+  {
+    "Date": "2004/5/16 21:00",
+    "Direction": 309.1,
+    "Speed": 3.2
+  },
+  {
+    "Date": "2004/6/16 0:00",
+    "Direction": 307.1,
+    "Speed": 2.3
+  },
+  {
+    "Date": "2004/6/16 3:00",
+    "Direction": 289.4,
+    "Speed": 1.5
+  },
+  {
+    "Date": "2004/6/16 6:00",
+    "Direction": 270.8,
+    "Speed": 0.9
+  },
+  {
+    "Date": "2004/6/16 9:00",
+    "Direction": 245.1,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2004/6/16 12:00",
+    "Direction": 225.6,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2004/6/16 15:00",
+    "Direction": 206.9,
+    "Speed": 2
+  },
+  {
+    "Date": "2004/6/16 18:00",
+    "Direction": 200.7,
+    "Speed": 3.3
+  },
+  {
+    "Date": "2004/6/16 21:00",
+    "Direction": 193.2,
+    "Speed": 3.8
+  },
+  {
+    "Date": "2004/7/16 0:00",
+    "Direction": 175.1,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/7/16 3:00",
+    "Direction": 182.5,
+    "Speed": 3
+  },
+  {
+    "Date": "2004/7/16 6:00",
+    "Direction": 169.2,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/7/16 9:00",
+    "Direction": 168.8,
+    "Speed": 2.3
+  },
+  {
+    "Date": "2004/7/16 12:00",
+    "Direction": 170.5,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/7/16 15:00",
+    "Direction": 172.1,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2004/7/16 18:00",
+    "Direction": 157.1,
+    "Speed": 4.4
+  },
+  {
+    "Date": "2004/7/16 21:00",
+    "Direction": 141.1,
+    "Speed": 5.2
+  },
+  {
+    "Date": "2004/8/16 0:00",
+    "Direction": 156.4,
+    "Speed": 5.2
+  },
+  {
+    "Date": "2004/8/16 3:00",
+    "Direction": 196.5,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2004/8/16 6:00",
+    "Direction": 222.7,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2004/8/16 9:00",
+    "Direction": 201.2,
+    "Speed": 0.7
+  },
+  {
+    "Date": "2004/8/16 12:00",
+    "Direction": 200.2,
+    "Speed": 0.5
+  },
+  {
+    "Date": "2004/8/16 15:00",
+    "Direction": 249.7,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2004/8/16 18:00",
+    "Direction": 221.3,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/8/16 21:00",
+    "Direction": 245,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/9/16 0:00",
+    "Direction": 265.4,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2004/9/16 3:00",
+    "Direction": 279.8,
+    "Speed": 2.3
+  },
+  {
+    "Date": "2004/9/16 6:00",
+    "Direction": 277.5,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/9/16 9:00",
+    "Direction": 289.4,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2004/9/16 12:00",
+    "Direction": 296.6,
+    "Speed": 2.2
+  },
+  {
+    "Date": "2004/9/16 15:00",
+    "Direction": 294.9,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/9/16 18:00",
+    "Direction": 318.9,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/9/16 21:00",
+    "Direction": 315.9,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/10/16 0:00",
+    "Direction": 336.8,
+    "Speed": 2.7
+  },
+  {
+    "Date": "2004/10/16 3:00",
+    "Direction": 334.8,
+    "Speed": 3.3
+  },
+  {
+    "Date": "2004/10/16 6:00",
+    "Direction": 334.3,
+    "Speed": 3.5
+  },
+  {
+    "Date": "2004/10/16 9:00",
+    "Direction": 326.9,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/10/16 12:00",
+    "Direction": 305.7,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/10/16 15:00",
+    "Direction": 292.2,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2004/10/16 18:00",
+    "Direction": 287,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2004/10/16 21:00",
+    "Direction": 279.8,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2004/11/16 0:00",
+    "Direction": 292.5,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2004/11/16 3:00",
+    "Direction": 158.9,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2004/11/16 6:00",
+    "Direction": 145.2,
+    "Speed": 1.1
+  },
+  {
+    "Date": "2004/11/16 9:00",
+    "Direction": 155.9,
+    "Speed": 2.3
+  },
+  {
+    "Date": "2004/11/16 12:00",
+    "Direction": 160.5,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/11/16 15:00",
+    "Direction": 164.1,
+    "Speed": 3.3
+  },
+  {
+    "Date": "2004/11/16 18:00",
+    "Direction": 174.4,
+    "Speed": 3.6
+  },
+  {
+    "Date": "2004/11/16 21:00",
+    "Direction": 172.9,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/12/16 0:00",
+    "Direction": 171.5,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/12/16 3:00",
+    "Direction": 187.1,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2004/12/16 6:00",
+    "Direction": 174.8,
+    "Speed": 2.2
+  },
+  {
+    "Date": "2004/12/16 9:00",
+    "Direction": 170.1,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2004/12/16 12:00",
+    "Direction": 197.6,
+    "Speed": 1.1
+  },
+  {
+    "Date": "2004/12/16 15:00",
+    "Direction": 277.5,
+    "Speed": 1.6
+  },
+  {
+    "Date": "2004/12/16 18:00",
+    "Direction": 288.7,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2004/12/16 21:00",
+    "Direction": 286.4,
+    "Speed": 3.2
+  },
+  {
+    "Date": "4/13/16 0:00",
+    "Direction": 282.2,
+    "Speed": 1.8
+  },
+  {
+    "Date": "4/13/16 3:00",
+    "Direction": 292.9,
+    "Speed": 1.8
+  },
+  {
+    "Date": "4/13/16 6:00",
+    "Direction": 291.3,
+    "Speed": 1.9
+  },
+  {
+    "Date": "4/13/16 9:00",
+    "Direction": 305.6,
+    "Speed": 2
+  },
+  {
+    "Date": "4/13/16 12:00",
+    "Direction": 327,
+    "Speed": 2.6
+  },
+  {
+    "Date": "4/13/16 15:00",
+    "Direction": 325.7,
+    "Speed": 2.7
+  },
+  {
+    "Date": "4/13/16 18:00",
+    "Direction": 330,
+    "Speed": 2
+  },
+  {
+    "Date": "4/13/16 21:00",
+    "Direction": 336.6,
+    "Speed": 2
+  },
+  {
+    "Date": "4/14/16 0:00",
+    "Direction": 334.5,
+    "Speed": 1
+  },
+  {
+    "Date": "4/14/16 3:00",
+    "Direction": 9.8,
+    "Speed": 0.6
+  },
+  {
+    "Date": "4/14/16 6:00",
+    "Direction": 9.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/14/16 9:00",
+    "Direction": 357.1,
+    "Speed": 0.4
+  },
+  {
+    "Date": "4/14/16 12:00",
+    "Direction": 59.6,
+    "Speed": 1
+  },
+  {
+    "Date": "4/14/16 15:00",
+    "Direction": 354.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/14/16 18:00",
+    "Direction": 351.4,
+    "Speed": 1.8
+  },
+  {
+    "Date": "4/14/16 21:00",
+    "Direction": 0.1,
+    "Speed": 2.3
+  },
+  {
+    "Date": "4/15/16 0:00",
+    "Direction": 5.5,
+    "Speed": 1.4
+  },
+  {
+    "Date": "4/15/16 3:00",
+    "Direction": 30.6,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/15/16 6:00",
+    "Direction": 53.4,
+    "Speed": 0.6
+  },
+  {
+    "Date": "4/15/16 9:00",
+    "Direction": 40.1,
+    "Speed": 0.6
+  },
+  {
+    "Date": "4/15/16 12:00",
+    "Direction": 67.4,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/15/16 15:00",
+    "Direction": 32.5,
+    "Speed": 2.4
+  },
+  {
+    "Date": "4/15/16 18:00",
+    "Direction": 19.5,
+    "Speed": 2.6
+  },
+  {
+    "Date": "4/15/16 21:00",
+    "Direction": 10.7,
+    "Speed": 2.8
+  },
+  {
+    "Date": "4/16/16 0:00",
+    "Direction": 13.4,
+    "Speed": 1.4
+  },
+  {
+    "Date": "4/16/16 3:00",
+    "Direction": 27.1,
+    "Speed": 1.1
+  },
+  {
+    "Date": "4/16/16 6:00",
+    "Direction": 49.6,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/16/16 9:00",
+    "Direction": 68,
+    "Speed": 0.4
+  },
+  {
+    "Date": "4/16/16 12:00",
+    "Direction": 59,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/16/16 15:00",
+    "Direction": 55.1,
+    "Speed": 1.3
+  },
+  {
+    "Date": "4/16/16 18:00",
+    "Direction": 28.3,
+    "Speed": 1.1
+  },
+  {
+    "Date": "4/16/16 21:00",
+    "Direction": 4.1,
+    "Speed": 1.6
+  },
+  {
+    "Date": "4/17/16 0:00",
+    "Direction": 45.6,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/17/16 3:00",
+    "Direction": 130.2,
+    "Speed": 1.1
+  },
+  {
+    "Date": "4/17/16 6:00",
+    "Direction": 128.3,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/17/16 9:00",
+    "Direction": 176.3,
+    "Speed": 0.6
+  },
+  {
+    "Date": "4/17/16 12:00",
+    "Direction": 279.8,
+    "Speed": 0.3
+  },
+  {
+    "Date": "4/17/16 15:00",
+    "Direction": 308.2,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/17/16 18:00",
+    "Direction": 311.1,
+    "Speed": 1.5
+  },
+  {
+    "Date": "4/17/16 21:00",
+    "Direction": 315.5,
+    "Speed": 2.5
+  },
+  {
+    "Date": "4/18/16 0:00",
+    "Direction": 306.4,
+    "Speed": 1.1
+  },
+  {
+    "Date": "4/18/16 3:00",
+    "Direction": 302.9,
+    "Speed": 0.6
+  },
+  {
+    "Date": "4/18/16 6:00",
+    "Direction": 296,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/18/16 9:00",
+    "Direction": 0.1,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/18/16 12:00",
+    "Direction": 337.9,
+    "Speed": 0.9
+  },
+  {
+    "Date": "4/18/16 15:00",
+    "Direction": 340,
+    "Speed": 0.9
+  },
+  {
+    "Date": "4/18/16 18:00",
+    "Direction": 353.4,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/18/16 21:00",
+    "Direction": 355.7,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/19/16 0:00",
+    "Direction": 9.8,
+    "Speed": 0.4
+  },
+  {
+    "Date": "4/19/16 3:00",
+    "Direction": 354.9,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/19/16 6:00",
+    "Direction": 358.3,
+    "Speed": 0.9
+  },
+  {
+    "Date": "4/19/16 9:00",
+    "Direction": 344.6,
+    "Speed": 1.1
+  },
+  {
+    "Date": "4/19/16 12:00",
+    "Direction": 336.1,
+    "Speed": 1.6
+  },
+  {
+    "Date": "4/19/16 15:00",
+    "Direction": 327.4,
+    "Speed": 3.1
+  },
+  {
+    "Date": "4/19/16 18:00",
+    "Direction": 321.8,
+    "Speed": 4.3
+  },
+  {
+    "Date": "4/19/16 21:00",
+    "Direction": 319.6,
+    "Speed": 4.8
+  },
+  {
+    "Date": "4/20/16 0:00",
+    "Direction": 328.1,
+    "Speed": 3.4
+  },
+  {
+    "Date": "4/20/16 3:00",
+    "Direction": 331.5,
+    "Speed": 3.3
+  },
+  {
+    "Date": "4/20/16 6:00",
+    "Direction": 341.8,
+    "Speed": 2.9
+  },
+  {
+    "Date": "4/20/16 9:00",
+    "Direction": 341.9,
+    "Speed": 2.1
+  },
+  {
+    "Date": "4/20/16 12:00",
+    "Direction": 355.1,
+    "Speed": 2.4
+  },
+  {
+    "Date": "4/20/16 15:00",
+    "Direction": 341,
+    "Speed": 2.1
+  },
+  {
+    "Date": "4/20/16 18:00",
+    "Direction": 326.2,
+    "Speed": 2.5
+  },
+  {
+    "Date": "4/20/16 21:00",
+    "Direction": 322.9,
+    "Speed": 3
+  },
+  {
+    "Date": "4/21/16 0:00",
+    "Direction": 315.7,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/21/16 3:00",
+    "Direction": 249.1,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/21/16 6:00",
+    "Direction": 211.1,
+    "Speed": 0.6
+  },
+  {
+    "Date": "4/21/16 9:00",
+    "Direction": 196.9,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/21/16 12:00",
+    "Direction": 221.2,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/21/16 15:00",
+    "Direction": 250.2,
+    "Speed": 1.9
+  },
+  {
+    "Date": "4/21/16 18:00",
+    "Direction": 267.3,
+    "Speed": 2.2
+  },
+  {
+    "Date": "4/21/16 21:00",
+    "Direction": 276.3,
+    "Speed": 2.3
+  },
+  {
+    "Date": "4/22/16 0:00",
+    "Direction": 315.9,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/22/16 3:00",
+    "Direction": 189.8,
+    "Speed": 0.4
+  },
+  {
+    "Date": "4/22/16 6:00",
+    "Direction": 160.8,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/22/16 9:00",
+    "Direction": 235,
+    "Speed": 1
+  },
+  {
+    "Date": "4/22/16 12:00",
+    "Direction": 162,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/22/16 15:00",
+    "Direction": 188.9,
+    "Speed": 2.2
+  },
+  {
+    "Date": "4/22/16 18:00",
+    "Direction": 211.5,
+    "Speed": 3.2
+  },
+  {
+    "Date": "4/22/16 21:00",
+    "Direction": 251.2,
+    "Speed": 2.9
+  },
+  {
+    "Date": "4/23/16 0:00",
+    "Direction": 306.5,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/23/16 3:00",
+    "Direction": 313.9,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/23/16 6:00",
+    "Direction": 326.7,
+    "Speed": 2.1
+  },
+  {
+    "Date": "4/23/16 9:00",
+    "Direction": 332.4,
+    "Speed": 2.2
+  },
+  {
+    "Date": "4/23/16 12:00",
+    "Direction": 333.6,
+    "Speed": 2.7
+  },
+  {
+    "Date": "4/23/16 15:00",
+    "Direction": 328,
+    "Speed": 3.2
+  },
+  {
+    "Date": "4/23/16 18:00",
+    "Direction": 328.9,
+    "Speed": 3.4
+  },
+  {
+    "Date": "4/23/16 21:00",
+    "Direction": 329.5,
+    "Speed": 3.8
+  },
+  {
+    "Date": "4/24/16 0:00",
+    "Direction": 331.8,
+    "Speed": 2.5
+  },
+  {
+    "Date": "4/24/16 3:00",
+    "Direction": 338.6,
+    "Speed": 2.1
+  },
+  {
+    "Date": "4/24/16 6:00",
+    "Direction": 346.9,
+    "Speed": 2.3
+  },
+  {
+    "Date": "4/24/16 9:00",
+    "Direction": 336.2,
+    "Speed": 2.1
+  },
+  {
+    "Date": "4/24/16 12:00",
+    "Direction": 339,
+    "Speed": 3.2
+  },
+  {
+    "Date": "4/24/16 15:00",
+    "Direction": 345.5,
+    "Speed": 3
+  },
+  {
+    "Date": "4/24/16 18:00",
+    "Direction": 335.1,
+    "Speed": 2.9
+  },
+  {
+    "Date": "4/24/16 21:00",
+    "Direction": 311.5,
+    "Speed": 2.9
+  },
+  {
+    "Date": "4/25/16 0:00",
+    "Direction": 286.7,
+    "Speed": 1.6
+  },
+  {
+    "Date": "4/25/16 3:00",
+    "Direction": 256.1,
+    "Speed": 0.9
+  },
+  {
+    "Date": "4/25/16 6:00",
+    "Direction": 293.8,
+    "Speed": 1.5
+  },
+  {
+    "Date": "4/25/16 9:00",
+    "Direction": 294.4,
+    "Speed": 1
+  },
+  {
+    "Date": "4/25/16 12:00",
+    "Direction": 313.5,
+    "Speed": 1.9
+  },
+  {
+    "Date": "4/25/16 15:00",
+    "Direction": 292.3,
+    "Speed": 2.6
+  },
+  {
+    "Date": "4/25/16 18:00",
+    "Direction": 296.2,
+    "Speed": 3.2
+  },
+  {
+    "Date": "4/25/16 21:00",
+    "Direction": 315.3,
+    "Speed": 3
+  },
+  {
+    "Date": "4/26/16 0:00",
+    "Direction": 329,
+    "Speed": 1.5
+  },
+  {
+    "Date": "4/26/16 3:00",
+    "Direction": 5.1,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/26/16 6:00",
+    "Direction": 9.8,
+    "Speed": 0.3
+  },
+  {
+    "Date": "4/26/16 9:00",
+    "Direction": 26.9,
+    "Speed": 0.3
+  },
+  {
+    "Date": "4/26/16 12:00",
+    "Direction": 91.9,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/26/16 15:00",
+    "Direction": 36.8,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/26/16 18:00",
+    "Direction": 9.8,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/26/16 21:00",
+    "Direction": 290.5,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/27/16 0:00",
+    "Direction": 306.6,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/27/16 3:00",
+    "Direction": 258.7,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/27/16 6:00",
+    "Direction": 285.6,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/27/16 9:00",
+    "Direction": 315.1,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/27/16 12:00",
+    "Direction": 303.3,
+    "Speed": 2.2
+  },
+  {
+    "Date": "4/27/16 15:00",
+    "Direction": 285.6,
+    "Speed": 2.6
+  },
+  {
+    "Date": "4/27/16 18:00",
+    "Direction": 281.3,
+    "Speed": 3.2
+  },
+  {
+    "Date": "4/27/16 21:00",
+    "Direction": 284.3,
+    "Speed": 3.5
+  },
+  {
+    "Date": "4/28/16 0:00",
+    "Direction": 312.2,
+    "Speed": 3.1
+  },
+  {
+    "Date": "4/28/16 3:00",
+    "Direction": 331.3,
+    "Speed": 1.3
+  },
+  {
+    "Date": "4/28/16 6:00",
+    "Direction": 299.6,
+    "Speed": 0.5
+  },
+  {
+    "Date": "4/28/16 9:00",
+    "Direction": 307.5,
+    "Speed": 2
+  },
+  {
+    "Date": "4/28/16 12:00",
+    "Direction": 329.1,
+    "Speed": 3.1
+  },
+  {
+    "Date": "4/28/16 15:00",
+    "Direction": 328.7,
+    "Speed": 2.3
+  },
+  {
+    "Date": "4/28/16 18:00",
+    "Direction": 318.5,
+    "Speed": 1.8
+  },
+  {
+    "Date": "4/28/16 21:00",
+    "Direction": 323.9,
+    "Speed": 2.1
+  },
+  {
+    "Date": "4/29/16 0:00",
+    "Direction": 349.4,
+    "Speed": 1.4
+  },
+  {
+    "Date": "4/29/16 3:00",
+    "Direction": 44.6,
+    "Speed": 0.9
+  },
+  {
+    "Date": "4/29/16 6:00",
+    "Direction": 359.1,
+    "Speed": 0.4
+  },
+  {
+    "Date": "4/29/16 9:00",
+    "Direction": 46.3,
+    "Speed": 0.2
+  },
+  {
+    "Date": "4/29/16 12:00",
+    "Direction": 177.9,
+    "Speed": 1.3
+  },
+  {
+    "Date": "4/29/16 15:00",
+    "Direction": 228.6,
+    "Speed": 1.7
+  },
+  {
+    "Date": "4/29/16 18:00",
+    "Direction": 252.9,
+    "Speed": 1.5
+  },
+  {
+    "Date": "4/29/16 21:00",
+    "Direction": 272.7,
+    "Speed": 1.9
+  },
+  {
+    "Date": "4/30/16 0:00",
+    "Direction": 346.2,
+    "Speed": 1.2
+  },
+  {
+    "Date": "4/30/16 3:00",
+    "Direction": 69.6,
+    "Speed": 0.8
+  },
+  {
+    "Date": "4/30/16 6:00",
+    "Direction": 21.8,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/30/16 9:00",
+    "Direction": 38.3,
+    "Speed": 0.7
+  },
+  {
+    "Date": "4/30/16 12:00",
+    "Direction": 350.4,
+    "Speed": 0.4
+  },
+  {
+    "Date": "4/30/16 15:00",
+    "Direction": 299.7,
+    "Speed": 1.1
+  },
+  {
+    "Date": "4/30/16 18:00",
+    "Direction": 324.3,
+    "Speed": 1.5
+  },
+  {
+    "Date": "4/30/16 21:00",
+    "Direction": 311.8,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2008/4/16 18:00",
+    "Direction": 225,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2008/4/16 21:00",
+    "Direction": 229.7,
+    "Speed": 2.8
+  },
+  {
+    "Date": "2008/5/16 0:00",
+    "Direction": 231.1,
+    "Speed": 1
+  },
+  {
+    "Date": "2008/5/16 3:00",
+    "Direction": 187.2,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2008/5/16 6:00",
+    "Direction": 178.7,
+    "Speed": 0.9
+  },
+  {
+    "Date": "2008/5/16 9:00",
+    "Direction": 176.4,
+    "Speed": 0.9
+  },
+  {
+    "Date": "2008/5/16 12:00",
+    "Direction": 181.2,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2008/5/16 15:00",
+    "Direction": 196.2,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2008/5/16 18:00",
+    "Direction": 201.5,
+    "Speed": 3.8
+  },
+  {
+    "Date": "2008/5/16 21:00",
+    "Direction": 212.9,
+    "Speed": 3.4
+  },
+  {
+    "Date": "2008/6/16 0:00",
+    "Direction": 200.2,
+    "Speed": 3
+  },
+  {
+    "Date": "2008/6/16 3:00",
+    "Direction": 206.5,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2008/6/16 6:00",
+    "Direction": 204.9,
+    "Speed": 2.1
+  },
+  {
+    "Date": "2008/6/16 9:00",
+    "Direction": 217.3,
+    "Speed": 2.1
+  },
+  {
+    "Date": "2008/6/16 12:00",
+    "Direction": 226.6,
+    "Speed": 1.7
+  },
+  {
+    "Date": "2008/6/16 15:00",
+    "Direction": 268.4,
+    "Speed": 3.4
+  },
+  {
+    "Date": "2008/6/16 18:00",
+    "Direction": 288.7,
+    "Speed": 3.3
+  },
+  {
+    "Date": "2008/6/16 21:00",
+    "Direction": 307.1,
+    "Speed": 3.4
+  },
+  {
+    "Date": "2008/7/16 0:00",
+    "Direction": 303.2,
+    "Speed": 2
+  },
+  {
+    "Date": "2008/7/16 3:00",
+    "Direction": 287.7,
+    "Speed": 0.9
+  },
+  {
+    "Date": "2008/7/16 6:00",
+    "Direction": 235.9,
+    "Speed": 0.3
+  },
+  {
+    "Date": "2008/7/16 9:00",
+    "Direction": 262.2,
+    "Speed": 0.7
+  },
+  {
+    "Date": "2008/7/16 12:00",
+    "Direction": 271.6,
+    "Speed": 1.1
+  },
+  {
+    "Date": "2008/7/16 15:00",
+    "Direction": 288.4,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2008/7/16 18:00",
+    "Direction": 286.7,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2008/7/16 21:00",
+    "Direction": 286.3,
+    "Speed": 3.2
+  },
+  {
+    "Date": "2008/8/16 0:00",
+    "Direction": 294.1,
+    "Speed": 2
+  },
+  {
+    "Date": "2008/8/16 3:00",
+    "Direction": 279.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2008/8/16 6:00",
+    "Direction": 241,
+    "Speed": 0.4
+  },
+  {
+    "Date": "2008/8/16 9:00",
+    "Direction": 252.3,
+    "Speed": 0.7
+  },
+  {
+    "Date": "2008/8/16 12:00",
+    "Direction": 235,
+    "Speed": 0.9
+  },
+  {
+    "Date": "2008/8/16 15:00",
+    "Direction": 279.8,
+    "Speed": 3.9
+  },
+  {
+    "Date": "2008/8/16 18:00",
+    "Direction": 288.1,
+    "Speed": 4
+  },
+  {
+    "Date": "2008/8/16 21:00",
+    "Direction": 304.2,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2008/9/16 0:00",
+    "Direction": 307.4,
+    "Speed": 1.7
+  },
+  {
+    "Date": "2008/9/16 3:00",
+    "Direction": 279.8,
+    "Speed": 0.4
+  },
+  {
+    "Date": "2008/9/16 6:00",
+    "Direction": 342.7,
+    "Speed": 0.5
+  },
+  {
+    "Date": "2008/9/16 9:00",
+    "Direction": 233.6,
+    "Speed": 0.3
+  },
+  {
+    "Date": "2008/9/16 12:00",
+    "Direction": 99.8,
+    "Speed": 0.2
+  },
+  {
+    "Date": "2008/9/16 15:00",
+    "Direction": 294,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2008/9/16 18:00",
+    "Direction": 278.6,
+    "Speed": 1.6
+  },
+  {
+    "Date": "2008/9/16 21:00",
+    "Direction": 257.7,
+    "Speed": 1.6
+  },
+  {
+    "Date": "2008/10/16 0:00",
+    "Direction": 175.9,
+    "Speed": 0.4
+  },
+  {
+    "Date": "2008/10/16 3:00",
+    "Direction": 135.2,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2008/10/16 6:00",
+    "Direction": 128.3,
+    "Speed": 0.7
+  },
+  {
+    "Date": "2008/10/16 9:00",
+    "Direction": 151.5,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2008/10/16 12:00",
+    "Direction": 169.9,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2008/10/16 15:00",
+    "Direction": 198.4,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2008/10/16 18:00",
+    "Direction": 200,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2008/10/16 21:00",
+    "Direction": 216.1,
+    "Speed": 2.1
+  },
+  {
+    "Date": "2008/11/16 0:00",
+    "Direction": 205.5,
+    "Speed": 1.4
+  },
+  {
+    "Date": "2008/11/16 3:00",
+    "Direction": 189.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2008/11/16 6:00",
+    "Direction": 193.5,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2008/11/16 9:00",
+    "Direction": 184.4,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2008/11/16 12:00",
+    "Direction": 194.6,
+    "Speed": 1.4
+  },
+  {
+    "Date": "2008/11/16 15:00",
+    "Direction": 263.4,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2008/11/16 18:00",
+    "Direction": 274.8,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2008/11/16 21:00",
+    "Direction": 295,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2008/12/16 0:00",
+    "Direction": 320.3,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2008/12/16 3:00",
+    "Direction": 226.6,
+    "Speed": 0.5
+  },
+  {
+    "Date": "2008/12/16 6:00",
+    "Direction": 158.6,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2008/12/16 9:00",
+    "Direction": 197.1,
+    "Speed": 1
+  },
+  {
+    "Date": "2008/12/16 12:00",
+    "Direction": 209.9,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2008/12/16 15:00",
+    "Direction": 248.1,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2008/12/16 18:00",
+    "Direction": 279.8,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2008/12/16 21:00",
+    "Direction": 291.7,
+    "Speed": 1.4
+  },
+  {
+    "Date": "8/13/16 0:00",
+    "Direction": 323.9,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/13/16 3:00",
+    "Direction": 350.1,
+    "Speed": 0.8
+  },
+  {
+    "Date": "8/13/16 6:00",
+    "Direction": 254.6,
+    "Speed": 0.1
+  },
+  {
+    "Date": "8/13/16 9:00",
+    "Direction": 131.6,
+    "Speed": 1.3
+  },
+  {
+    "Date": "8/13/16 12:00",
+    "Direction": 136.9,
+    "Speed": 2
+  },
+  {
+    "Date": "8/13/16 15:00",
+    "Direction": 146.9,
+    "Speed": 2.1
+  },
+  {
+    "Date": "8/13/16 18:00",
+    "Direction": 136.2,
+    "Speed": 2.2
+  },
+  {
+    "Date": "8/13/16 21:00",
+    "Direction": 135.8,
+    "Speed": 2.8
+  },
+  {
+    "Date": "8/14/16 0:00",
+    "Direction": 143.6,
+    "Speed": 2.5
+  },
+  {
+    "Date": "8/14/16 3:00",
+    "Direction": 159.2,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/14/16 6:00",
+    "Direction": 174,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/14/16 9:00",
+    "Direction": 200.4,
+    "Speed": 2.7
+  },
+  {
+    "Date": "8/14/16 12:00",
+    "Direction": 213.2,
+    "Speed": 2.5
+  },
+  {
+    "Date": "8/14/16 15:00",
+    "Direction": 252.2,
+    "Speed": 3.6
+  },
+  {
+    "Date": "8/14/16 18:00",
+    "Direction": 279.8,
+    "Speed": 3
+  },
+  {
+    "Date": "8/14/16 21:00",
+    "Direction": 296.7,
+    "Speed": 2.4
+  },
+  {
+    "Date": "8/15/16 0:00",
+    "Direction": 306.8,
+    "Speed": 2.3
+  },
+  {
+    "Date": "8/15/16 3:00",
+    "Direction": 301.9,
+    "Speed": 1.7
+  },
+  {
+    "Date": "8/15/16 6:00",
+    "Direction": 275.3,
+    "Speed": 2
+  },
+  {
+    "Date": "8/15/16 9:00",
+    "Direction": 287.6,
+    "Speed": 2.1
+  },
+  {
+    "Date": "8/15/16 12:00",
+    "Direction": 321.2,
+    "Speed": 1.7
+  },
+  {
+    "Date": "8/15/16 15:00",
+    "Direction": 324,
+    "Speed": 3
+  },
+  {
+    "Date": "8/15/16 18:00",
+    "Direction": 319.8,
+    "Speed": 2.8
+  },
+  {
+    "Date": "8/15/16 21:00",
+    "Direction": 314.1,
+    "Speed": 2.3
+  },
+  {
+    "Date": "8/16/16 0:00",
+    "Direction": 303.7,
+    "Speed": 0.8
+  },
+  {
+    "Date": "8/16/16 3:00",
+    "Direction": 211.3,
+    "Speed": 0.5
+  },
+  {
+    "Date": "8/16/16 6:00",
+    "Direction": 189.8,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/16/16 9:00",
+    "Direction": 173.7,
+    "Speed": 0.5
+  },
+  {
+    "Date": "8/16/16 12:00",
+    "Direction": 146.8,
+    "Speed": 0.9
+  },
+  {
+    "Date": "8/16/16 15:00",
+    "Direction": 191.4,
+    "Speed": 1.6
+  },
+  {
+    "Date": "8/16/16 18:00",
+    "Direction": 198.5,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/16/16 21:00",
+    "Direction": 156,
+    "Speed": 1.8
+  },
+  {
+    "Date": "8/17/16 0:00",
+    "Direction": 136.2,
+    "Speed": 3.2
+  },
+  {
+    "Date": "8/17/16 3:00",
+    "Direction": 154.5,
+    "Speed": 4
+  },
+  {
+    "Date": "8/17/16 6:00",
+    "Direction": 181.5,
+    "Speed": 1.5
+  },
+  {
+    "Date": "8/17/16 9:00",
+    "Direction": 223.2,
+    "Speed": 1.4
+  },
+  {
+    "Date": "8/17/16 12:00",
+    "Direction": 293.7,
+    "Speed": 3.4
+  },
+  {
+    "Date": "8/17/16 15:00",
+    "Direction": 302.5,
+    "Speed": 3.4
+  },
+  {
+    "Date": "8/17/16 18:00",
+    "Direction": 315,
+    "Speed": 4
+  },
+  {
+    "Date": "8/17/16 21:00",
+    "Direction": 315.7,
+    "Speed": 2.8
+  },
+  {
+    "Date": "8/18/16 0:00",
+    "Direction": 290.2,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/18/16 3:00",
+    "Direction": 228.2,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/18/16 6:00",
+    "Direction": 196,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/18/16 9:00",
+    "Direction": 187.7,
+    "Speed": 0.9
+  },
+  {
+    "Date": "8/18/16 12:00",
+    "Direction": 183.6,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/18/16 15:00",
+    "Direction": 266.8,
+    "Speed": 2.8
+  },
+  {
+    "Date": "8/18/16 18:00",
+    "Direction": 289.4,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/18/16 21:00",
+    "Direction": 302.7,
+    "Speed": 3.1
+  },
+  {
+    "Date": "8/19/16 0:00",
+    "Direction": 301.3,
+    "Speed": 1.3
+  },
+  {
+    "Date": "8/19/16 3:00",
+    "Direction": 279.8,
+    "Speed": 0.3
+  },
+  {
+    "Date": "8/19/16 6:00",
+    "Direction": 279.8,
+    "Speed": 0.2
+  },
+  {
+    "Date": "8/19/16 9:00",
+    "Direction": 317.5,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/19/16 12:00",
+    "Direction": 326.3,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/19/16 15:00",
+    "Direction": 332.1,
+    "Speed": 2.5
+  },
+  {
+    "Date": "8/19/16 18:00",
+    "Direction": 320.9,
+    "Speed": 2.5
+  },
+  {
+    "Date": "8/19/16 21:00",
+    "Direction": 322.4,
+    "Speed": 2.5
+  },
+  {
+    "Date": "8/20/16 0:00",
+    "Direction": 328.7,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/20/16 3:00",
+    "Direction": 99.8,
+    "Speed": 0.3
+  },
+  {
+    "Date": "8/20/16 6:00",
+    "Direction": 113.8,
+    "Speed": 1
+  },
+  {
+    "Date": "8/20/16 9:00",
+    "Direction": 119.9,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/20/16 12:00",
+    "Direction": 137,
+    "Speed": 1.7
+  },
+  {
+    "Date": "8/20/16 15:00",
+    "Direction": 163.1,
+    "Speed": 2.3
+  },
+  {
+    "Date": "8/20/16 18:00",
+    "Direction": 167.2,
+    "Speed": 3.4
+  },
+  {
+    "Date": "8/20/16 21:00",
+    "Direction": 169.5,
+    "Speed": 3.3
+  },
+  {
+    "Date": "8/21/16 0:00",
+    "Direction": 148.3,
+    "Speed": 2.2
+  },
+  {
+    "Date": "8/21/16 3:00",
+    "Direction": 144.9,
+    "Speed": 2
+  },
+  {
+    "Date": "8/21/16 6:00",
+    "Direction": 157.1,
+    "Speed": 2.4
+  },
+  {
+    "Date": "8/21/16 9:00",
+    "Direction": 163.1,
+    "Speed": 2.2
+  },
+  {
+    "Date": "8/21/16 12:00",
+    "Direction": 163.3,
+    "Speed": 3.8
+  },
+  {
+    "Date": "8/21/16 15:00",
+    "Direction": 174,
+    "Speed": 5
+  },
+  {
+    "Date": "8/21/16 18:00",
+    "Direction": 169.4,
+    "Speed": 5.4
+  },
+  {
+    "Date": "8/21/16 21:00",
+    "Direction": 158.1,
+    "Speed": 4.4
+  },
+  {
+    "Date": "8/22/16 0:00",
+    "Direction": 164.7,
+    "Speed": 3.1
+  },
+  {
+    "Date": "8/22/16 3:00",
+    "Direction": 155,
+    "Speed": 2.5
+  },
+  {
+    "Date": "8/22/16 6:00",
+    "Direction": 185,
+    "Speed": 0.5
+  },
+  {
+    "Date": "8/22/16 9:00",
+    "Direction": 276,
+    "Speed": 1.6
+  },
+  {
+    "Date": "8/22/16 12:00",
+    "Direction": 287,
+    "Speed": 2.8
+  },
+  {
+    "Date": "8/22/16 15:00",
+    "Direction": 291.4,
+    "Speed": 3.9
+  },
+  {
+    "Date": "8/22/16 18:00",
+    "Direction": 296.3,
+    "Speed": 4.1
+  },
+  {
+    "Date": "8/22/16 21:00",
+    "Direction": 299.5,
+    "Speed": 4.2
+  },
+  {
+    "Date": "8/23/16 0:00",
+    "Direction": 302,
+    "Speed": 3
+  },
+  {
+    "Date": "8/23/16 3:00",
+    "Direction": 307.6,
+    "Speed": 1.5
+  },
+  {
+    "Date": "8/23/16 6:00",
+    "Direction": 253.8,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/23/16 9:00",
+    "Direction": 213.1,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/23/16 12:00",
+    "Direction": 209.2,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/23/16 15:00",
+    "Direction": 261.8,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/23/16 18:00",
+    "Direction": 251.5,
+    "Speed": 3.3
+  },
+  {
+    "Date": "8/23/16 21:00",
+    "Direction": 243.3,
+    "Speed": 3.2
+  },
+  {
+    "Date": "8/24/16 0:00",
+    "Direction": 244.1,
+    "Speed": 1.6
+  },
+  {
+    "Date": "8/24/16 3:00",
+    "Direction": 215.1,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/24/16 6:00",
+    "Direction": 173.3,
+    "Speed": 0.8
+  },
+  {
+    "Date": "8/24/16 9:00",
+    "Direction": 171,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/24/16 12:00",
+    "Direction": 165.7,
+    "Speed": 0.7
+  },
+  {
+    "Date": "8/24/16 15:00",
+    "Direction": 250.4,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/24/16 18:00",
+    "Direction": 237.1,
+    "Speed": 2.6
+  },
+  {
+    "Date": "8/24/16 21:00",
+    "Direction": 221.6,
+    "Speed": 2.3
+  },
+  {
+    "Date": "8/25/16 0:00",
+    "Direction": 197.5,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/25/16 3:00",
+    "Direction": 174.7,
+    "Speed": 1.2
+  },
+  {
+    "Date": "8/25/16 6:00",
+    "Direction": 197.4,
+    "Speed": 1.5
+  },
+  {
+    "Date": "8/25/16 9:00",
+    "Direction": 171.4,
+    "Speed": 1.4
+  },
+  {
+    "Date": "8/25/16 12:00",
+    "Direction": 200.6,
+    "Speed": 2.8
+  },
+  {
+    "Date": "8/25/16 15:00",
+    "Direction": 206.3,
+    "Speed": 2.9
+  },
+  {
+    "Date": "8/25/16 18:00",
+    "Direction": 211,
+    "Speed": 3
+  },
+  {
+    "Date": "8/25/16 21:00",
+    "Direction": 217.4,
+    "Speed": 2.4
+  },
+  {
+    "Date": "8/26/16 0:00",
+    "Direction": 222.6,
+    "Speed": 1.6
+  },
+  {
+    "Date": "8/26/16 3:00",
+    "Direction": 216.5,
+    "Speed": 1.3
+  },
+  {
+    "Date": "8/26/16 6:00",
+    "Direction": 178.3,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/26/16 9:00",
+    "Direction": 194.4,
+    "Speed": 1.6
+  },
+  {
+    "Date": "8/26/16 12:00",
+    "Direction": 199,
+    "Speed": 0.9
+  },
+  {
+    "Date": "8/26/16 15:00",
+    "Direction": 248.9,
+    "Speed": 3
+  },
+  {
+    "Date": "8/26/16 18:00",
+    "Direction": 273.6,
+    "Speed": 3.9
+  },
+  {
+    "Date": "8/26/16 21:00",
+    "Direction": 286.1,
+    "Speed": 4.1
+  },
+  {
+    "Date": "8/27/16 0:00",
+    "Direction": 291.6,
+    "Speed": 2
+  },
+  {
+    "Date": "8/27/16 3:00",
+    "Direction": 279.8,
+    "Speed": 0.1
+  },
+  {
+    "Date": "8/27/16 6:00",
+    "Direction": 308,
+    "Speed": 0.4
+  },
+  {
+    "Date": "8/27/16 9:00",
+    "Direction": 309.5,
+    "Speed": 0.4
+  },
+  {
+    "Date": "8/27/16 12:00",
+    "Direction": 323,
+    "Speed": 0.9
+  },
+  {
+    "Date": "8/27/16 15:00",
+    "Direction": 332.4,
+    "Speed": 2.2
+  },
+  {
+    "Date": "8/27/16 18:00",
+    "Direction": 323.8,
+    "Speed": 2.4
+  },
+  {
+    "Date": "8/27/16 21:00",
+    "Direction": 329.9,
+    "Speed": 2
+  },
+  {
+    "Date": "8/28/16 0:00",
+    "Direction": 320.2,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/28/16 3:00",
+    "Direction": 115.4,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/28/16 6:00",
+    "Direction": 116.9,
+    "Speed": 1.3
+  },
+  {
+    "Date": "8/28/16 9:00",
+    "Direction": 128.5,
+    "Speed": 1
+  },
+  {
+    "Date": "8/28/16 12:00",
+    "Direction": 161,
+    "Speed": 1.4
+  },
+  {
+    "Date": "8/28/16 15:00",
+    "Direction": 186.3,
+    "Speed": 3.1
+  },
+  {
+    "Date": "8/28/16 18:00",
+    "Direction": 191.7,
+    "Speed": 3.1
+  },
+  {
+    "Date": "8/28/16 21:00",
+    "Direction": 189.8,
+    "Speed": 2.7
+  },
+  {
+    "Date": "8/29/16 0:00",
+    "Direction": 178.2,
+    "Speed": 1.4
+  },
+  {
+    "Date": "8/29/16 3:00",
+    "Direction": 189.8,
+    "Speed": 1.5
+  },
+  {
+    "Date": "8/29/16 6:00",
+    "Direction": 225.9,
+    "Speed": 1.2
+  },
+  {
+    "Date": "8/29/16 9:00",
+    "Direction": 260.5,
+    "Speed": 1.7
+  },
+  {
+    "Date": "8/29/16 12:00",
+    "Direction": 288,
+    "Speed": 2.7
+  },
+  {
+    "Date": "8/29/16 15:00",
+    "Direction": 303.4,
+    "Speed": 4.1
+  },
+  {
+    "Date": "8/29/16 18:00",
+    "Direction": 309.6,
+    "Speed": 4.2
+  },
+  {
+    "Date": "8/29/16 21:00",
+    "Direction": 315.7,
+    "Speed": 3.6
+  },
+  {
+    "Date": "8/30/16 0:00",
+    "Direction": 315.7,
+    "Speed": 1.2
+  },
+  {
+    "Date": "8/30/16 3:00",
+    "Direction": "",
+    "Speed": ""
+  },
+  {
+    "Date": "8/30/16 6:00",
+    "Direction": 99.8,
+    "Speed": 0.2
+  },
+  {
+    "Date": "8/30/16 9:00",
+    "Direction": 189.8,
+    "Speed": 0.3
+  },
+  {
+    "Date": "8/30/16 12:00",
+    "Direction": 202.9,
+    "Speed": 0.6
+  },
+  {
+    "Date": "8/30/16 15:00",
+    "Direction": 262,
+    "Speed": 1.7
+  },
+  {
+    "Date": "8/30/16 18:00",
+    "Direction": 242.5,
+    "Speed": 1.9
+  },
+  {
+    "Date": "8/30/16 21:00",
+    "Direction": 262.4,
+    "Speed": 2.1
+  },
+  {
+    "Date": "8/31/16 0:00",
+    "Direction": 233.7,
+    "Speed": 0.9
+  },
+  {
+    "Date": "8/31/16 3:00",
+    "Direction": 161.7,
+    "Speed": 0.9
+  },
+  {
+    "Date": "8/31/16 6:00",
+    "Direction": 171.2,
+    "Speed": 1
+  },
+  {
+    "Date": "8/31/16 9:00",
+    "Direction": 185.9,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/31/16 12:00",
+    "Direction": 215.1,
+    "Speed": 1.1
+  },
+  {
+    "Date": "8/31/16 15:00",
+    "Direction": 236,
+    "Speed": 2.4
+  },
+  {
+    "Date": "8/31/16 18:00",
+    "Direction": 232.4,
+    "Speed": 2.1
+  },
+  {
+    "Date": "8/31/16 21:00",
+    "Direction": 235.3,
+    "Speed": 1.6
+  },
+  {
+    "Date": "",
+    "Direction": "",
+    "Speed": ""
+  },
+  {
+    "Date": "2012/1/16 0:00",
+    "Direction": 125.8,
+    "Speed": 4.2
+  },
+  {
+    "Date": "2012/1/16 3:00",
+    "Direction": 128.4,
+    "Speed": 4.7
+  },
+  {
+    "Date": "2012/1/16 6:00",
+    "Direction": 131.4,
+    "Speed": 4.3
+  },
+  {
+    "Date": "2012/1/16 9:00",
+    "Direction": 129.7,
+    "Speed": 5.5
+  },
+  {
+    "Date": "2012/1/16 12:00",
+    "Direction": 146.6,
+    "Speed": 2
+  },
+  {
+    "Date": "2012/1/16 15:00",
+    "Direction": 175.5,
+    "Speed": 0.4
+  },
+  {
+    "Date": "2012/1/16 18:00",
+    "Direction": 246.4,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2012/1/16 21:00",
+    "Direction": 261,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2012/2/16 0:00",
+    "Direction": 254.2,
+    "Speed": 3
+  },
+  {
+    "Date": "2012/2/16 3:00",
+    "Direction": 272.1,
+    "Speed": 3.2
+  },
+  {
+    "Date": "2012/2/16 6:00",
+    "Direction": 261.3,
+    "Speed": 2.3
+  },
+  {
+    "Date": "2012/2/16 9:00",
+    "Direction": 253.4,
+    "Speed": 2
+  },
+  {
+    "Date": "2012/2/16 12:00",
+    "Direction": 217.4,
+    "Speed": 1.7
+  },
+  {
+    "Date": "2012/2/16 15:00",
+    "Direction": 225.9,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2012/2/16 18:00",
+    "Direction": 222.1,
+    "Speed": 2.3
+  },
+  {
+    "Date": "2012/2/16 21:00",
+    "Direction": 258.3,
+    "Speed": 2.6
+  },
+  {
+    "Date": "2012/3/16 0:00",
+    "Direction": 290.4,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2012/3/16 3:00",
+    "Direction": 283.4,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2012/3/16 6:00",
+    "Direction": 285.8,
+    "Speed": 3
+  },
+  {
+    "Date": "2012/3/16 9:00",
+    "Direction": 294,
+    "Speed": 3.6
+  },
+  {
+    "Date": "2012/3/16 12:00",
+    "Direction": 309.6,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2012/3/16 15:00",
+    "Direction": 306.8,
+    "Speed": 3.5
+  },
+  {
+    "Date": "2012/3/16 18:00",
+    "Direction": 311.4,
+    "Speed": 4
+  },
+  {
+    "Date": "2012/3/16 21:00",
+    "Direction": 314.7,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2012/4/16 0:00",
+    "Direction": 320.4,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2012/4/16 3:00",
+    "Direction": 313,
+    "Speed": 3.6
+  },
+  {
+    "Date": "2012/4/16 6:00",
+    "Direction": 318,
+    "Speed": 3.5
+  },
+  {
+    "Date": "2012/4/16 9:00",
+    "Direction": 308.2,
+    "Speed": 3.2
+  },
+  {
+    "Date": "2012/4/16 12:00",
+    "Direction": 309.2,
+    "Speed": 3.2
+  },
+  {
+    "Date": "2012/4/16 15:00",
+    "Direction": 313.2,
+    "Speed": 3.7
+  },
+  {
+    "Date": "2012/4/16 18:00",
+    "Direction": 312.9,
+    "Speed": 3.8
+  },
+  {
+    "Date": "2012/4/16 21:00",
+    "Direction": 318.9,
+    "Speed": 2.7
+  },
+  {
+    "Date": "2012/5/16 0:00",
+    "Direction": 324.3,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2012/5/16 3:00",
+    "Direction": 38,
+    "Speed": 0.3
+  },
+  {
+    "Date": "2012/5/16 6:00",
+    "Direction": 155.2,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2012/5/16 9:00",
+    "Direction": 150.5,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2012/5/16 12:00",
+    "Direction": 174.5,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2012/5/16 15:00",
+    "Direction": 140.2,
+    "Speed": 2.2
+  },
+  {
+    "Date": "2012/5/16 18:00",
+    "Direction": 160.9,
+    "Speed": 2.7
+  },
+  {
+    "Date": "2012/5/16 21:00",
+    "Direction": 175.8,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2012/6/16 0:00",
+    "Direction": 251.8,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2012/6/16 3:00",
+    "Direction": 293.3,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2012/6/16 6:00",
+    "Direction": 308.6,
+    "Speed": 2.4
+  },
+  {
+    "Date": "2012/6/16 9:00",
+    "Direction": 311.7,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2012/6/16 12:00",
+    "Direction": 307.9,
+    "Speed": 1.7
+  },
+  {
+    "Date": "2012/6/16 15:00",
+    "Direction": 321.1,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2012/6/16 18:00",
+    "Direction": 326,
+    "Speed": 1.4
+  },
+  {
+    "Date": "2012/6/16 21:00",
+    "Direction": 355.5,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2012/7/16 0:00",
+    "Direction": 65.9,
+    "Speed": 0.6
+  },
+  {
+    "Date": "2012/7/16 3:00",
+    "Direction": 134.9,
+    "Speed": 0.7
+  },
+  {
+    "Date": "2012/7/16 6:00",
+    "Direction": 145,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2012/7/16 9:00",
+    "Direction": 153.4,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2012/7/16 12:00",
+    "Direction": 144.5,
+    "Speed": 1.2
+  },
+  {
+    "Date": "2012/7/16 15:00",
+    "Direction": 184.1,
+    "Speed": 2.2
+  },
+  {
+    "Date": "2012/7/16 18:00",
+    "Direction": 197.6,
+    "Speed": 3
+  },
+  {
+    "Date": "2012/7/16 21:00",
+    "Direction": 221.5,
+    "Speed": 2
+  },
+  {
+    "Date": "2012/8/16 0:00",
+    "Direction": 227.7,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2012/8/16 3:00",
+    "Direction": 242.8,
+    "Speed": 1.8
+  },
+  {
+    "Date": "2012/8/16 6:00",
+    "Direction": 239.5,
+    "Speed": 1.3
+  },
+  {
+    "Date": "2012/8/16 9:00",
+    "Direction": 221,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2012/8/16 12:00",
+    "Direction": 189.8,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2012/8/16 15:00",
+    "Direction": 211.8,
+    "Speed": 2.7
+  },
+  {
+    "Date": "2012/8/16 18:00",
+    "Direction": 226,
+    "Speed": 2.9
+  },
+  {
+    "Date": "2012/8/16 21:00",
+    "Direction": 271.4,
+    "Speed": 3
+  },
+  {
+    "Date": "2012/9/16 0:00",
+    "Direction": 249.2,
+    "Speed": 1.7
+  },
+  {
+    "Date": "2012/9/16 3:00",
+    "Direction": 253.9,
+    "Speed": 3.8
+  },
+  {
+    "Date": "2012/9/16 6:00",
+    "Direction": 266.3,
+    "Speed": 3.9
+  },
+  {
+    "Date": "2012/9/16 9:00",
+    "Direction": 283.2,
+    "Speed": 4
+  },
+  {
+    "Date": "2012/9/16 12:00",
+    "Direction": 289.2,
+    "Speed": 4.8
+  },
+  {
+    "Date": "2012/9/16 15:00",
+    "Direction": 290.6,
+    "Speed": 4.2
+  },
+  {
+    "Date": "2012/9/16 18:00",
+    "Direction": 287.2,
+    "Speed": 5.1
+  },
+  {
+    "Date": "2012/9/16 21:00",
+    "Direction": 286.1,
+    "Speed": 4.5
+  },
+  {
+    "Date": "2012/10/16 0:00",
+    "Direction": 297,
+    "Speed": 4.8
+  },
+  {
+    "Date": "2012/10/16 3:00",
+    "Direction": 308,
+    "Speed": 4.4
+  },
+  {
+    "Date": "2012/10/16 6:00",
+    "Direction": 295.4,
+    "Speed": 3.1
+  },
+  {
+    "Date": "2012/10/16 9:00",
+    "Direction": 308.8,
+    "Speed": 3.4
+  },
+  {
+    "Date": "2012/10/16 12:00",
+    "Direction": 310.3,
+    "Speed": 3
+  },
+  {
+    "Date": "2012/10/16 15:00",
+    "Direction": 309.4,
+    "Speed": 4.1
+  },
+  {
+    "Date": "2012/10/16 18:00",
+    "Direction": 309.5,
+    "Speed": 4
+  },
+  {
+    "Date": "2012/10/16 21:00",
+    "Direction": 309.9,
+    "Speed": 3.2
+  },
+  {
+    "Date": "2012/11/16 0:00",
+    "Direction": 279.8,
+    "Speed": 1.4
+  },
+  {
+    "Date": "2012/11/16 3:00",
+    "Direction": 239.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2012/11/16 6:00",
+    "Direction": 221,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2012/11/16 9:00",
+    "Direction": 228.1,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2012/11/16 12:00",
+    "Direction": 213.8,
+    "Speed": 0.8
+  },
+  {
+    "Date": "2012/11/16 15:00",
+    "Direction": 227.6,
+    "Speed": 1.1
+  },
+  {
+    "Date": "2012/11/16 18:00",
+    "Direction": 228.2,
+    "Speed": 1.6
+  },
+  {
+    "Date": "2012/11/16 21:00",
+    "Direction": 215.6,
+    "Speed": 1
+  },
+  {
+    "Date": "2012/12/16 0:00",
+    "Direction": 145.4,
+    "Speed": 1.5
+  },
+  {
+    "Date": "2012/12/16 3:00",
+    "Direction": 137.6,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2012/12/16 6:00",
+    "Direction": 131.3,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2012/12/16 9:00",
+    "Direction": 136.8,
+    "Speed": 3.5
+  },
+  {
+    "Date": "2012/12/16 12:00",
+    "Direction": 134,
+    "Speed": 3.9
+  },
+  {
+    "Date": "2012/12/16 15:00",
+    "Direction": 142.9,
+    "Speed": 2.5
+  },
+  {
+    "Date": "2012/12/16 18:00",
+    "Direction": 189.8,
+    "Speed": 1.9
+  },
+  {
+    "Date": "2012/12/16 21:00",
+    "Direction": 208.7,
+    "Speed": 1.5
+  },
+  {
+    "Date": "12/13/16 0:00",
+    "Direction": 227.7,
+    "Speed": 2.2
+  },
+  {
+    "Date": "12/13/16 3:00",
+    "Direction": 272.4,
+    "Speed": 3.3
+  },
+  {
+    "Date": "12/13/16 6:00",
+    "Direction": 293.5,
+    "Speed": 4.1
+  },
+  {
+    "Date": "12/13/16 9:00",
+    "Direction": 293.5,
+    "Speed": 3.7
+  },
+  {
+    "Date": "12/13/16 12:00",
+    "Direction": 285.2,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/13/16 15:00",
+    "Direction": 269.3,
+    "Speed": 2.7
+  },
+  {
+    "Date": "12/13/16 18:00",
+    "Direction": 224.2,
+    "Speed": 1.8
+  },
+  {
+    "Date": "12/13/16 21:00",
+    "Direction": 181.2,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/14/16 0:00",
+    "Direction": 176.2,
+    "Speed": 2.9
+  },
+  {
+    "Date": "12/14/16 3:00",
+    "Direction": 176.2,
+    "Speed": 2.5
+  },
+  {
+    "Date": "12/14/16 6:00",
+    "Direction": 198.3,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/14/16 9:00",
+    "Direction": 216.3,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/14/16 12:00",
+    "Direction": 272,
+    "Speed": 2.3
+  },
+  {
+    "Date": "12/14/16 15:00",
+    "Direction": 290.9,
+    "Speed": 3.6
+  },
+  {
+    "Date": "12/14/16 18:00",
+    "Direction": 271,
+    "Speed": 3.1
+  },
+  {
+    "Date": "12/14/16 21:00",
+    "Direction": 229,
+    "Speed": 1.5
+  },
+  {
+    "Date": "12/15/16 0:00",
+    "Direction": 231,
+    "Speed": 3.7
+  },
+  {
+    "Date": "12/15/16 3:00",
+    "Direction": 204,
+    "Speed": 2.7
+  },
+  {
+    "Date": "12/15/16 6:00",
+    "Direction": 194.6,
+    "Speed": 2.3
+  },
+  {
+    "Date": "12/15/16 9:00",
+    "Direction": 279.8,
+    "Speed": 0.2
+  },
+  {
+    "Date": "12/15/16 12:00",
+    "Direction": 262.3,
+    "Speed": 2.5
+  },
+  {
+    "Date": "12/15/16 15:00",
+    "Direction": 279.8,
+    "Speed": 5.4
+  },
+  {
+    "Date": "12/15/16 18:00",
+    "Direction": 282.3,
+    "Speed": 6.7
+  },
+  {
+    "Date": "12/15/16 21:00",
+    "Direction": 284.6,
+    "Speed": 4.6
+  },
+  {
+    "Date": "12/16/16 0:00",
+    "Direction": 303.5,
+    "Speed": 6.8
+  },
+  {
+    "Date": "12/16/16 3:00",
+    "Direction": 304.2,
+    "Speed": 6.3
+  },
+  {
+    "Date": "12/16/16 6:00",
+    "Direction": 299.7,
+    "Speed": 5.4
+  },
+  {
+    "Date": "12/16/16 9:00",
+    "Direction": 301.6,
+    "Speed": 4.8
+  },
+  {
+    "Date": "12/16/16 12:00",
+    "Direction": 295.2,
+    "Speed": 3.1
+  },
+  {
+    "Date": "12/16/16 15:00",
+    "Direction": 286.8,
+    "Speed": 3
+  },
+  {
+    "Date": "12/16/16 18:00",
+    "Direction": 276.2,
+    "Speed": 2.8
+  },
+  {
+    "Date": "12/16/16 21:00",
+    "Direction": 227.1,
+    "Speed": 1.4
+  },
+  {
+    "Date": "12/17/16 0:00",
+    "Direction": 169.9,
+    "Speed": 1.4
+  },
+  {
+    "Date": "12/17/16 3:00",
+    "Direction": 186,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/17/16 6:00",
+    "Direction": 185.3,
+    "Speed": 1.8
+  },
+  {
+    "Date": "12/17/16 9:00",
+    "Direction": 164,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/17/16 12:00",
+    "Direction": 154.6,
+    "Speed": 2.4
+  },
+  {
+    "Date": "12/17/16 15:00",
+    "Direction": 156.9,
+    "Speed": 2.5
+  },
+  {
+    "Date": "12/17/16 18:00",
+    "Direction": 146.5,
+    "Speed": 2.1
+  },
+  {
+    "Date": "12/17/16 21:00",
+    "Direction": 161.8,
+    "Speed": 1
+  },
+  {
+    "Date": "12/18/16 0:00",
+    "Direction": 177.9,
+    "Speed": 0.9
+  },
+  {
+    "Date": "12/18/16 3:00",
+    "Direction": 173.3,
+    "Speed": 1.4
+  },
+  {
+    "Date": "12/18/16 6:00",
+    "Direction": 165.9,
+    "Speed": 1.6
+  },
+  {
+    "Date": "12/18/16 9:00",
+    "Direction": 173.6,
+    "Speed": 2.2
+  },
+  {
+    "Date": "12/18/16 12:00",
+    "Direction": 186.5,
+    "Speed": 2.3
+  },
+  {
+    "Date": "12/18/16 15:00",
+    "Direction": 182,
+    "Speed": 3.5
+  },
+  {
+    "Date": "12/18/16 18:00",
+    "Direction": 291.6,
+    "Speed": 3.7
+  },
+  {
+    "Date": "12/18/16 21:00",
+    "Direction": 287.7,
+    "Speed": 4.1
+  },
+  {
+    "Date": "12/19/16 0:00",
+    "Direction": 292.5,
+    "Speed": 4.4
+  },
+  {
+    "Date": "12/19/16 3:00",
+    "Direction": 299.9,
+    "Speed": 5.1
+  },
+  {
+    "Date": "12/19/16 6:00",
+    "Direction": 308.5,
+    "Speed": 3.9
+  },
+  {
+    "Date": "12/19/16 9:00",
+    "Direction": 313.4,
+    "Speed": 2.8
+  },
+  {
+    "Date": "12/19/16 12:00",
+    "Direction": 318.1,
+    "Speed": 1
+  },
+  {
+    "Date": "12/19/16 15:00",
+    "Direction": 299.1,
+    "Speed": 1.3
+  },
+  {
+    "Date": "12/19/16 18:00",
+    "Direction": 300.1,
+    "Speed": 1.6
+  },
+  {
+    "Date": "12/19/16 21:00",
+    "Direction": 249.2,
+    "Speed": 0.9
+  },
+  {
+    "Date": "12/20/16 0:00",
+    "Direction": 222.7,
+    "Speed": 1
+  },
+  {
+    "Date": "12/20/16 3:00",
+    "Direction": 184.8,
+    "Speed": 1
+  },
+  {
+    "Date": "12/20/16 6:00",
+    "Direction": 208.4,
+    "Speed": 0.6
+  },
+  {
+    "Date": "12/20/16 9:00",
+    "Direction": 175.3,
+    "Speed": 0.4
+  },
+  {
+    "Date": "12/20/16 12:00",
+    "Direction": 182.6,
+    "Speed": 0.7
+  },
+  {
+    "Date": "12/20/16 15:00",
+    "Direction": 176.4,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/20/16 18:00",
+    "Direction": 195.9,
+    "Speed": 3
+  },
+  {
+    "Date": "12/20/16 21:00",
+    "Direction": 179.8,
+    "Speed": 2.9
+  },
+  {
+    "Date": "12/21/16 0:00",
+    "Direction": 189.8,
+    "Speed": 2.9
+  },
+  {
+    "Date": "12/21/16 3:00",
+    "Direction": 200.3,
+    "Speed": 3.2
+  },
+  {
+    "Date": "12/21/16 6:00",
+    "Direction": 215.6,
+    "Speed": 2.5
+  },
+  {
+    "Date": "12/21/16 9:00",
+    "Direction": 216.8,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/21/16 12:00",
+    "Direction": 211.2,
+    "Speed": 2.2
+  },
+  {
+    "Date": "12/21/16 15:00",
+    "Direction": 242.2,
+    "Speed": 2.3
+  },
+  {
+    "Date": "12/21/16 18:00",
+    "Direction": 252.5,
+    "Speed": 3.8
+  },
+  {
+    "Date": "12/21/16 21:00",
+    "Direction": 256.8,
+    "Speed": 3.6
+  },
+  {
+    "Date": "12/22/16 0:00",
+    "Direction": 259.3,
+    "Speed": 2.1
+  },
+  {
+    "Date": "12/22/16 3:00",
+    "Direction": 251.6,
+    "Speed": 2.2
+  },
+  {
+    "Date": "12/22/16 6:00",
+    "Direction": 218.5,
+    "Speed": 1.4
+  },
+  {
+    "Date": "12/22/16 9:00",
+    "Direction": 188.7,
+    "Speed": 2
+  },
+  {
+    "Date": "12/22/16 12:00",
+    "Direction": 186.5,
+    "Speed": 2.5
+  },
+  {
+    "Date": "12/22/16 15:00",
+    "Direction": 187.9,
+    "Speed": 2.4
+  },
+  {
+    "Date": "12/22/16 18:00",
+    "Direction": 203.5,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/22/16 21:00",
+    "Direction": 271.2,
+    "Speed": 1.3
+  },
+  {
+    "Date": "12/23/16 0:00",
+    "Direction": 299.5,
+    "Speed": 2.1
+  },
+  {
+    "Date": "12/23/16 3:00",
+    "Direction": 296.2,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/23/16 6:00",
+    "Direction": 293.9,
+    "Speed": 3.2
+  },
+  {
+    "Date": "12/23/16 9:00",
+    "Direction": 279.8,
+    "Speed": 3
+  },
+  {
+    "Date": "12/23/16 12:00",
+    "Direction": 257.2,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/23/16 15:00",
+    "Direction": 263.1,
+    "Speed": 3.6
+  },
+  {
+    "Date": "12/23/16 18:00",
+    "Direction": 237.7,
+    "Speed": 3.2
+  },
+  {
+    "Date": "12/23/16 21:00",
+    "Direction": 232.2,
+    "Speed": 2.6
+  },
+  {
+    "Date": "12/24/16 0:00",
+    "Direction": 202.6,
+    "Speed": 1.6
+  },
+  {
+    "Date": "12/24/16 3:00",
+    "Direction": 172.3,
+    "Speed": 1.2
+  },
+  {
+    "Date": "12/24/16 6:00",
+    "Direction": 180.3,
+    "Speed": 1.5
+  },
+  {
+    "Date": "12/24/16 9:00",
+    "Direction": 179.9,
+    "Speed": 1.2
+  },
+  {
+    "Date": "12/24/16 12:00",
+    "Direction": 165,
+    "Speed": 2
+  },
+  {
+    "Date": "12/24/16 15:00",
+    "Direction": 203.2,
+    "Speed": 4
+  },
+  {
+    "Date": "12/24/16 18:00",
+    "Direction": 205.5,
+    "Speed": 3.4
+  },
+  {
+    "Date": "12/24/16 21:00",
+    "Direction": 268.1,
+    "Speed": 3.6
+  },
+  {
+    "Date": "12/25/16 0:00",
+    "Direction": 282.3,
+    "Speed": 3.5
+  },
+  {
+    "Date": "12/25/16 3:00",
+    "Direction": 278.3,
+    "Speed": 3.9
+  },
+  {
+    "Date": "12/25/16 6:00",
+    "Direction": 279.8,
+    "Speed": 4.3
+  },
+  {
+    "Date": "12/25/16 9:00",
+    "Direction": 298,
+    "Speed": 4.8
+  },
+  {
+    "Date": "12/25/16 12:00",
+    "Direction": 312.9,
+    "Speed": 5.5
+  },
+  {
+    "Date": "12/25/16 15:00",
+    "Direction": 321.2,
+    "Speed": 5.9
+  },
+  {
+    "Date": "12/25/16 18:00",
+    "Direction": 323,
+    "Speed": 5
+  },
+  {
+    "Date": "12/25/16 21:00",
+    "Direction": 326.7,
+    "Speed": 3.7
+  },
+  {
+    "Date": "12/26/16 0:00",
+    "Direction": 332.1,
+    "Speed": 2.1
+  },
+  {
+    "Date": "12/26/16 3:00",
+    "Direction": 319.2,
+    "Speed": 1.4
+  },
+  {
+    "Date": "12/26/16 6:00",
+    "Direction": 345.9,
+    "Speed": 0.5
+  },
+  {
+    "Date": "12/26/16 9:00",
+    "Direction": 78.9,
+    "Speed": 0.7
+  },
+  {
+    "Date": "12/26/16 12:00",
+    "Direction": 130.6,
+    "Speed": 0.9
+  },
+  {
+    "Date": "12/26/16 15:00",
+    "Direction": 147.1,
+    "Speed": 1.8
+  },
+  {
+    "Date": "12/26/16 18:00",
+    "Direction": 162.4,
+    "Speed": 3.4
+  },
+  {
+    "Date": "12/26/16 21:00",
+    "Direction": 166.8,
+    "Speed": 5.4
+  },
+  {
+    "Date": "12/27/16 0:00",
+    "Direction": 174.7,
+    "Speed": 4.6
+  },
+  {
+    "Date": "12/27/16 3:00",
+    "Direction": 177.8,
+    "Speed": 4.9
+  },
+  {
+    "Date": "12/27/16 6:00",
+    "Direction": 189.8,
+    "Speed": 3.8
+  },
+  {
+    "Date": "12/27/16 9:00",
+    "Direction": 205.2,
+    "Speed": 3.3
+  },
+  {
+    "Date": "12/27/16 12:00",
+    "Direction": 241.3,
+    "Speed": 4.9
+  },
+  {
+    "Date": "12/27/16 15:00",
+    "Direction": 273.8,
+    "Speed": 4.6
+  },
+  {
+    "Date": "12/27/16 18:00",
+    "Direction": 275.6,
+    "Speed": 4.3
+  },
+  {
+    "Date": "12/27/16 21:00",
+    "Direction": 284,
+    "Speed": 4.8
+  },
+  {
+    "Date": "12/28/16 0:00",
+    "Direction": 284,
+    "Speed": 4.5
+  },
+  {
+    "Date": "12/28/16 3:00",
+    "Direction": 272,
+    "Speed": 3.4
+  },
+  {
+    "Date": "12/28/16 6:00",
+    "Direction": 270,
+    "Speed": 3.4
+  },
+  {
+    "Date": "12/28/16 9:00",
+    "Direction": 271.3,
+    "Speed": 3.1
+  },
+  {
+    "Date": "12/28/16 12:00",
+    "Direction": 282.5,
+    "Speed": 2.9
+  },
+  {
+    "Date": "12/28/16 15:00",
+    "Direction": 303.5,
+    "Speed": 2.9
+  },
+  {
+    "Date": "12/28/16 18:00",
+    "Direction": 300.4,
+    "Speed": 3.5
+  },
+  {
+    "Date": "12/28/16 21:00",
+    "Direction": 308.4,
+    "Speed": 2.9
+  },
+  {
+    "Date": "12/29/16 0:00",
+    "Direction": 307.7,
+    "Speed": 1.1
+  },
+  {
+    "Date": "12/29/16 3:00",
+    "Direction": 234.7,
+    "Speed": 0.4
+  },
+  {
+    "Date": "12/29/16 6:00",
+    "Direction": 143.2,
+    "Speed": 0.7
+  },
+  {
+    "Date": "12/29/16 9:00",
+    "Direction": 128.5,
+    "Speed": 1.3
+  },
+  {
+    "Date": "12/29/16 12:00",
+    "Direction": 138.8,
+    "Speed": 2.8
+  },
+  {
+    "Date": "12/29/16 15:00",
+    "Direction": 145.5,
+    "Speed": 3.9
+  },
+  {
+    "Date": "12/29/16 18:00",
+    "Direction": 141.3,
+    "Speed": 3.4
+  },
+  {
+    "Date": "12/29/16 21:00",
+    "Direction": 127,
+    "Speed": 3.3
+  },
+  {
+    "Date": "12/30/16 0:00",
+    "Direction": 125.7,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/30/16 3:00",
+    "Direction": 110.9,
+    "Speed": 0.5
+  },
+  {
+    "Date": "12/30/16 6:00",
+    "Direction": 311,
+    "Speed": 3.3
+  },
+  {
+    "Date": "12/30/16 9:00",
+    "Direction": 288,
+    "Speed": 6
+  },
+  {
+    "Date": "12/30/16 12:00",
+    "Direction": 275.9,
+    "Speed": 5.1
+  },
+  {
+    "Date": "12/30/16 15:00",
+    "Direction": 261.4,
+    "Speed": 4.1
+  },
+  {
+    "Date": "12/30/16 18:00",
+    "Direction": 265.9,
+    "Speed": 5.1
+  },
+  {
+    "Date": "12/30/16 21:00",
+    "Direction": 269.9,
+    "Speed": 4.9
+  },
+  {
+    "Date": "12/31/16 0:00",
+    "Direction": 276.8,
+    "Speed": 4.6
+  },
+  {
+    "Date": "12/31/16 3:00",
+    "Direction": 282.5,
+    "Speed": 4.1
+  },
+  {
+    "Date": "12/31/16 6:00",
+    "Direction": 277,
+    "Speed": 3.6
+  },
+  {
+    "Date": "12/31/16 9:00",
+    "Direction": 282.5,
+    "Speed": 3.1
+  },
+  {
+    "Date": "12/31/16 12:00",
+    "Direction": 279.8,
+    "Speed": 1.5
+  },
+  {
+    "Date": "12/31/16 15:00",
+    "Direction": 207.1,
+    "Speed": 1.9
+  },
+  {
+    "Date": "12/31/16 18:00",
+    "Direction": 177,
+    "Speed": 3.3
+  },
+  {
+    "Date": "12/31/16 21:00",
+    "Direction": 161,
+    "Speed": 3.5
+  }
+]

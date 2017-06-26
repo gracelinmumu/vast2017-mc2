@@ -1,24 +1,23 @@
 <template>
   <div id="App"
-       class="animated"
-       namespace="App"
-       transition="fadeUD">
+       class="uk-width-1-1 uk-grid"
+       namespace="App">
     <div class="uk-width-1-1 uk-grid top">
-      <div class="select-menu uk-width-1-6 uk-panel uk-panel-box">
+      <div class="select-menu uk-width-1-6 uk-panel-box uk-padding-remove">
         <select-menu></select-menu>
       </div>
-      <div class="calendar uk-width-1-6 uk-panel uk-panel-box">
+      <div class="calendar uk-width-1-6 uk-panel-box">
         <calendar></calendar>
       </div>
-      <div class="iso-map uk-width-1-2 uk-panel uk-panel-box">
+      <div class="iso-map uk-width-1-2 uk-panel-box">
         <iso-map></iso-map>
       </div>
-      <div class="distribute uk-width-1-6 uk-panel uk-panel-box">
+      <div class="distribute uk-width-1-6 uk-panel-box">
         <distribute-view></distribute-view>
       </div>
     </div>
-    <div class="uk-width-1-1 bottom">
-      <div class="time-line uk-panel uk-panel-box">
+    <div class="uk-width-1-1 uk-grid bottom">
+      <div class="time-line uk-width-1-1 uk-panel uk-panel-box">
         <time-line></time-line>
       </div>
     </div>
@@ -34,45 +33,25 @@
 
   export default{
     data () {
-      return {
-        links: []
-      }
+      return {}
     },
     components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar },
-    methods: {
-      transitionAppBeforeEnter () {
-        this.$fLogs.log('[App]transitionBeforeEnter')
-      }
-    },
+    methods: {},
     ready () {
-      this.show = true
-      this.links = [ {
-        url: 'https://confluence.b.360.cn/pages/viewpage.action?pageId=10092607',
-        text: '教程'
-      }, {
-        url: 'http://10.95.24.22:5011/package/@qnpm/skyfenv',
-        text: 'skyfenv'
-      }, {
-        url: '/mochatest/index',
-        text: 'Mocha单元测试'
-      } ]
-      this.$fLogs.info('[APP]HelloWorld is ready !!!')
+      this.$fLogs.info('[APP]Analyze is ready !!!')
     }
   }
 </script>
 <style lang="less" scoped>
   @import "../commons/base.vars.less";
-
   #App {
-    margin: 0;
-    padding: 0;
     height: 100%;
-    width: 100%;
     .top {
       height: 60%;
     }
     .bottom {
-      height: 39%
+      margin-top: 8px;
+      height: 39%;
     }
     .time-line {
       height: 100%;
