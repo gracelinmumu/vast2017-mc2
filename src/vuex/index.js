@@ -18,8 +18,11 @@ const state = {
     Appluimonia: 5.0,
     'AGOC-3A': 5.0
   },
+  chemicalToken: null,
+  windToken: null,
   sctDataToken: null, // 传感器-化学物质-时间-读数 数据的token
   sctBarChart: [], // {sensor: 1, chemical: 'C', month: 'M4' }
+  diffChart: [],
   selectedBar: null
 }
 
@@ -59,6 +62,15 @@ const mutations = {
   },
   [types.UPDATE_DISTRIBUTE] (state, { month, chemical, sensor, dataToken }) {
     state.selectedBar = { month, chemical, sensor, dataToken }
+  },
+  [types.ADD_DIFF_CHART] (state, { month, sensor, factory }) {
+    state.diffChart = [ { month, sensor, factory } ].concat(state.diffChart)
+  },
+  [types.SET_WIND_TOKEN] (state, token) {
+    state.windToken = token
+  },
+  [types.SET_CHEMICAL_TOKEN] (state, token) {
+    state.chemicalToken = token
   }
 }
 

@@ -12,13 +12,15 @@
     </div>
   </div>
   <div class="uk-width-1-1 middle panel">
-    Diff
+    <direction-diff></direction-diff>
   </div>
   <div class="uk-width-1-1 bottom panel">
-    wind
+    <wind></wind>
   </div>
 </template>
 <script>
+  import DirectionDiff from './DirectionDiff.vue'
+  import Wind from './Wind.vue'
   import storage from '../commons/storage'
   import {month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart} from '../vuex/getters'
   import {removeSCTChart, updateSelectedBar} from '../vuex/actions'
@@ -33,11 +35,12 @@
         allData = storage.get(this.sctDataToken).data
       }
     },
+    components: { Wind, DirectionDiff },
     methods: {
       clickBar (bar) {
         let data = allData[ bar.sensor ][ bar.chemical ]
         let dataToken = storage.set(data)
-        this.updateSelectedBar(Object.assign({dataToken}, bar))
+        this.updateSelectedBar(Object.assign({ dataToken }, bar))
       },
       drawWind () {},
       drawDirectionDiff () {},
@@ -59,7 +62,7 @@
 </script>
 <style lang="less" scoped>
   @bottom: 60px;
-  @middle: 80px;
+  @middle: 100px;
   .panel {
     border: 1px solid #ddd;
   }

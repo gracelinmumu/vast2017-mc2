@@ -35,3 +35,15 @@ export const removeSCTChart = (store, index) => {
 export const updateSelectedBar = (store, {month, chemical, sensor, dataToken}) => {
   store.dispatch(types.UPDATE_DISTRIBUTE, {month, chemical, sensor, dataToken})
 }
+
+export const addDiffChart = (store, {sensor, month, factory}) => {
+  store.dispatch(types.ADD_DIFF_CHART, {month, sensor, factory})
+}
+
+export const setWindToken = (store, token) => {
+  store.dispatch(types.SET_WIND_TOKEN, token)
+}
+
+export const setChemicalToken = (store, token) => {
+  store.dispatch(types.SET_CHEMICAL_TOKEN, token)
+}

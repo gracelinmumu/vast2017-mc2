@@ -31,16 +31,15 @@
   import Calendar from '../components/Calendar.vue'
   import IsoMap from '../components/IsoMap.vue'
 
-  import meteorologicalData from '../data/meteorological.json'
   import sensorData from '../data/sensor.json'
   import storage from '../commons/storage'
   import Process from './dataProcess.worker'
 
-  import {setSCTToken} from '../vuex/actions'
-  meteorologicalData
+  import {setSCTToken, setChemicalToken} from '../vuex/actions'
+
   export default{
     vuex: {
-      actions: { setSCTToken }
+      actions: { setSCTToken, setChemicalToken }
     },
     components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar },
     ready () {
@@ -50,10 +49,11 @@
       let wk = new Process()
       wk.postMessage({ sensorData })
       wk.onmessage = (evt) => {
-        let data = evt.data
-        console.log(data)
-        let dataToken = storage.set(evt, 'sctData')
+        let {bySensor, byChemical} = evt.data
+        let dataToken = storage.set(bySensor, 'sctData')
         this.setSCTToken(dataToken)
+        let chemicalToken = storage.set(byChemical, 'byChemical')
+        this.setChemicalToken(chemicalToken)
       }
     }
   }

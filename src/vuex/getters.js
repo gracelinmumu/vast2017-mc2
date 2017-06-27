@@ -6,3 +6,7 @@ export const threshold = state => state.threshold
 export const sctDataToken = state => state.sctDataToken
 export const sctBarChart = state => state.sctBarChart
 export const selectedBar = state => state.selectedBar
+export const diffChart = state => state.diffChart
+
+export const windToken = state => state.windToken
+export const chemicalToken = state => state.chemicalToken

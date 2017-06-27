@@ -46,6 +46,9 @@
                 @click="switchFactory(op)"> {{op}}
         </button>
       </div>
+      <button class="uk-button uk-button-success uk-align-right" @click="addDiff"> Add Diff </button>
+      <br>
+      <br>
     </div>
   </div>
   <div class="uk-width-1-1 bottom">
@@ -56,24 +59,30 @@
 </template>
 <script>
   import {month, sensor, chemical, factory} from '../vuex/getters'
-  import {switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart} from '../vuex/actions'
+  import {switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart} from '../vuex/actions'
+  import config from '../commons/config'
   export default {
     vuex: {
       getters: { month, sensor, chemical, factory },
-      actions: { switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart }
+      actions: { switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart }
     },
     data () {
       return {
-        monthOpts: [ 'M4', 'M8', 'M12' ],
-        factoryOpts: [ 'Roadrunner ', 'Kasios', 'Radiance ', 'Indigo' ],
-        chemicalOpts: [ 'Chlorodinine', 'Methylosmolene', 'AGOC-3A', 'Appluimonia' ],
-        sensorOpts: [ 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9' ],
+        monthOpts: config.monthOpts,
+        factoryOpts: config.factoryOpts,
+        chemicalOpts: config.chemicalOpts,
+        sensorOpts: config.sensorOpts,
         correlationOpts: [ 'Pearson', 'Spearman' ]
       }
     },
     methods: {
       addBar () {
-        this.addSCTChart({ sensor: this.sensor, chemical: this.chemical, month: this.month })
+        if (this.sensor && this.chemical && this.month) {
+          this.addSCTChart({ sensor: this.sensor, chemical: this.chemical, month: this.month })
+        }
+      },
+      addDiff () {
+        if (this.sensor && this.factory) this.addDiffChart({ sensor: this.sensor, factory: this.factory, month: this.month })
       }
     }
   }
