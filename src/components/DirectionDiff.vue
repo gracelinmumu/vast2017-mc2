@@ -31,6 +31,10 @@
   .container {
     height: 100%;
     overflow-y: scroll;
+    i {
+      cursor: pointer;
+      color: red;
+    }
     .chart {
       height: @chart-height;
       border-bottom: 1px solid #ddd;
