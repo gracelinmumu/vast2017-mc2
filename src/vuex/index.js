@@ -9,9 +9,18 @@ frame.vueInstall({ module: 'vx', name: 'mutations' }, types)
 
 const state = {
   month: 'M4',
-  chemical: 'C2',
-  factory: 'F4',
-  sensor: 'S3'
+  chemical: [],
+  factory: [],
+  sensor: [],
+  threshold: {
+    Chlorodinine: 3.0,
+    Methylosmolene: 10.0,
+    Appluimonia: 5.0,
+    'AGOC-3A': 5.0
+  },
+  sctDataToken: null, // 传感器-化学物质-时间-读数 数据的token
+  sctBarChart: [], // {sensor: 1, chemical: 'C', month: 'M4' }
+  selectedBar: null
 }
 
 const mutations = {
@@ -21,11 +30,35 @@ const mutations = {
   [types.SWITCH_CHEMICAL] (state, ch) {
     state.chemical = ch
   },
+  // [types.SWITCH_CHEMICAL] (state, ch) {
+  //   let chemical = state.chemical
+  //   let index = chemical.indexOf(ch)
+  //   if (index !== -1) {
+  //     chemical.splice(index, 1)
+  //   } else {
+  //     chemical.push(ch)
+  //   }
+  // },
   [types.SWITCH_FACTORY] (state, f) {
     state.factory = f
   },
   [types.SWITCH_SENSOR] (state, s) {
     state.sensor = s
+  },
+  [types.UPDATE_THRESHOLD] (state, k, v) {
+    state.threshold[ k ] = v
+  },
+  [types.SET_SCT_TOKEN] (state, token) {
+    state.sctDataToken = token
+  },
+  [types.ADD_SCT_CHART] (state, { sensor, month, chemical }) {
+    state.sctBarChart = [ { sensor, month, chemical } ].concat(state.sctBarChart)
+  },
+  [types.REMOVE_SCR_CHART] (state, index) {
+    state.sctBarChart.splice(index, 1)
+  },
+  [types.UPDATE_DISTRIBUTE] (state, { month, chemical, sensor, dataToken }) {
+    state.selectedBar = { month, chemical, sensor, dataToken }
   }
 }
 

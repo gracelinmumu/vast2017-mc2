@@ -1,5 +1,7 @@
 <template>
   <div class="uk-panel-title">日历图</div>
+  <template v-if="selectedBar">{{selectedBar.sensor}} {{selectedBar.chemical}} {{threshold[ selectedBar.chemical ]}}
+  </template>
   <div class="uk-width-1-1 uk-flex container">
     <div class="left">
       <div class="uk-width-1-1 chart" v-el:april></div>
@@ -11,38 +13,40 @@
 
 </template>
 <script>
-  import sensorData from '../data/sensor.json'
+  import storage from '../commons/storage'
   import Calendar from '../charts/Calendar'
-  import {month, sensor, chemical} from '../vuex/getters'
-  sensorData
+  import {selectedBar, threshold} from '../vuex/getters'
+
+  let sensorData = null
   export default {
     vuex: {
-      getters: { month, sensor, chemical }
+      getters: { selectedBar, threshold }
     },
     watch: {
-      month () {
-        this.update()
-      },
-      sensor () {
-        this.update()
-      },
-      chemical () {
-        this.update()
+      selectedBar: {
+        deep: true,
+        handler () {
+          if (this.selectedBar) this.update()
+        }
       }
     },
     methods: {
       update () {
-        // todo 1.处理数据； 2.绘图
-        let data = this.processData()
+        if (this.selectedBar) {
+          let { dataToken } = this.selectedBar
 
-        let chartApril = new Calendar(this.$els.april)
-        chartApril.draw(data.april)
+          let data = storage.get(dataToken).data
+          // todo 1.处理数据； 2.绘图
+          let dataFormat = this.processData(data)
+          let chartApril = new Calendar(this.$els.april)
+          chartApril.draw(dataFormat.april)
 
-        let chartAugust = new Calendar(this.$els.august)
-        chartAugust.draw(data.august)
+          let chartAugust = new Calendar(this.$els.august)
+          chartAugust.draw(dataFormat.august)
 
-        let chartDecember = new Calendar(this.$els.december)
-        chartDecember.draw(data.december)
+          let chartDecember = new Calendar(this.$els.december)
+          chartDecember.draw(dataFormat.december)
+        }
       },
       processData () {
         let res = {}

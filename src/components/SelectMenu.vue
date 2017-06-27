@@ -14,7 +14,7 @@
     <div class="uk-width-1-1">
       <p class="p-title">Chemical</p>
       <div class="uk-width-1-1 uk-flex uk-flex-wrap">
-        <button :class="{'uk-button-primary': op === chemical}"
+        <button :class="{'uk-button-primary': chemical.indexOf(op) !== -1}"
                 class="uk-button"
                 v-for="op in chemicalOpts"
                 @click="switchChemical(op)"> {{op}}
@@ -27,11 +27,15 @@
       <div class="uk-width-1-1 uk-flex uk-flex-wrap">
         <button v-for="op in sensorOpts"
                 class="uk-button"
-                :class="{'uk-button-primary': op === sensor}"
+                :class="{'uk-button-primary': sensor.indexOf(op) !== -1}"
                 @click="switchSensor(op)"> {{op}}
         </button>
       </div>
     </div>
+
+    <button class="uk-button uk-button-success uk-align-right" @click="addBar"> Add Bar </button>
+    <br>
+    <br>
     <hr>
     <div class="uk-width-1-1">
       <p class="p-title">Factory</p>
@@ -52,22 +56,25 @@
 </template>
 <script>
   import {month, sensor, chemical, factory} from '../vuex/getters'
-  import {switchMonth, switchChemical, switchFactory, switchSensor} from '../vuex/actions'
+  import {switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart} from '../vuex/actions'
   export default {
     vuex: {
       getters: { month, sensor, chemical, factory },
-      actions: { switchMonth, switchChemical, switchFactory, switchSensor }
+      actions: { switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart }
     },
     data () {
       return {
         monthOpts: [ 'M4', 'M8', 'M12' ],
-        factoryOpts: [ 'F1', 'F2', 'F3', 'F4' ],
-        chemicalOpts: [ 'C1', 'C2', 'C3', 'C4' ],
+        factoryOpts: [ 'Roadrunner ', 'Kasios', 'Radiance ', 'Indigo' ],
+        chemicalOpts: [ 'Chlorodinine', 'Methylosmolene', 'AGOC-3A', 'Appluimonia' ],
         sensorOpts: [ 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9' ],
         correlationOpts: [ 'Pearson', 'Spearman' ]
       }
     },
     methods: {
+      addBar () {
+        this.addSCTChart({ sensor: this.sensor, chemical: this.chemical, month: this.month })
+      }
     }
   }
 </script>

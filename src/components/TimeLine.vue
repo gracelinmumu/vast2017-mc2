@@ -1,10 +1,14 @@
 <template>
   <div class="uk-width-1-1 top panel">
     <div class="content">
-      <p>sensor readingggggggggggggggg</p>
-      <p>sensor readingggggggggggggggg</p>
-      <p>sensor readingggggggggggggggg</p>
-      <p>sensor readingggggggggggggggg</p>
+      <div v-for="(index,bar) in sctBarChart"
+           class="uk-width-1-1 bar-container"
+           @click="clickBar(bar)">
+        <i class="uk-icon-close uk-align-right" @click="closeBar(index,bar)"></i>
+        <span class="uk-badge uk-badge-primary"
+              @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}</span>
+        <div class="uk-width-1-1" :id="'Bar-'+index"></div>
+      </div>
     </div>
   </div>
   <div class="uk-width-1-1 middle panel">
@@ -15,19 +19,41 @@
   </div>
 </template>
 <script>
-  import sensorData from '../data/sensor.json'
-  import {month, chemical, sensor, factory} from '../vuex/getters'
+  import storage from '../commons/storage'
+  import {month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart} from '../vuex/getters'
+  import {removeSCTChart, updateSelectedBar} from '../vuex/actions'
+  let allData = null
   export default {
     vuex: {
-      getters: { month, chemical, sensor, factory }
+      getters: { month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart },
+      actions: { removeSCTChart, updateSelectedBar }
     },
-    created () {
-      console.log(sensorData[ 0 ])
+    watch: {
+      sctDataToken () {
+        allData = storage.get(this.sctDataToken).data
+      }
     },
     methods: {
-      clickChart () {},
+      clickBar (bar) {
+        let data = allData[ bar.sensor ][ bar.chemical ]
+        let dataToken = storage.set(data)
+        this.updateSelectedBar(Object.assign({dataToken}, bar))
+      },
       drawWind () {},
-      drawDirectionDiff () {}
+      drawDirectionDiff () {},
+      closeBar (index, bar) {
+        console.log(index, bar)
+        this.removeSCTChart(index)
+      },
+      drawBar (bar) {
+        let { chemical, month, sensor } = bar
+        if (allData && allData[ sensor ] && allData[ sensor ][ chemical ]) {
+          let chartData = allData[ sensor ][ chemical ]
+          // todo 根据chartData threshold month绘图
+          chartData
+          month
+        }
+      }
     }
   }
 </script>
@@ -41,7 +67,15 @@
     height: calc(~"100% - " @bottom ~"-" @middle);
     overflow-y: scroll;
     .content {
-      height: 300px;
+      /*height: 300px;*/
+      i {
+        cursor: pointer;
+        color: red;
+      }
+      .bar-container {
+        height: 100px;
+        border-bottom: 1px solid #ddd;
+      }
     }
   }
   .middle {

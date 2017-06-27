@@ -25,20 +25,36 @@
 </template>
 <script>
   import '../commons/base.less'
-  import IsoMap from '../components/IsoMap.vue'
+  import DistributeView from '../components/DistributeView.vue'
   import SelectMenu from '../components/SelectMenu.vue'
   import TimeLine from '../components/TimeLine.vue'
-  import DistributeView from '../components/DistributeView.vue'
   import Calendar from '../components/Calendar.vue'
+  import IsoMap from '../components/IsoMap.vue'
 
+  import meteorologicalData from '../data/meteorological.json'
+  import sensorData from '../data/sensor.json'
+  import storage from '../commons/storage'
+  import Process from './dataProcess.worker'
+
+  import {setSCTToken} from '../vuex/actions'
+  meteorologicalData
   export default{
-    data () {
-      return {}
+    vuex: {
+      actions: { setSCTToken }
     },
     components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar },
-    methods: {},
     ready () {
       this.$fLogs.info('[APP]Analyze is ready !!!')
+    },
+    created () {
+      let wk = new Process()
+      wk.postMessage({ sensorData })
+      wk.onmessage = (evt) => {
+        let data = evt.data
+        console.log(data)
+        let dataToken = storage.set(evt, 'sctData')
+        this.setSCTToken(dataToken)
+      }
     }
   }
 </script>
@@ -55,6 +71,9 @@
     }
     .time-line {
       height: 100%;
+    }
+    .select-menu {
+      overflow-y: scroll;
     }
   }
 </style>

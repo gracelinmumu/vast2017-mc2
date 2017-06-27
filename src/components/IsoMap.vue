@@ -1,13 +1,23 @@
 <template>
   <div class="uk-text-bold">等高线</div>
+  <span v-if="selectedBar">{{selectedBar.chemical}} - {{factory}}</span>
   <div class="chart" v-el:chart></div>
 </template>
 <script>
-  import {month, chemical, sensor, factory} from '../vuex/getters'
+  import {selectedBar, factory} from '../vuex/getters'
   import ISOMap from '../charts/ISOMap'
+
   export default {
     vuex: {
-      getters: { month, chemical, sensor, factory }
+      getters: { selectedBar, factory }
+    },
+    watch: {
+      selectedBar: {
+        deep: true,
+        handler () {
+
+        }
+      }
     },
     methods: {
       update () {
