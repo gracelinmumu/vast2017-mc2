@@ -43,10 +43,14 @@
           }
         })
         return dataValues
+      },
+      updateT (t) {
+        this.updateThreshold(this.selectedBar.chemical, t)
       }
     },
     ready () {
       this.chartIns = new Histogram(this.$els.chart)
+      this.chartIns.on({ updateThreshold: this.updateT })
     }
   }
 </script>
@@ -55,6 +59,11 @@
     height: 100%;
     .chart {
       height: calc(~"100% - 40px");
+    }
+    .brush .extent {
+      stroke: #fff;
+      fill-opacity: 0.125;
+      shape-rendering: crispEdges;
     }
   }
 </style>

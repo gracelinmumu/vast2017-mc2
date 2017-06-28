@@ -30,7 +30,6 @@ export default class {
       .attr('width', '100%')
       .attr('height', height)
 
-    console.log(height)
     let cellSize = height / 24
 
     let hour = this.svg.selectAll('.hour')
@@ -55,7 +54,6 @@ export default class {
   }
 
   getColor (d) {
-    // console.log(d)
     let color = '#ddd'
     let domain = this.domain
     if (d < domain[ 0 ]) {

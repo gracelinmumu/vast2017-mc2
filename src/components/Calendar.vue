@@ -34,6 +34,12 @@
         handler () {
           if (this.selectedBar) this.update()
         }
+      },
+      threshold: {
+        deep: true,
+        handler () {
+          this.update()
+        }
       }
     },
     methods: {
