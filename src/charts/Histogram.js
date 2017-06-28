@@ -18,7 +18,10 @@ export default class {
   }
 
   draw (data) {
-    this.svg.selectAll('.bar').remove()
+    this.svg.selectAll('.histogram').remove()
+
+    let container = this.svg.append('g').attr('class', 'histogram')
+
     let width = $(this.el).width()
     let height = $(this.el).height()
     this.svg.attr('height', height)
@@ -30,18 +33,21 @@ export default class {
     let dataHis = histogram(data)
 
     let max = d3.max(dataHis, d => d.y)
-    let maxWid = width - 20
+    let left = 30
+    let right = 20
+
+    let maxWid = width - left - right
 
     let scale = d3.scale.sqrt()
     scale.domain([ 0, max ])
       .range([ 0, maxWid ])
 
-    let rect = this.svg.selectAll('.bar')
+    let rect = container.selectAll('.bar')
       .data(dataHis)
       .enter()
       .append('g')
       .attr('class', 'bar')
-      .attr('transform', (d, index) => 'translate(0,' + index * hei + ')')
+      .attr('transform', (d, index) => 'translate(' + left + ',' + index * hei + ')')
 
     rect.append('rect')
       .attr('width', d => scale(d.y))
@@ -52,6 +58,11 @@ export default class {
     rect.append('text')
       .text(d => d.y)
       .attr('x', d => scale(d.y))
+      .attr('y', 20)
+
+    rect.append('text')
+      .text(d => d.x.toFixed(2))
+      .attr('x', d => -left)
       .attr('y', 20)
 
     return this
