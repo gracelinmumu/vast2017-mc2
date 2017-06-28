@@ -17,7 +17,7 @@ export default class {
     return this
   }
 
-  draw (data) {
+  draw (data, threshold) {
     this.svg.selectAll('.histogram').remove()
 
     let container = this.svg.append('g').attr('class', 'histogram')
@@ -33,7 +33,7 @@ export default class {
     let dataHis = histogram(data)
 
     let max = d3.max(dataHis, d => d.y)
-    let left = 30
+    let left = 35
     let right = 20
 
     let maxWid = width - left - right
@@ -52,7 +52,7 @@ export default class {
     rect.append('rect')
       .attr('width', d => scale(d.y))
       .attr('height', hei)
-      .attr('fill', '#27b8e7')
+      .attr('fill', d => d.x > threshold ? 'red' : '#27b8e7')
       .attr('stroke', '#fff')
 
     rect.append('text')
@@ -63,7 +63,7 @@ export default class {
     rect.append('text')
       .text(d => d.x.toFixed(2))
       .attr('x', d => -left)
-      .attr('y', 20)
+      .attr('y', 10)
 
     return this
   }

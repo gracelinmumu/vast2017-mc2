@@ -14,9 +14,9 @@ const state = {
   sensor: [],
   threshold: {
     Chlorodinine: 3.0,
-    Methylosmolene: 0.5,
-    Appluimonia: 5.0,
-    'AGOC-3A': 5.0
+    Methylosmolene: 10,
+    Appluimonia: 4,
+    'AGOC-3A': 18
   },
   chemicalToken: null,
   windToken: null,

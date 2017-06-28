@@ -1,18 +1,19 @@
 <template>
   <div class="uk-width-1-1 container">
-    <div class="uk-panel-title">分布直方图<span v-if="selectedBar">{{selectedBar.sensor}} - {{selectedBar.chemical}} - {{selectedBar.month}}</span></div>
+    <div class="uk-panel-title">分布直方图<span
+      v-if="selectedBar">{{selectedBar.sensor}} - {{selectedBar.chemical}} - {{selectedBar.month}}</span></div>
     <div class="uk-width-1-1 chart" v-el:chart></div>
   </div>
 </template>
 <script>
-  import {selectedBar} from '../vuex/getters'
+  import {selectedBar, threshold} from '../vuex/getters'
   import {updateThreshold} from '../vuex/actions'
   import storage from '../commons/storage'
   import Histogram from '../charts/Histogram'
 
   export default {
     vuex: {
-      getters: { selectedBar },
+      getters: { selectedBar, threshold },
       actions: { updateThreshold }
     },
     watch: {
@@ -31,7 +32,7 @@
         // 绘图数据是data
         // todo 处理数据，绘图
         let data = this.processData(input, month)
-        this.chartIns.draw(data)
+        this.chartIns.draw(data, this.threshold[ this.selectedBar.chemical ])
       },
       processData (data, month) {
         let dataValues = []
