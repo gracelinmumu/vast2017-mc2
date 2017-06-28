@@ -32,7 +32,7 @@
     },
     watch: {
       sctDataToken () {
-        allData = storage.get(this.sctDataToken).data
+        allData = storage.get(this.sctDataToken)
       }
     },
     components: { Wind, DirectionDiff },

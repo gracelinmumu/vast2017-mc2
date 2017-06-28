@@ -6,7 +6,7 @@
         <button :class="{'uk-button-primary': op === month}"
                 class="uk-button"
                 v-for="op in monthOpts"
-                @click="switchMonth(op)">{{op}}
+                @click="switchMonth(op)">M{{op}}
         </button>
       </div>
     </div>

@@ -3,6 +3,7 @@
  */
 import d3 from 'd3'
 import $ from 'jquery'
+
 export default class {
   constructor (el) {
     this.el = el
@@ -17,34 +18,36 @@ export default class {
   }
 
   draw (data, domain, colorMap) {
-    this.svg.selectAll('.day').remove()
+    this.svg.selectAll('.hour').remove()
     this.domain = domain
     this.colorMap = colorMap
 
-    let width = $(this.el).width()
     let height = $(this.el).height()
-    let cellSize = Math.min(width / 7, height / 5)
+    let pad = 2
+    let width = $(this.el).width() - pad * 2
 
-    let week = d3.time.format('%U')
+    this.svg
+      .attr('width', '100%')
+      .attr('height', height)
 
-    let month = new Date(+Object.keys(data)[ 0 ]).getMonth() + 1
-    let weeksBefore = month === 4 ? 13 : (month === 8 ? 31 : 48)
+    console.log(height)
+    let cellSize = height / 24
 
-    let day = this.svg.selectAll('.day')
+    let hour = this.svg.selectAll('.hour')
       .data(Object.keys(data))
       .enter()
       .append('g')
-      .attr('class', 'day')
-      .attr('transform', d => 'translate(' + new Date(+d).getDay() * cellSize + ',' + (week(new Date(+d)) - weeksBefore) * cellSize + ')')
+      .attr('class', 'hour')
+      .attr('transform', d => 'translate(' + pad + ',' + (d - 1) * cellSize + ')')
 
-    day.append('rect')
-      .attr('width', cellSize)
+    hour.append('rect')
+      .attr('width', width)
       .attr('height', cellSize)
       .attr('fill', d => this.getColor(data[ d ]))
       .attr('stroke', '#fff')
 
-    day.append('text')
-      .text((d) => new Date(+d).getDate())
+    hour.append('text')
+      .text((d) => d)
       .attr('dy', 16)
       .attr('dx', 5)
       .attr('color', '#fff')
@@ -52,6 +55,7 @@ export default class {
   }
 
   getColor (d) {
+    // console.log(d)
     let color = '#ddd'
     let domain = this.domain
     if (d < domain[ 0 ]) {

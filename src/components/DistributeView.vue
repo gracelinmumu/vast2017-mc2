@@ -1,8 +1,7 @@
 <template>
   <div class="uk-width-1-1 container">
-    <div class="uk-panel-title">分布直方图</div>
-    <span v-if="selectedBar">{{selectedBar.sensor}} - {{selectedBar.chemical}} - {{selectedBar.month}}</span>
-    <div class="uk-width-1-1" v-el:chart></div>
+    <div class="uk-panel-title">分布直方图<span v-if="selectedBar">{{selectedBar.sensor}} - {{selectedBar.chemical}} - {{selectedBar.month}}</span></div>
+    <div class="uk-width-1-1 chart" v-el:chart></div>
   </div>
 </template>
 <script>
@@ -27,21 +26,34 @@
     methods: {
       update () {
         let { month, dataToken } = this.selectedBar
-        let data = storage.get(dataToken).data
+        let input = storage.get(dataToken)
+        console.log(input)
         // 绘图数据是data
         // todo 处理数据，绘图
-        this.processData(data, month)
-
-        let chart = new Histogram(this.$els.chart)
-        chart.draw()
+        let data = this.processData(input, month)
+        this.chartIns.draw(data)
       },
       processData (data, month) {
+        let dataValues = []
+        Object.keys(data).forEach((d) => {
+          let m = new Date(d).getMonth() + 1
+          if (m === month) {
+            dataValues.push(data[ d ])
+          }
+        })
+        return dataValues
       }
+    },
+    ready () {
+      this.chartIns = new Histogram(this.$els.chart)
     }
   }
 </script>
 <style lang="less" scoped>
   .container {
     height: 100%;
+    .chart {
+      height: calc(~"100% - 40px");
+    }
   }
 </style>

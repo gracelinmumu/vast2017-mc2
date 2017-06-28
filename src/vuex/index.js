@@ -8,13 +8,13 @@ Vue.use(Vuex)
 frame.vueInstall({ module: 'vx', name: 'mutations' }, types)
 
 const state = {
-  month: 'M4',
+  month: 4,
   chemical: [],
   factory: [],
   sensor: [],
   threshold: {
     Chlorodinine: 3.0,
-    Methylosmolene: 10.0,
+    Methylosmolene: 0.5,
     Appluimonia: 5.0,
     'AGOC-3A': 5.0
   },

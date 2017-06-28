@@ -1,7 +1,7 @@
 // process.SkyEye 可以访问
 let config = {
   debug: process.SkyEye.ENV === 'dev',
-  monthOpts: [ 'M4', 'M8', 'M12' ],
+  monthOpts: [ 4, 8, 12 ],
   factoryOpts: [ 'Roadrunner ', 'Kasios', 'Radiance ', 'Indigo' ],
   chemicalOpts: [ 'Chlorodinine', 'Methylosmolene', 'AGOC-3A', 'Appluimonia' ],
   sensorOpts: [ 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9' ],

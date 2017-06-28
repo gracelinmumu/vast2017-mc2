@@ -16,10 +16,10 @@
     },
     watch: {
       windToken () {
-        if (this.windToken) windData = storage.get(this.windToken).data
+        if (this.windToken) windData = storage.get(this.windToken)
       },
       chemicalToken () {
-        if (this.chemicalToken) sensorData = storage.get(this.chemicalToken).data
+        if (this.chemicalToken) sensorData = storage.get(this.chemicalToken)
       },
       selectedBar: {
         deep: true,
