@@ -35,11 +35,11 @@
   import storage from '../commons/storage'
   import Process from './dataProcess.worker'
 
-  import {setSCTToken, setChemicalToken} from '../vuex/actions'
+  import {setSCTToken, setChemicalToken, setTimeToken} from '../vuex/actions'
 
   export default{
     vuex: {
-      actions: { setSCTToken, setChemicalToken }
+      actions: { setSCTToken, setChemicalToken, setTimeToken }
     },
     components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar },
     ready () {
@@ -49,11 +49,13 @@
       let wk = new Process()
       wk.postMessage({ sensorData })
       wk.onmessage = (evt) => {
-        let {bySensor, byChemical} = evt.data
+        let { bySensor, byChemical, byTime } = evt.data
         let dataToken = storage.set(bySensor, 'sctData')
         this.setSCTToken(dataToken)
         let chemicalToken = storage.set(byChemical, 'byChemical')
         this.setChemicalToken(chemicalToken)
+        let timeToken = storage.set(byTime, 'byTime')
+        this.setTimeToken(timeToken)
       }
     }
   }

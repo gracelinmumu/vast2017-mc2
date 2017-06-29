@@ -10,7 +10,7 @@ frame.vueInstall({ module: 'vx', name: 'mutations' }, types)
 const state = {
   month: 4,
   chemical: [],
-  factory: [],
+  factory: 'Roadrunner',
   sensor: [],
   threshold: {
     Chlorodinine: 3.0,
@@ -19,6 +19,7 @@ const state = {
     'AGOC-3A': 18
   },
   chemicalToken: null,
+  timeToken: null,
   windToken: null,
   sctDataToken: null, // 传感器-化学物质-时间-读数 数据的token
   sctBarChart: [], // {sensor: 1, chemical: 'C', month: 'M4' }
@@ -71,6 +72,9 @@ const mutations = {
   },
   [types.SET_CHEMICAL_TOKEN] (state, token) {
     state.chemicalToken = token
+  },
+  [types.SET_TIME_TOKEN] (state, token) {
+    state.timeToken = token
   }
 }
 

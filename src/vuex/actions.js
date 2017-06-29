@@ -47,3 +47,6 @@ export const setWindToken = (store, token) => {
 export const setChemicalToken = (store, token) => {
   store.dispatch(types.SET_CHEMICAL_TOKEN, token)
 }
+export const setTimeToken = (store, token) => {
+  store.dispatch(types.SET_TIME_TOKEN, token)
+}

@@ -6,7 +6,10 @@
            @click="clickBar(bar)">
         <i class="uk-icon-close uk-align-right" @click="closeBar(index,bar)"></i>
         <span class="uk-badge uk-badge-primary"
-              @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}</span>
+              @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}
+        </span>
+        <i class="uk-icon-play"></i>
+        <i class="uk-icon-pause"></i>
         <div class="uk-width-1-1" :id="'Bar-'+index"></div>
       </div>
     </div>
