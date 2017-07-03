@@ -11,3 +11,4 @@ export const diffChart = state => state.diffChart
 export const windToken = state => state.windToken
 export const chemicalToken = state => state.chemicalToken
 export const timeToken = state => state.timeToken
+export const correlationToken = state => state.correlationToken

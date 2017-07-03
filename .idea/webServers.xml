@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="56bc581b-1f59-425c-96ee-40373bd63427" name="10.16.66.9" url="http://10.16.66.9">
-        <fileTransfer host="10.16.66.9" port="22" rootFolder="/home/huangwei/vast2017" accessType="SFTP">
+      <webServer id="56bc581b-1f59-425c-96ee-40373bd63427" name="10.95.38.32" url="http://10.95.38.32">
+        <fileTransfer host="10.95.38.32" port="22" rootFolder="/home/huangwei/vast2017" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

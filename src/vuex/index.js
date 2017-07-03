@@ -18,6 +18,7 @@ const state = {
     Appluimonia: 4,
     'AGOC-3A': 18
   },
+  correlationToken: null,
   chemicalToken: null,
   timeToken: null,
   windToken: null,
@@ -75,6 +76,9 @@ const mutations = {
   },
   [types.SET_TIME_TOKEN] (state, token) {
     state.timeToken = token
+  },
+  [types.SET_CORRELATION_TOKEN] (state, token) {
+    state.correlationToken = token
   }
 }
 

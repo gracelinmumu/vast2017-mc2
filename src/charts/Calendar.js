@@ -21,6 +21,13 @@ export default class {
     this.domain = domain
     this.colorMap = colorMap
 
+    let a = '#00b32d'
+    let b = '#db4b0b'
+
+    let compute = d3.interpolate(a, b)
+    let linear = d3.scale.linear()
+      .domain(domain)
+      .range([ 0, 1 ])
     let width = $(this.el).width()
     let height = $(this.el).height()
     let cellSize = Math.min(width / 7, height / 5)
@@ -36,11 +43,13 @@ export default class {
       .append('g')
       .attr('class', 'day')
       .attr('transform', d => 'translate(' + new Date(+d).getDay() * cellSize + ',' + (week(new Date(+d)) - weeksBefore) * cellSize + ')')
-
+    compute
+    linear
     day.append('rect')
       .attr('width', cellSize)
       .attr('height', cellSize)
       .attr('fill', d => this.getColor(data[ d ]))
+      // .attr('fill', d => compute(linear(data[ d ])))
       .attr('stroke', '#fff')
 
     day.append('text')

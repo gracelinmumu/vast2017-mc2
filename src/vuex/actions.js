@@ -50,3 +50,7 @@ export const setChemicalToken = (store, token) => {
 export const setTimeToken = (store, token) => {
   store.dispatch(types.SET_TIME_TOKEN, token)
 }
+
+export const setCorrelation = (store, token) => {
+  store.dispatch(types.SET_CORRELATION_TOKEN, token)
+}
