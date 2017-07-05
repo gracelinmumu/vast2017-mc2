@@ -104,7 +104,7 @@
     border: 1px solid #ddd;
   }
   .top {
-    height: calc(~"100% - " @bottom ~"-" @middle);
+    height: calc(~"100% - 20px - " @bottom ~"-" @middle);
     overflow-y: scroll;
     .content {
       /*height: 300px;*/

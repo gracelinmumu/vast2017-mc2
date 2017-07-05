@@ -3,7 +3,7 @@
     class="panel {{ fullHeight ? 'panel-full-height' : '' }} uk-panel uk-panel-box uk-panel-box-secondary">
     <div class="uk-panel-header" @click="doHeaderClick">
       <h3 class="uk-panel-title" v-if="title || btnFolder || btnRemove">
-        <slot name="title"></slot>
+        <b><slot name="title"></slot></b>
       </h3>
       <div class="uk-panel-badge" v-if="btn || btnFolder || btnRemove">
         <slot name="btns"></slot>
