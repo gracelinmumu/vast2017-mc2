@@ -1,9 +1,9 @@
 <template>
-  <div class="uk-text-bold">等高线<span v-if="selectedBar">{{selectedBar.chemical}} - {{factory}}</span></div>
+  <div class="uk-text-bold">等高线<span v-if="selectedBar"> - {{factory}}</span></div>
   <div class="chart" v-el:chart></div>
 </template>
 <script>
-  import {selectedBar, factory, windToken, chemicalToken, timeToken} from '../vuex/getters'
+  import {selectedBar, factory, windToken, chemicalToken, timeToken, isPlay} from '../vuex/getters'
   import storage from '../commons/storage'
   import config from '../commons/config'
   import ISOMap from '../charts/ISOMap'
@@ -35,7 +35,7 @@
   }
   export default {
     vuex: {
-      getters: { selectedBar, factory, windToken, chemicalToken, timeToken }
+      getters: { selectedBar, factory, windToken, chemicalToken, timeToken, isPlay }
     },
     watch: {
       windToken () {
@@ -49,6 +49,12 @@
         handler () {
           this.update()
         }
+      },
+      isPlay () {
+        this.switchPlay()
+      },
+      factory () {
+        this.update()
       }
     },
     data () {
@@ -56,15 +62,64 @@
         chartIns: null,
         playData: {},
         factorySensorAngle: {},
-        factorySenorDist: {}
+        factorySenorDist: {},
+        playId: null
       }
     },
     methods: {
       update () {
-        let { chemical } = this.selectedBar
         // todo 处理数据 画图
         this.processData()
+        this.index = 0
+        this.drawISO()
+      },
+      drawISO () {
+        let { chemical } = this.selectedBar
+        let timeArr = Object.keys(sensorData)
+        let windMap = this.windMap
+        let currentTime = timeArr[ this.index ]
+        let playSensor = sensorData[ currentTime ][ chemical ]
+        let playWind = windMap[ currentTime ]
 
+        let dataSet = Object.keys(playSensor).map((d) => {
+          return {
+            name: d,
+            value: playSensor[ d ],
+            angle: this.factorySensorAngle[ this.factory ][ d ]
+          }
+        })
+        dataSet.sort((a, b) => config.sensorSort.indexOf(a.name) - config.sensorSort.indexOf(b.name))
+        let count = 20
+        let datas = []
+        for (let i = 0; i < count; i++) {
+          let d = dataSet.map((item) => {
+            return {
+              name: item.name,
+              value: (count - i) * item.value / count,
+              angle: item.angle
+            }
+          })
+          datas.push(d)
+        }
+
+        dataSet.sort((a, b) => b.value - a.value)
+        let max = dataSet[ 0 ]
+        let min = dataSet[ dataSet.length - 1 ]
+        let maxValue = max.value
+        let maxRadius = this.factorySenorDist[ this.factory ][ min.name ] * max.value / min.value
+        this.chartIns.draw({ sensorData: datas, windData: playWind, factory: this.factory, maxValue, maxRadius })
+        this.index = (this.index + 1) % Object.keys(sensorData).length
+      },
+      switchPlay () {
+        if (this.isPlay) {
+          this.playId = setInterval(() => {
+            this.drawISO()
+          }, 3000)
+        } else {
+          clearInterval(this.playId)
+        }
+      },
+      processData () {
         let windMap = {}
         windData.forEach((d) => {
           if (!windMap[ d.date ]) {
@@ -74,45 +129,7 @@
             }
           }
         })
-        let index = 0
-        let timeArr = Object.keys(sensorData)
-
-        setInterval(() => {
-          let currentTime = timeArr[ index ]
-          let playSensor = sensorData[ currentTime ][ chemical ]
-          let playWind = windMap[ currentTime ]
-
-          let dataSet = Object.keys(playSensor).map((d) => {
-            return {
-              name: d,
-              value: playSensor[ d ],
-              angle: this.factorySensorAngle[ this.factory ][ d ]
-            }
-          })
-          dataSet.sort((a, b) => config.sensorSort.indexOf(a.name) - config.sensorSort.indexOf(b.name))
-          let count = 20
-          let datas = []
-          for (let i = 0; i < count; i++) {
-            let d = dataSet.map((item) => {
-              return {
-                name: item.name,
-                value: (count - i) * item.value / count,
-                angle: item.angle
-              }
-            })
-            datas.push(d)
-          }
-
-          dataSet.sort((a, b) => b.value - a.value)
-          let max = dataSet[ 0 ]
-          let min = dataSet[ dataSet.length - 1 ]
-          let maxValue = max.value
-          let maxRadius = this.factorySenorDist[ this.factory ][ min.name ] * max.value / min.value
-          this.chartIns.draw({ sensorData: datas, windData: playWind, factory: this.factory, maxValue, maxRadius })
-          index = (index + 1) % Object.keys(sensorData).length
-        }, 3000)
-      },
-      processData () {
+        this.windMap = windMap
       },
       getAnglesAndDist () {
         let axisAngle = {}

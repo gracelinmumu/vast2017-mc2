@@ -1,18 +1,17 @@
 <template>
   <div id="App"
-       class="uk-width-1-1"
+       class="uk-width-1-1 uk-grid"
        namespace="App">
-    <!--<div class="uk-width-1-1 title"><img :src="banner"></div>-->
-    <div class="uk-width-1-1 uk-grid top clear-grid-margin">
-      <!--<div class="select-menu uk-width-1-6 uk-panel-box uk-padding-remove">-->
-        <!--<select-menu></select-menu>-->
-      <!--</div>-->
-      <div class="calendar uk-width-1-2 uk-panel-box">
-        <!--<ul class="uk-tab" data-uk-tab>-->
-          <!--<li class="{'uk-active': op.active === activeCal.value} uk-text-bold" v-for="op in calenderView">-->
-            <!--<a href="" @click="switchCalendar(op)">{{op.text}}</a>-->
-          <!--</li>-->
-        <!--</ul>-->
+    <div class="uk-width-1-1 uk-grid top">
+      <div class="select-menu uk-width-1-6 uk-panel-box uk-padding-remove">
+        <select-menu></select-menu>
+      </div>
+      <div class="calendar uk-width-1-6 uk-panel-box">
+        <ul class="uk-tab" data-uk-tab>
+          <li class="{'uk-active': op.active === activeCal.value} uk-text-bold" v-for="op in calenderView">
+            <a href="" @click="switchCalendar(op)">{{op.text}}</a>
+          </li>
+        </ul>
         <div class="uk-width-1-1 calendar">
           <component :is="activeCal.comp"></component>
         </div>
@@ -21,11 +20,11 @@
       <div class="iso-map uk-width-1-2 uk-panel-box">
         <iso-map></iso-map>
       </div>
-      <!--<div class="distribute uk-width-1-6 uk-panel-box">-->
-        <!--<distribute-view></distribute-view>-->
-      <!--</div>-->
+      <div class="distribute uk-width-1-6 uk-panel-box">
+        <distribute-view></distribute-view>
+      </div>
     </div>
-    <div class="uk-width-1-1 uk-grid bottom clear-grid-margin">
+    <div class="uk-width-1-1 uk-grid bottom">
       <div class="time-line uk-width-1-1 uk-panel uk-panel-box">
         <time-line></time-line>
       </div>
@@ -44,7 +43,7 @@
   import sensorData from '../data/sensor.json'
   import storage from '../commons/storage'
   import Process from './dataProcess.worker'
-  import banner from '../../assets/images/display.jpg'
+
   import {setSCTToken, setChemicalToken, setTimeToken, setCorrelation} from '../vuex/actions'
 
   export default{
@@ -54,7 +53,6 @@
     components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar, Correlation },
     data () {
       return {
-        banner,
         calenderView: [ {
           value: 'calendar',
           text: 'Calendar',
@@ -65,9 +63,9 @@
           comp: 'Correlation'
         } ],
         activeCal: {
-          value: 'calendar',
-          text: 'Calendar',
-          comp: 'Calendar'
+          value: 'correlation',
+          text: 'Correlation',
+          comp: 'Correlation'
         }
       }
     },
@@ -100,8 +98,6 @@
 </script>
 <style lang="less" scoped>
   @import "../commons/base.vars.less";
-  @title-h: 1px;
-  @body-top-h: 60%;
   #App {
     height: 100%;
     .top {
@@ -109,7 +105,7 @@
     }
     .bottom {
       margin-top: 8px;
-      height: calc(~"39% - " @title-h);
+      height: 39%;
     }
     .time-line {
       height: 100%;
@@ -119,12 +115,6 @@
     }
     .calendar {
       height: 100%;
-    }
-    .clear-grid-margin {
-      margin-left: 0;
-    }
-    .title {
-      height: @title-h;
     }
   }
 </style>

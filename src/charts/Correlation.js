@@ -29,7 +29,7 @@ export default class {
     console.log(this.width, this.height)
     this.svg.selectAll('.matrix').remove()
     this.matrix = this.processData(data)
-    let matrixWidth = this.width / (this.nodeList.length + 1)
+    let matrixWidth = Math.min(this.width / (this.nodeList.length + 1), this.height / (this.nodeList.length + 2))
 
     let container = this.svg
       .append('g')

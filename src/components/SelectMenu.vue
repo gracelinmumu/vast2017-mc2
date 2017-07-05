@@ -22,18 +22,18 @@
       </div>
     </div>
     <hr>
-    <div class="uk-width-1-1">
-      <p class="p-title">Sensor</p>
-      <div class="uk-width-1-1 uk-flex uk-flex-wrap">
-        <button v-for="op in sensorOpts"
-                class="uk-button"
-                :class="{'uk-button-primary': sensor.indexOf(op) !== -1}"
-                @click="switchSensor(op)"> {{op}}
-        </button>
-      </div>
-    </div>
+    <!--<div class="uk-width-1-1">-->
+      <!--<p class="p-title">Sensor</p>-->
+      <!--<div class="uk-width-1-1 uk-flex uk-flex-wrap">-->
+        <!--<button v-for="op in sensorOpts"-->
+                <!--class="uk-button"-->
+                <!--:class="{'uk-button-primary': sensor.indexOf(op) !== -1}"-->
+                <!--@click="switchSensor(op)"> {{op}}-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
 
-    <button class="uk-button uk-button-success uk-align-right" @click="addBar"> Add Bar </button>
+    <button class="uk-button uk-button-success uk-align-right" @click="addBar"> Add Reading Bars </button>
     <br>
     <br>
     <hr>
@@ -51,20 +51,20 @@
       <br>
     </div>
   </div>
-  <div class="uk-width-1-1 bottom">
-    <p class="p-title">Correlation</p>
-    <button class="uk-button" v-for="op in correlationOpts">{{op}}</button>
-  </div>
+  <!--<div class="uk-width-1-1 bottom">-->
+    <!--<p class="p-title">Correlation</p>-->
+    <!--<button class="uk-button" v-for="op in correlationOpts">{{op}}</button>-->
+  <!--</div>-->
 
 </template>
 <script>
   import {month, sensor, chemical, factory} from '../vuex/getters'
-  import {switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart} from '../vuex/actions'
+  import {switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart, addSCTCharts} from '../vuex/actions'
   import config from '../commons/config'
   export default {
     vuex: {
       getters: { month, sensor, chemical, factory },
-      actions: { switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart }
+      actions: { switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart, addSCTCharts }
     },
     data () {
       return {
@@ -77,12 +77,15 @@
     },
     methods: {
       addBar () {
-        if (this.sensor && this.chemical && this.month) {
-          this.addSCTChart({ sensor: this.sensor, chemical: this.chemical, month: this.month })
+        if (this.chemical && this.month) {
+//          this.addSCTChart({ sensor: this.sensor, chemical: this.chemical, month: this.month })
+          this.addSCTCharts({ chemical: this.chemical, month: this.month })
+          this.$dispatch('close-dialog')
         }
       },
       addDiff () {
         if (this.sensor && this.factory) this.addDiffChart({ sensor: this.sensor, factory: this.factory, month: this.month })
+        this.$dispatch('close-dialog')
       }
     }
   }

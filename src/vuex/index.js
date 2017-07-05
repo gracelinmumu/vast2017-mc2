@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as types from './mutations'
 import frame from 'FRAME'
-
+import config from '../commons/config'
+let sensorOpts = config.sensorOpts
 Vue.use(Vuex)
 // 在Vue实例中通过this.vxMutations进行使用
 frame.vueInstall({ module: 'vx', name: 'mutations' }, types)
@@ -25,7 +26,11 @@ const state = {
   sctDataToken: null, // 传感器-化学物质-时间-读数 数据的token
   sctBarChart: [], // {sensor: 1, chemical: 'C', month: 'M4' }
   diffChart: [],
-  selectedBar: null
+  selectedBar: {
+    chemical: 'Chlorodinine',
+    sensor: 'S3'
+  },
+  isPlay: false
 }
 
 const mutations = {
@@ -57,13 +62,20 @@ const mutations = {
     state.sctDataToken = token
   },
   [types.ADD_SCT_CHART] (state, { sensor, month, chemical }) {
-    state.sctBarChart = [ { sensor, month, chemical } ].concat(state.sctBarChart)
+    state.sctBarChart = [ { sensor, month, chemical, isPlay: false } ].concat(state.sctBarChart)
+  },
+  [types.ADD_SCT_CHARTS] (state, { month, chemical }) {
+    let arr = state.sctBarChart
+    state.sctBarChart = sensorOpts.map((d) => {
+      return { sensor: d, month, chemical, isPlay: false }
+    }).concat(arr)
   },
   [types.REMOVE_SCR_CHART] (state, index) {
     state.sctBarChart.splice(index, 1)
   },
   [types.UPDATE_DISTRIBUTE] (state, { month, chemical, sensor, dataToken }) {
-    state.selectedBar = { month, chemical, sensor, dataToken }
+    state.selectedBar && (state.selectedBar.isPlay = false)
+    state.selectedBar = { month, chemical, sensor, dataToken, isPlay: false }
   },
   [types.ADD_DIFF_CHART] (state, { month, sensor, factory }) {
     state.diffChart = [ { month, sensor, factory } ].concat(state.diffChart)
@@ -79,6 +91,9 @@ const mutations = {
   },
   [types.SET_CORRELATION_TOKEN] (state, token) {
     state.correlationToken = token
+  },
+  [types.SWITCH_PLAY] (state, isPlay) {
+    state.isPlay = isPlay
   }
 }
 

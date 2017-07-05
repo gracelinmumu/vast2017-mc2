@@ -54,3 +54,11 @@ export const setTimeToken = (store, token) => {
 export const setCorrelation = (store, token) => {
   store.dispatch(types.SET_CORRELATION_TOKEN, token)
 }
+
+export const switchPlay = (store, isPlay) => {
+  store.dispatch(types.SWITCH_PLAY, isPlay)
+}
+
+export const addSCTCharts = (store, {chemical, month}) => {
+  store.dispatch(types.ADD_SCT_CHARTS, {chemical, month})
+}

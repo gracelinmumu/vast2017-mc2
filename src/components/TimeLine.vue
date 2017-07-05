@@ -1,16 +1,21 @@
 <template>
+  <div class="uk-width-1-1"><b>Reading View</b>
+    <button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>
+    </button>
+  </div>
   <div class="uk-width-1-1 top panel">
     <div class="content">
       <div v-for="(index,bar) in sctBarChart"
            class="uk-width-1-1 bar-container"
-           @click="clickBar(bar)">
+           @click="clickBar(bar, index)">
         <i class="uk-icon-close uk-align-right" @click="closeBar(index,bar)"></i>
         <span class="uk-badge uk-badge-primary"
               @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}
         </span>
-        <i class="uk-icon-play"></i>
-        <i class="uk-icon-pause"></i>
-        <div class="uk-width-1-1" :id="'Bar-'+index"></div>
+        <div class="uk-width-1-1 full-height uk-grid">
+          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index"></div>
+          <div class="uk-width-1-6 bar-item" :id="'BarDistribute-'+index"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -20,30 +25,59 @@
   <div class="uk-width-1-1 bottom panel">
     <wind></wind>
   </div>
+  <dialog v-ref:menu>
+    <div slot="title">Config Panel</div>
+    <div slot="body">
+      <select-menu @close-dialog="closeDialog"></select-menu>
+    </div>
+  </dialog>
 </template>
 <script>
+  import Dialog from './Dialog.vue'
   import DirectionDiff from './DirectionDiff.vue'
   import Wind from './Wind.vue'
+  import SelectMenu from './SelectMenu.vue'
   import storage from '../commons/storage'
-  import {month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart} from '../vuex/getters'
-  import {removeSCTChart, updateSelectedBar} from '../vuex/actions'
+
+  import {
+    month,
+    chemical,
+    sensor,
+    factory,
+    threshold,
+    sctDataToken,
+    sctBarChart,
+    isPlay,
+    selectedBar
+  } from '../vuex/getters'
+  import {removeSCTChart, updateSelectedBar, switchPlay} from '../vuex/actions'
+
   let allData = null
+
   export default {
     vuex: {
-      getters: { month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart },
-      actions: { removeSCTChart, updateSelectedBar }
+      getters: { month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, isPlay, selectedBar },
+      actions: { removeSCTChart, updateSelectedBar, switchPlay }
     },
     watch: {
       sctDataToken () {
         allData = storage.get(this.sctDataToken)
       }
     },
-    components: { Wind, DirectionDiff },
+    components: { Wind, DirectionDiff, Dialog, SelectMenu },
     methods: {
-      clickBar (bar) {
+      openDialog () {
+        this.$refs.menu.show()
+      },
+      closeDialog () {
+        this.$refs.menu.close()
+      },
+      clickBar (bar, index) {
         let data = allData[ bar.sensor ][ bar.chemical ]
         let dataToken = storage.set(data)
-        this.updateSelectedBar(Object.assign({ dataToken }, bar))
+//        this.selectedBar && this.selectedBar.isPlay = false
+        this.updateSelectedBar(Object.assign({ dataToken, index }, bar))
+        this.closeDialog()
       },
       drawWind () {},
       drawDirectionDiff () {},
@@ -89,5 +123,12 @@
   }
   .bottom {
     height: @bottom;
+  }
+  .bar-item {
+    height: calc(~"100% - 20px");
+    border: 1px solid #ddd;
+  }
+  .full-height {
+    height: 100%;
   }
 </style>

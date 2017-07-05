@@ -1,8 +1,10 @@
 <template>
-  <div class="uk-panel-title">
-    <template v-if="selectedBar">{{selectedBar.sensor}} - {{selectedBar.chemical}} - M{{selectedBar.month}}
-    </template>
-  </div>
+  <!--<div class="uk-panel-title">-->
+  <!--<template v-if="selectedBar">{{selectedBar.sensor}} - {{selectedBar.chemical}} - M{{selectedBar.month}}-->
+  <!--</template>-->
+  <!--</div>-->
+  <button class="uk-button uk-button-primary uk-align-right" @click="openPanel"> Config  <i class="uk-icon-cog"></i>
+  </button>
   <div class="uk-width-1-1 uk-flex container">
     <div class="left">
       <b>April</b>
@@ -14,10 +16,14 @@
     </div>
     <div class="right" v-el:hour></div>
   </div>
-
+  <dialog v-ref:menu>
+    <div slot="title">xxxx</div>
+    <div slot="body">xxxx</div>
+  </dialog>
 </template>
 <script>
   import Calendar from '../charts/Calendar'
+  import Dialog from './Dialog.vue'
   import Hour from '../charts/Hour'
   import storage from '../commons/storage'
   import {selectedBar, threshold} from '../vuex/getters'
@@ -28,6 +34,7 @@
     vuex: {
       getters: { selectedBar, threshold }
     },
+    components: { Dialog },
     watch: {
       selectedBar: {
         deep: true,
@@ -40,6 +47,11 @@
         handler () {
           this.update()
         }
+      }
+    },
+    data () {
+      return {
+        showMenu: false
       }
     },
     methods: {
@@ -62,6 +74,7 @@
           for (let i = 1; i < count; i++) {
             domain.push(step * i)
           }
+          console.log(april, 'ssss')
           this.chartApril.draw(april, domain, colorMap)
           this.chartAugust.draw(august, domain, colorMap)
           this.chartDecember.draw(december, domain, colorMap)
@@ -107,6 +120,10 @@
       },
       preProcess () {
         this.preData = sensorData
+      },
+      openPanel () {
+        this.showMenu = true
+        this.$refs.menu.show()
       }
     },
     ready () {
@@ -117,7 +134,7 @@
       this.chartHour = new Hour(this.$els.hour)
 
       this.preProcess()
-      this.update()
+//      this.update()
     }
   }
 </script>

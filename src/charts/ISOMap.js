@@ -81,6 +81,11 @@ export default class {
       .attr('transform', d => 'translate(' + factoriesLoc[ d ][ 0 ] + ',' + factoriesLoc[ d ][ 1 ] + ')')
 
     let nodeSize = 15
+    factory.append('circle')
+      .attr('r', nodeSize)
+      .attr('fill', 'none')
+      .attr('stroke', '#888')
+      .attr('stroke-dasharray', '3, 3')
     factory.append('image')
       .attr('xlink:href', (d) => factoryImg)
       .attr('width', nodeSize)
@@ -144,7 +149,7 @@ export default class {
 
   drawISOLine (factory, maxValue, maxRadius) {
     let g = d3.select(this.el).select('#' + factory)
-    g.selectAll('.iso-line').remove()
+    d3.select(this.el).selectAll('.iso-line').remove()
     g.append('g')
       .attr('class', 'iso-g')
 
