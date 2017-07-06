@@ -7,15 +7,15 @@
   <div class="uk-width-1-1 top panel">
     <div class="content">
       <div v-for="(index,bar) in sctBarChart"
-           class="uk-width-1-1 bar-container"
-           @click="clickBar(bar, index)">
+           class="uk-width-1-1 bar-container">
         <i class="uk-icon-close uk-align-right" @click="closeBar(index,bar)"></i>
         <span class="uk-badge uk-badge-primary"
               @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}
         </span>
         <div class="uk-width-1-1 full-height uk-grid">
-          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index"></div>
-          <div class="uk-width-1-6 bar-item" :id="'BarDistribute-'+index"></div>
+          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index" :draw="calcAndDrawReading(bar, 'Bar-'+index)"></div>
+          <div class="uk-width-1-6 bar-item" :id="'BarDistribute-'+index"
+               :draw="calcAndDrawDistribute(bar, '#BarDistribute-'+index)"></div>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
   import Wind from './Wind.vue'
   import SelectMenu from './SelectMenu.vue'
   import storage from '../commons/storage'
-
+  import Histogram from '../charts/Histogram'
   import {
     month,
     chemical,
@@ -51,14 +51,14 @@
     isPlay,
     selectedBar
   } from '../vuex/getters'
-  import {removeSCTChart, updateSelectedBar, switchPlay} from '../vuex/actions'
+  import {removeSCTChart, updateSelectedBar, switchPlay, updateThreshold} from '../vuex/actions'
 
   let allData = null
 
   export default {
     vuex: {
       getters: { month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, isPlay, selectedBar },
-      actions: { removeSCTChart, updateSelectedBar, switchPlay }
+      actions: { removeSCTChart, updateSelectedBar, switchPlay, updateThreshold }
     },
     watch: {
       sctDataToken () {
@@ -67,33 +67,68 @@
     },
     components: { Wind, DirectionDiff, Dialog, SelectMenu },
     methods: {
+      // todo 处理数据，绘制一个分布图
+      calcAndDrawDistribute (bar, selector) {
+        // 柱状图相关数据
+        console.log(bar)
+        let { month, chemical } = bar
+        console.log(month, chemical)
+
+        // 容器选择器
+        console.log(selector)
+
+        // 绘图数据是data
+        let data = allData[ bar.sensor ][ bar.chemical ]
+        console.log(data)
+
+        // Step1 处理数据
+        let chartData = this.processData(data, month)
+        // this.threshold 不同化学物质的阈值
+        // Step2绘图
+        this.$nextTick(() => {
+          let chart = new Histogram(selector)
+          chart.on({ updateThreshold: this.updateT })
+          chart.draw(chartData, this.threshold[ chemical ])
+        })
+      },
+      updateT (t) {
+        this.updateThreshold(this.selectedBar.chemical, t)
+      },
+      // 分布图数据处理
+      processData (data, month) {
+        let dataValues = []
+        Object.keys(data).forEach((d) => {
+          let m = new Date(d).getMonth() + 1
+          if (m === month) {
+            dataValues.push(data[ d ])
+          }
+        })
+        return dataValues
+      },
+      // todo 绘制一个读数图
+      calcAndDrawReading (bar, selector) {
+        // todo @ruike 处理数据，绘图
+        let data = allData[ bar.sensor ][ bar.chemical ]
+        console.log(data)
+        // 绘图类可以参考Histogram的写法
+        // tip1 记得暴露updateThreshold()方法，这样分布图中的threshold更新时，读数图也同步更新
+        // 你可以试一下，threshold更新时，日历图已经更新了
+        // Tip2 记得暴露updateCurrent()更新当前时间
+      },
+      drawWind () {
+        // @ruike
+      },
+      drawDirectionDiff () {
+        // @ruike
+      },
       openDialog () {
         this.$refs.menu.show()
       },
       closeDialog () {
         this.$refs.menu.close()
       },
-      clickBar (bar, index) {
-        let data = allData[ bar.sensor ][ bar.chemical ]
-        let dataToken = storage.set(data)
-//        this.selectedBar && this.selectedBar.isPlay = false
-        this.updateSelectedBar(Object.assign({ dataToken, index }, bar))
-        this.closeDialog()
-      },
-      drawWind () {},
-      drawDirectionDiff () {},
       closeBar (index, bar) {
-        console.log(index, bar)
         this.removeSCTChart(index)
-      },
-      drawBar (bar) {
-        let { chemical, month, sensor } = bar
-        if (allData && allData[ sensor ] && allData[ sensor ][ chemical ]) {
-          let chartData = allData[ sensor ][ chemical ]
-          // todo 根据chartData threshold month绘图
-          chartData
-          month
-        }
       }
     }
   }
