@@ -20,7 +20,7 @@
     </div>
     <div class="uk-width-1-2 full-height uk-flex hour-container">
       <div class="hour-chart-item" v-for="hour in hoursData">
-        {{hour.display}}<i class="uk-icon-close uk-align-right" @click="closeHour(hour)"></i>
+        &nbsp;{{hour.display}}<i class="uk-icon-close uk-align-right" @click="closeHour(hour)"></i>
         <div class="uk-width-1-1 full-height"
              :id="'Day'+hour.day"
              :draw="drawHours(hour)">

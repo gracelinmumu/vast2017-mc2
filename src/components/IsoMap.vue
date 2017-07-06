@@ -17,7 +17,7 @@
   let { sensorsLoc, factoriesLoc, sensorOpts } = config
   let windData = null
   let sensorData = null
-  let timeBeforeAndAfter = 3
+  let timeBeforeAndAfter = 4
 
   const formatFunc = (t) => {
     return 1 + t.getMonth() + '/' + t.getDate() + '/' + t.getFullYear() + ' ' + (t.getHours()) + ':00'
@@ -122,13 +122,11 @@
         let min = dataSet[ dataSet.length - 1 ]
         let maxValue = max.value
         let maxRadius = this.factorySenorDist[ this.factory ][ min.name ] * max.value / min.value
-//        this.chartIns.drawISOLine()
-        this.chartIns.drawPeriodLine({chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
+
+        this.chartIns
+          .drawPeriodLine({chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
           .drawISOLine({ sensorData: datas, factory: this.factory, maxValue, maxRadius })
-        if (windMap[ currentTime ]) {
-          this.chartIns.drawWind(windMap[ currentTime ])
-        }
-//        this.chartIns.draw({ sensorData: datas, windData: playWind, factory: this.factory, maxValue, maxRadius })
+        windMap[ currentTime ] && this.chartIns.drawWind(windMap[ currentTime ])
         this.index = (this.index + 1) % Object.keys(sensorData).length
       },
       processData () {
@@ -156,6 +154,7 @@
         }
         timeArr.sort((a, b) => new Date(a) - new Date(b))
         let periodData = {}
+        let periodWind = {}
         sensorOpts.forEach((d) => {
           periodData[d] = {}
         })
@@ -176,11 +175,17 @@
               periodData[s][t] = 0
             })
           }
+          periodWind
+//          if (windMap[t]) {
+//            periodWind[]
+//          }
         })
         this.periodData = {
           data: periodData,
           domain
         }
+        // 当前时刻前后的风向数据
+        if (windMap[currentTime]) console.log('>>>>>>>>>>>>>>>>', windMap[currentTime])
       },
       getAnglesAndDist () {
         let axisAngle = {}
