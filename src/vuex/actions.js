@@ -62,3 +62,11 @@ export const switchPlay = (store, isPlay) => {
 export const addSCTCharts = (store, {chemical, month}) => {
   store.dispatch(types.ADD_SCT_CHARTS, {chemical, month})
 }
+
+export const updateSelectedTime = (store, hour) => {
+  store.dispatch(types.UPDATE_SELECTED_TIME, hour)
+}
+
+export const updateSelectedChemical = (store, ch) => {
+  store.dispatch(types.UPDATE_SELECTED_CHEMICAL, ch)
+}

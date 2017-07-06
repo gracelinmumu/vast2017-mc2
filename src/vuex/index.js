@@ -30,7 +30,8 @@ const state = {
     chemical: 'Chlorodinine',
     sensor: 'S3'
   },
-  isPlay: false
+  selectedHour: null,
+  selectedChemical: null
 }
 
 const mutations = {
@@ -94,6 +95,12 @@ const mutations = {
   },
   [types.SWITCH_PLAY] (state, isPlay) {
     state.isPlay = isPlay
+  },
+  [types.UPDATE_SELECTED_TIME] (state, hour) {
+    state.selectedHour = hour
+  },
+  [types.UPDATE_SELECTED_CHEMICAL] (state, ch) {
+    state.selectedChemical = ch
   }
 }
 

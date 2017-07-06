@@ -22,8 +22,15 @@ let config = {
     S8: [ 74, 7 ],
     S9: [ 119, 42 ]
   },
-  sensorSort: [ 'S4', 'S5', 'S9', 'S6', 'S7', 'S8', 'S1', 'S2', 'S3' ]
-
+  sensorSort: [ 'S4', 'S5', 'S9', 'S6', 'S7', 'S8', 'S1', 'S2', 'S3' ],
+  dangerColor: 'rgba(255, 26, 58, 1)',
+  safeColor: '#bef7c3',
+  colorMap: {
+    Chlorodinine: ['#f9ecf1', '#ff49dc'],
+    Methylosmolene: ['#ffebb5', '#ed650a'],
+    Appluimonia: ['#e4f4f5', '#0082ff'],
+    'AGOC-3A': ['#d4c1dc', '#7b4fde'] // '#fbcf00'
+  }
 }
 
 export default config

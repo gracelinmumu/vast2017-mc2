@@ -13,4 +13,5 @@ export const chemicalToken = state => state.chemicalToken
 export const timeToken = state => state.timeToken
 export const correlationToken = state => state.correlationToken
 
-export const isPlay = state => state.isPlay
+export const selectedHour = state => state.selectedHour
+export const selectedChemical = state => state.selectedChemical

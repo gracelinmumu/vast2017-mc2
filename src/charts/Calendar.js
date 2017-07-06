@@ -3,6 +3,9 @@
  */
 import d3 from 'd3'
 import $ from 'jquery'
+import config from '../commons/config'
+let {colorMap, chemicalOpts} = config
+
 export default class {
   constructor (el) {
     this.el = el
@@ -16,18 +19,21 @@ export default class {
     return this
   }
 
-  draw (data, domain, colorMap) {
+  draw (data, domainMap, selectedChemicals) {
     this.svg.selectAll('.day').remove()
-    this.domain = domain
-    this.colorMap = colorMap
+    this.domain = domainMap
 
-    let a = '#00b32d'
-    let b = '#db4b0b'
+    let colorScale = {}
+    chemicalOpts.forEach((ch) => {
+      let compute = d3.interpolate(colorMap[ch][0], colorMap[ch][1])
+      let linear = d3.scale.linear()
+        .domain([0, domainMap[ch]])
+        .range([ 0, 1 ])
+      colorScale[ch] = {
+        compute, linear
+      }
+    })
 
-    let compute = d3.interpolate(a, b)
-    let linear = d3.scale.linear()
-      .domain(domain)
-      .range([ 0, 1 ])
     let width = $(this.el).width()
     let height = $(this.el).height()
     let cellSize = Math.min(width / 7, height / 5)
@@ -43,37 +49,66 @@ export default class {
       .append('g')
       .attr('class', 'day')
       .attr('transform', d => 'translate(' + new Date(+d).getDay() * cellSize + ',' + (week(new Date(+d)) - weeksBefore) * cellSize + ')')
-    compute
-    linear
-    day.append('rect')
-      .attr('width', cellSize)
-      .attr('height', cellSize)
-      .attr('fill', d => this.getColor(data[ d ]))
-      // .attr('fill', d => compute(linear(data[ d ])))
-      .attr('stroke', '#fff')
+      .attr('cursor', 'pointer')
+      .on('click', (d) => {
+        this.clickDay(d, data[d])
+      })
+    // compute
+    // linear
+    let chLen = selectedChemicals.length
+    let w = chLen < 4 ? cellSize / chLen : cellSize / 2
+    let h = chLen > 3 ? cellSize / 2 : cellSize
 
+    selectedChemicals.forEach((ch, index) => {
+      let colorS = colorScale[ch]
+      day.append('rect')
+        .attr('width', w)
+        .attr('height', h)
+        .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
+        .attr('y', chLen > 3 && index > 1 ? h : 0)
+        .attr('fill', d => this.getColor(colorS, data[d][ch].value))
+    })
     day.append('text')
       .text((d) => new Date(+d).getDate())
       .attr('dy', 16)
       .attr('dx', 5)
       .attr('color', '#fff')
+    day.append('rect')
+      .attr('width', cellSize * 2)
+      .attr('height', cellSize * 2)
+      .attr('fill', 'none')
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 4)
+
+    // let hourH = height / 32
+    //
+    // let hourRow = this.svg.selectAll('.hour-row')
+    //   .data(Object.keys(data))
+    //   .enter()
+    //   .append('g')
+    //   .attr('class', 'hour-row')
+    //   .attr('transform', (d, index) => 'translate(0,' + index * hourH + ')')
+    // let hourW = width / 24
+    // chemicalOpts.forEach((ch, index) => {
+    //   hourRow.selectAll('.hour')
+    //     .data(d => Object.keys(data[d][ch].time))
+    //     .enter()
+    //     .append('rect')
+    //     .attr('x', (d, j) => hourW * (j + index))
+    //     .attr('y', (d, j) => hourH * index)
+    //     .attr('width', hourW)
+    //     .attr('height', hourH)
+    //     .attr('fill', 'none')
+    //     .attr('stroke', 'black')
+    // })
     return this
   }
 
-  getColor (d) {
-    let color = '#ddd'
-    let domain = this.domain
-    if (d < domain[ 0 ]) {
-      color = this.colorMap[ 0 ]
-    } else if (d < domain[ 1 ]) {
-      color = this.colorMap[ 1 ]
-    } else if (d < domain[ 2 ]) {
-      color = this.colorMap[ 2 ]
-    } else if (d < domain[ 3 ]) {
-      color = this.colorMap[ 3 ]
-    } else {
-      color = this.colorMap[ 4 ]
-    }
-    return color
+  on (evt, cb) {
+    this[evt] = cb
+    return this
+  }
+  getColor (colorScale, value) {
+    return colorScale.compute(colorScale.linear(value))
   }
 }

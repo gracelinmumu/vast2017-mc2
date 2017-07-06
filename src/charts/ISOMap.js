@@ -4,20 +4,20 @@
 import d3 from 'd3'
 import $ from 'jquery'
 
-import factoryImg from '../../assets/images/factory.png'
-import monitorImg from '../../assets/images/monitor.png'
+import factoryImg from '../../assets/images/factory2.png'
+import monitorImg from '../../assets/images/monitor2.png'
 
 import config from '../commons/config'
-let { factoriesLoc, sensorsLoc } = config
+let { factoriesLoc, sensorsLoc, colorMap } = config
 
 let windColor = 'rgba(189,217,252,0.5)'
-
+let nodeSize = 15
 export default class {
   constructor (el) {
     this.el = el
     this.width = 0
     this.height = 0
-    this.scale = 4
+    this.scale = 7
     this.init()
   }
 
@@ -55,7 +55,7 @@ export default class {
 
     this.mapG = this.svg.append('g')
       .attr('class', 'map-g')
-      .attr('transform', 'translate(' + (this.width - gridS * this.scale) * 0.5 + ',' + this.height * 0.6 + ')')
+      .attr('transform', 'translate(' + (this.width - gridS * this.scale) * 0.5 + ',' + this.height * 0.8 + ')')
 
     // 画工厂和传感器
     this.drawFactory()
@@ -80,7 +80,6 @@ export default class {
       .attr('id', d => d)
       .attr('transform', d => 'translate(' + factoriesLoc[ d ][ 0 ] + ',' + factoriesLoc[ d ][ 1 ] + ')')
 
-    let nodeSize = 15
     factory.append('circle')
       .attr('r', nodeSize)
       .attr('fill', 'none')
@@ -107,23 +106,24 @@ export default class {
       .enter()
       .append('g')
       .attr('class', 'sensor')
+      .attr('id', d => 'Sensor' + d)
       .attr('transform', d => 'translate(' + sensorsLoc[ d ][ 0 ] + ',' + sensorsLoc[ d ][ 1 ] + ')')
 
-    let nodeSize = 15
     sensor.append('image')
       .attr('xlink:href', (d) => monitorImg)
       .attr('width', nodeSize)
       .attr('height', nodeSize)
     sensor.append('text')
+      .attr('dy', nodeSize * 2)
       .text(d => d)
     return this
   }
 
-  drawWind () {
+  drawWind (data) {
     let containerG = d3.select(this.el).select('.wind-g')
     containerG.selectAll('path').remove()
 
-    let data = this.windData
+    this.windData = data
     let r = data.speed * 10
     let direction = 2 * Math.PI * (180 - data.direction) / 360
     let fw = 0
@@ -147,7 +147,8 @@ export default class {
     return this
   }
 
-  drawISOLine (factory, maxValue, maxRadius) {
+  drawISOLine ({sensorData, factory, maxValue, maxRadius}) {
+    this.sensorData = sensorData
     let g = d3.select(this.el).select('#' + factory)
     d3.select(this.el).selectAll('.iso-line').remove()
     g.append('g')
@@ -179,11 +180,75 @@ export default class {
       .attr('fill-opacity', (d, i) => i * 0)
   }
 
-  draw ({ sensorData, windData, factory, maxValue, maxRadius }) {
-    this.windData = windData
-    this.sensorData = sensorData
-    if (windData) this.drawWind()
-    this.drawISOLine(factory, maxValue, maxRadius)
+  drawPeriodLine ({current, periodData, chemical}) {
+    d3.select(this.el).selectAll('.time-period-line').remove()
+    let { domain, data } = periodData
+    let width = 60
+    let height = 30
+    Object.keys(data).forEach((sensor) => {
+      let sensorData = data[ sensor ]
+      let g = d3.select(this.el).select('#Sensor' + sensor)
+      let containerG = g.append('g')
+        .attr('class', 'time-period-line')
+        .attr('transform', 'translate(' + nodeSize + ',' + -height + ')')
+
+      let x = d3.scale.ordinal().rangeRoundPoints([ 0, width ])
+      let y = d3.scale.linear().range([ height, 0 ])
+      x.domain(Object.keys(sensorData))
+      y.domain([ domain.min, domain.max ])
+
+      let line = d3.svg.line()
+        .x((d) => x(d))
+        .y((d) => y(sensorData[ d ]))
+      containerG.selectAll('path')
+        .data([ Object.keys(sensorData) ])
+        .enter()
+        .append('path')
+        .attr('d', line)
+        .attr('stroke', colorMap[chemical][1])
+        .attr('stroke-width', 2)
+        .attr('fill', 'none')
+
+      containerG.append('circle')
+        .attr('cx', x(current))
+        .attr('cy', y(sensorData[ current ]))
+        .attr('r', 2)
+        .attr('fill', 'red')
+
+      var xAxis = d3.svg.axis()
+        .scale(x)
+        .ticks(0)
+        .tickFormat(d => '')
+        .innerTickSize(0)
+        .outerTickSize(0)
+        .orient('bottom')
+      var yAxis = d3.svg.axis()
+        .scale(y)
+        .ticks(2)
+        .innerTickSize(0)
+        .outerTickSize(0)
+        // .tickFormat(d => '')
+        .orient('left')
+      containerG.append('g')
+        .attr('class', 'axis')
+        .call(yAxis)
+      containerG.append('g').attr('class', 'axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis)
+      containerG.selectAll('.axis').selectAll('path')
+        .attr('fill', 'none')
+        .attr('stroke', '#888')
+    })
+    return this
+  }
+
+  draw ({ periodData, sensorData, windData, factory, maxValue, maxRadius, current, chemical }) {
+    // this.windData = windData
+    // this.sensorData = sensorData
+    // this.periodData = periodData
+    // if (windData) this.drawWind()
+    // this.drawPeriodLine(current, periodData, chemical)
+    // // this.drawISOLine(factory, maxValue, maxRadius)
     return this
   }
 }

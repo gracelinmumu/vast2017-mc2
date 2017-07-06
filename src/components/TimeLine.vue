@@ -1,5 +1,6 @@
 <template>
-  <div class="uk-width-1-1"><b>Reading View</b>
+  <div class="uk-width-1-1">
+    <span class="comps-title"><b>Reading View</b></span>
     <button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>
     </button>
   </div>

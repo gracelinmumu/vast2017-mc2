@@ -3,6 +3,9 @@
  */
 import d3 from 'd3'
 import $ from 'jquery'
+import config from '../commons/config'
+
+let {dangerColor, safeColor, colorMap} = config
 
 export default class {
   constructor (el) {
@@ -17,10 +20,8 @@ export default class {
     return this
   }
 
-  draw (data, domain, colorMap) {
+  draw (data, thresholdMap, chemicals) {
     this.svg.selectAll('.hour').remove()
-    this.domain = domain
-    this.colorMap = colorMap
 
     let height = $(this.el).height()
     let pad = 2
@@ -30,43 +31,53 @@ export default class {
       .attr('width', '100%')
       .attr('height', height)
 
-    let cellSize = height / 24
+    let cellH = height / 24
+    let cellW = width
+    let timesArr = data[Object.keys(data)[0]].time
 
     let hour = this.svg.selectAll('.hour')
-      .data(Object.keys(data))
+      .data(Object.keys(timesArr))
       .enter()
       .append('g')
       .attr('class', 'hour')
-      .attr('transform', d => 'translate(' + pad + ',' + (d - 1) * cellSize + ')')
+      .attr('transform', (d, i) => 'translate(' + pad + ',' + (i) * cellH + ')')
+      .attr('cursor', 'pointer')
 
-    hour.append('rect')
-      .attr('width', width)
-      .attr('height', cellSize)
-      .attr('fill', d => this.getColor(data[ d ]))
-      .attr('stroke', '#fff')
-
+    let chLen = chemicals.length
+    let w = chLen < 4 ? cellW / chLen : cellW / 2
+    let h = chLen > 3 ? (cellH - 5) / 2 : (cellH - 5)
+    chemicals.forEach((ch, index) => {
+      let threshold = thresholdMap[ch]
+      let chemicalData = data[ch].time
+      hour.append('rect')
+        .attr('width', w)
+        .attr('height', h)
+        .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
+        .attr('y', chLen > 3 && index > 1 ? h : 0)
+        .attr('fill', d => chemicalData[d] > threshold ? dangerColor : safeColor)
+        .attr('stroke', colorMap[ch][1])
+        .attr('stroke-width', 2)
+        .on('click', (d) => {
+          this.clickHour(d, ch)
+        })
+    })
+    // hour.append('rect')
+    //   .attr('width', cellW)
+    //   .attr('height', cellH)
+    //   .attr('fill', 'none')
+    //   .attr('stroke', '#fff')
+    //   .attr('stroke-width', 5)
     hour.append('text')
-      .text((d) => d)
-      .attr('dy', 16)
-      .attr('dx', 5)
+      .text((d) => new Date(d).getHours())
+      .attr('dy', h * 0.5 + 6)
+      .attr('dx', w * 0.5 - 3)
+      // .attr('text-anchor', 'middle')
+      // .attr('text-baseline', 'middle')
       .attr('color', '#fff')
     return this
   }
-
-  getColor (d) {
-    let color = '#ddd'
-    let domain = this.domain
-    if (d < domain[ 0 ]) {
-      color = this.colorMap[ 0 ]
-    } else if (d < domain[ 1 ]) {
-      color = this.colorMap[ 1 ]
-    } else if (d < domain[ 2 ]) {
-      color = this.colorMap[ 2 ]
-    } else if (d < domain[ 3 ]) {
-      color = this.colorMap[ 3 ]
-    } else {
-      color = this.colorMap[ 4 ]
-    }
-    return color
+  on (evt, cb) {
+    this[evt] = cb
+    return this
   }
 }
