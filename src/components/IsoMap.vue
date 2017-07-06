@@ -124,7 +124,7 @@
         let maxRadius = this.factorySenorDist[ this.factory ][ min.name ] * max.value / min.value
 
         this.chartIns
-          .drawPeriodLine({chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
+          .drawPeriodLine({factory: this.factory, chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
           .drawISOLine({ sensorData: datas, factory: this.factory, maxValue, maxRadius })
         windMap[ currentTime ] && this.chartIns.drawWind(windMap[ currentTime ])
         this.index = (this.index + 1) % Object.keys(sensorData).length
@@ -176,13 +176,14 @@
             })
           }
           periodWind
-//          if (windMap[t]) {
-//            periodWind[]
-//          }
+          if (windMap[t]) {
+            periodWind[t] = windMap[t]
+          }
         })
         this.periodData = {
           data: periodData,
-          domain
+          domain,
+          periodWind
         }
         // 当前时刻前后的风向数据
         if (windMap[currentTime]) console.log('>>>>>>>>>>>>>>>>', windMap[currentTime])

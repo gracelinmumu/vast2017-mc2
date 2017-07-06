@@ -10,6 +10,20 @@ import monitorImg from '../../assets/images/monitor2.png'
 import config from '../commons/config'
 let { factoriesLoc, sensorsLoc, colorMap } = config
 
+const getAngles = (pos1, pos2) => {
+  let radius = Math.atan((pos1[1] - pos2[1]) / (pos1[0] - pos2[0])) * 180 / Math.PI
+  return radius
+}
+
+let angelsMap = {}
+Object.keys(sensorsLoc).forEach((s) => {
+  angelsMap[s] = {}
+  Object.keys(factoriesLoc).forEach((f) => {
+    angelsMap[s][f] = getAngles(sensorsLoc[s], factoriesLoc[f])
+  })
+})
+console.log(angelsMap)
+
 let windColor = 'rgba(189,217,252,0.5)'
 let nodeSize = 15
 export default class {
@@ -180,9 +194,10 @@ export default class {
       .attr('fill-opacity', (d, i) => i * 0)
   }
 
-  drawPeriodLine ({current, periodData, chemical}) {
+  drawPeriodLine ({current, periodData, chemical, factory}) {
+    console.log(periodData)
     d3.select(this.el).selectAll('.time-period-line').remove()
-    let { domain, data } = periodData
+    let { domain, data, periodWind } = periodData
     let width = 60
     let height = 30
     Object.keys(data).forEach((sensor) => {
@@ -238,6 +253,43 @@ export default class {
       containerG.selectAll('.axis').selectAll('path')
         .attr('fill', 'none')
         .attr('stroke', '#888')
+      let diffRanger = [1, 60]
+      let minAdd = 10
+      let maxResult = 1.0 / (0 + minAdd)
+      let minResult = 1.0 / (180 + minAdd)
+      Object.keys(periodWind).forEach((t) => {
+        let result = periodWind[t].direction - angelsMap[sensor][factory]
+        while (result < -180) {
+          result += 360
+        }
+        while (result > 180) {
+          result -= 360
+        }
+        result = Math.abs(result)
+        let flag = false
+        if (result < 10) {
+          flag = true
+        }
+        result += minAdd
+        result = 1 / result
+        result = diffRanger[0] + (diffRanger[1] - diffRanger[0]) * (result - minResult) / (maxResult - minResult)
+        console.log(flag, result)
+        periodWind[t].calcValue = result
+      })
+      let getDiffPath = () => {
+        let str = 'M'
+        Object.keys(periodWind).forEach((d) => {
+          let xx = x(d)
+          let yy = periodWind[d].calcValue
+          str += xx + ' ' + yy + 'L'
+        })
+        str = str.substr(0, str.length - 2)
+        return str
+      }
+      containerG.append('path')
+        .attr('d', getDiffPath)
+        .attr('fill', 'none')
+        .attr('stroke', 'red')
     })
     return this
   }
