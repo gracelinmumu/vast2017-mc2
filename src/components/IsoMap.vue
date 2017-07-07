@@ -1,14 +1,15 @@
 <template>
   <button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>
   </button>
-  <div class="uk-text-bold">
     <span class="comps-title"><b>ISOMap View</b></span>
-    <span v-if="selectedBar"> - {{factory}}</span></div>
-    <span class="tip-title">Current Time</span>{{selectedHour}}
-    <template v-if="selectedHour">
-      <span class="tip-title">Show ISOMap Layer</span> <input type="checkbox" v-model="showISO">
-      <span class="tip-title">Hours before and after</span> <input type="number" v-model="timeBeforeAndAfter">
+    <div class="uk-width-1-1 uk-flex uk-flex-wrap">
+      <span class="tip-title" v-if="selectedHour"> Current Time: </span>  <b class="label-color">{{selectedHour}}</b>
+      <span class="tip-title" v-if="factory"> Factory: </span>  <b class="label-color">{{factory}}</b>
+    <template class="uk-width-1-1" v-if="selectedHour">
+      <span class="tip-title">Show ISOMap: </span> <input type="checkbox" v-model="showISO">
+      <span class="tip-title">Hours before and after: </span> <input type="number" v-model="timeBeforeAndAfter">
     </template>
+    </div>
   <div class="chart" v-el:chart></div>
   <dialog v-ref:menu>
     <div slot="title">Config Panel</div>
@@ -94,6 +95,9 @@
       },
       updateStr () {
         this.update()
+      },
+      factory () {
+        this.chartIns && this.chartIns.highlightFactory(this.factory)
       }
     },
     computed: {
@@ -159,7 +163,6 @@
         let min = dataSet[ dataSet.length - 1 ]
         let maxValue = max.value
         let maxRadius = this.factorySenorDist[ this.factory ][ min.name ] * max.value / min.value
-
         this.chartIns
           .drawPeriodLine({factory: this.factory, chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
         this.showISO && this.chartIns.drawISOLine({ chemical: this.selectedChemical, sensorData: datas, factory: this.factory, maxValue, maxRadius })
@@ -213,8 +216,7 @@
               periodData[s][t] = 0
             })
           }
-          periodWind
-          console.log(t, windMap[t])
+
           if (windMap[t]) {
             periodWind[t] = windMap[t]
           }
@@ -224,8 +226,6 @@
           domain,
           periodWind
         }
-        // 当前时刻前后的风向数据
-        if (windMap[currentTime]) console.log('>>>>>>>>>>>>>>>>', windMap[currentTime])
       },
       getAnglesAndDist () {
         let axisAngle = {}

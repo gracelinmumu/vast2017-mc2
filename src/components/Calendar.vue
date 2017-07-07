@@ -4,9 +4,12 @@
   <button class="uk-button uk-button-primary uk-align-right" @click="openPanel"> Config  <i class="uk-icon-cog"></i>
   </button>
   <!--params-->
-  <div class="uk-width-1-1 uk-flex">
-    Sensor:<span class="uk-badge uk-badge-primary">{{selectedSensor}}</span>&nbsp;&nbsp;
-    Chemicals: <span v-for="op in selectedChemicals" class="uk-badge uk-badge-primary uk-margin-right">{{op}}</span>
+  <div class="uk-width-1-1 uk-flex uk-flex-wrap">
+    Sensor:&nbsp;  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
+    &nbsp;&nbsp;&nbsp;Chemicals: &nbsp; <template v-for="op in chemicalOpts">
+    <input type="checkbox" id="chemical" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
+    <label for="chemical" :class="{'label-color': chemicalsMap[op]}">{{op}}{{chemicalsMap[op]}}</label>
+  </template>
   </div>
   <!--body-->
   <div class="uk-width-1-1 uk-flex container">
@@ -45,8 +48,8 @@
       <div class="uk-width-1-1">
         <span>Chemical</span>
         <template v-for="op in chemicalOpts">
-          <input type="checkbox" id="chemical" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
-          <label for="chemical">{{op}}</label>
+          <input type="checkbox" id="chemicals" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
+          <label for="chemicals">{{op}}</label>
         </template>
       </div>
       <button class="uk-button uk-button-success uk-align-right" @click="configConfirm"> Confirm </button>
@@ -94,6 +97,12 @@
           dataByTime = storage.get(this.timeToken)
           this.update()
         }
+      },
+      selectedChemicals () {
+        this.update()
+      },
+      selectedSensor () {
+        this.update()
       }
     },
     computed: {

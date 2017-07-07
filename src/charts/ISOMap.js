@@ -22,7 +22,6 @@ Object.keys(sensorsLoc).forEach((s) => {
     angelsMap[s][f] = getAngles(sensorsLoc[s], factoriesLoc[f])
   })
 })
-console.log(angelsMap)
 
 let windColor = 'rgba(189,217,252,0.5)'
 let nodeSize = 15
@@ -98,12 +97,14 @@ export default class {
       .attr('r', nodeSize)
       .attr('fill', 'none')
       .attr('stroke', '#888')
+      .attr('class', 'factory-circle')
       .attr('stroke-dasharray', '3, 3')
       .on('click', (d) => this.trigger('clickFactory', d))
     factory.append('circle')
         .attr('r', nodeSize + 3)
         .attr('fill', 'none')
         .attr('stroke', '#888')
+        .attr('class', 'factory-circle')
         .attr('stroke-dasharray', '3, 3')
         .on('click', (d) => this.trigger('clickFactory', d))
     factory.append('image')
@@ -177,6 +178,11 @@ export default class {
     return this
   }
 
+  highlightFactory (factory) {
+    d3.select(this.el).selectAll('.factory-circle').attr('stroke', '#888')
+    d3.select(this.el).select('#' + factory).selectAll('circle').attr('stroke', '#f00')
+    return this
+  }
   drawISOLine ({sensorData, factory, maxValue, maxRadius, chemical}) {
     this.sensorData = sensorData
     let g = d3.select(this.el).select('#' + factory)
@@ -213,7 +219,6 @@ export default class {
   }
 
   drawPeriodLine ({current, periodData, chemical, factory}) {
-    console.log(periodData)
     d3.select(this.el).selectAll('.time-period-line').remove()
     let { domain, data, periodWind } = periodData
     let width = 60
@@ -275,7 +280,6 @@ export default class {
       let minAdd = 10
       let maxResult = 1.0 / (0 + minAdd)
       let minResult = 1.0 / (180 + minAdd)
-      console.log(periodWind)
       Object.keys(periodWind).forEach((t) => {
         let result = periodWind[t].direction - angelsMap[sensor][factory]
         while (result < -180) {
@@ -289,10 +293,11 @@ export default class {
         if (result < 10) {
           flag = true
         }
+        flag
         result += minAdd
         result = 1 / result
         result = diffRanger[0] + (diffRanger[1] - diffRanger[0]) * (result - minResult) / (maxResult - minResult)
-        console.log(flag, result)
+
         periodWind[t].calcValue = result
       })
       let getDiffPath = () => {

@@ -30,7 +30,8 @@ let config = {
     Methylosmolene: ['#ffebb5', '#ed650a'],
     Appluimonia: ['#e4f4f5', '#0082ff'],
     'AGOC-3A': ['#d4c1dc', '#7b4fde'] // '#fbcf00'
-  }
+  },
+  colorText: '#63c4ff'
 }
 
 export default config
