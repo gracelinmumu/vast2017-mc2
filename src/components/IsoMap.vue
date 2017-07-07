@@ -43,14 +43,10 @@
   import storage from '../commons/storage'
   import config from '../commons/config'
   import ISOMap from '../charts/ISOMap'
-
+  import {formatFunc} from '../commons/utils'
   let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
   let windData = null
   let sensorData = null
-
-  const formatFunc = (t) => {
-    return 1 + t.getMonth() + '/' + t.getDate() + '/' + t.getFullYear() + ' ' + (t.getHours()) + ':00'
-  }
 
   const getAngle = (s, t) => {
     let a = Math.abs(Math.atan((t[ 1 ] - s[ 1 ]) / (t[ 0 ] - s[ 0 ])))
@@ -167,7 +163,11 @@
           .drawPeriodLine({factory: this.factory, chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
         this.showISO && this.chartIns.drawISOLine({ chemical: this.selectedChemical, sensorData: datas, factory: this.factory, maxValue, maxRadius })
         !this.showISO && this.chartIns.clearISOLine()
-        windMap[ currentTime ] && this.chartIns.drawWind(windMap[ currentTime ])
+        if (windMap[ currentTime ]) {
+          this.chartIns.drawWind(windMap[ currentTime ])
+        } else {
+          this.chartIns.clearWind()
+        }
         this.index = (this.index + 1) % Object.keys(sensorData).length
       },
       processData () {

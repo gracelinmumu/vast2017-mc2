@@ -177,7 +177,10 @@ export default class {
     }
     return this
   }
-
+  clearWind () {
+    d3.select(this.el).select('.wind-g').selectAll('path').remove()
+    return this
+  }
   highlightFactory (factory) {
     d3.select(this.el).selectAll('.factory-circle').attr('stroke', '#888')
     d3.select(this.el).select('#' + factory).selectAll('circle').attr('stroke', '#f00')

@@ -71,9 +71,14 @@ export default class {
     })
     day.append('text')
       .text((d) => new Date(+d).getDate())
-      .attr('dy', cellSize * 0.5)
-      .attr('dx', cellSize * 0.5)
-      .attr('color', '#fff')
+      .attr('y', cellSize * 0.5)
+      .attr('x', cellSize * 0.5)
+      .attr({
+        'text-anchor': 'middle',
+        'dominant-baseline': 'middle',
+        'font-size': '16px',
+        'fill': '#888'
+      })
     day.append('rect')
       .attr('width', cellSize)
       .attr('height', cellSize)

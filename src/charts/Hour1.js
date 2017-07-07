@@ -23,6 +23,7 @@ export default class {
   }
 
   draw (data, day, thresholdMap, chemicals) {
+    console.log(data, day)
     this.svg.selectAll('.hour').remove()
 
     let height = $(this.el).height()
@@ -40,8 +41,9 @@ export default class {
     for (let i = 0; i < hourCount; i++) {
       timesArr.push(formatFunc(new Date(day + i * oneHour)))
     }
+
     let hour = this.svg.selectAll('.hour')
-      .data(timesArr)
+      .data(Object.keys(timesArr))
       .enter()
       .append('g')
       .attr('class', 'hour')
@@ -59,7 +61,7 @@ export default class {
         .attr('height', h)
         .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
         .attr('y', chLen > 3 && index > 1 ? h : 0)
-        .attr('fill', d => chemicalData[d] ? (chemicalData[d] > threshold ? dangerColor : safeColor) : 'none')
+        .attr('fill', d => chemicalData[d] > threshold ? dangerColor : safeColor)
         .attr('fill-opacity', d => chemicalData[d] > threshold ? 0.8 : 0.3)
         .attr('stroke', '#ccc')
         .attr('stroke-width', 1)
@@ -74,10 +76,7 @@ export default class {
     //   .attr('stroke', '#fff')
     //   .attr('stroke-width', 5)
     // hour.append('text')
-    //   .text((d) => {
-    //     console.log(d, new Date(d), new Date(d).getHours())
-    //     return new Date(d).getHours()
-    //   })
+    //   .text((d) => new Date(d).getHours())
     //   .attr('dy', cellH * 0.5)
     //   .attr('dx', cellW * 0.5 - 3)
     //   // .attr('text-anchor', 'middle')

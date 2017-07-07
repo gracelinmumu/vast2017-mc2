@@ -18,7 +18,7 @@ export default class {
     return this
   }
 
-  draw (data, threshold) {
+  draw (data, threshold, chemical) {
     this.svg.selectAll('.histogram').remove()
     let self = this
     let container = this.svg.append('g').attr('class', 'histogram')
@@ -95,7 +95,7 @@ export default class {
       let ext = brush.extent()
 
       let newThresh = axisScale.invert(ext[ 0 ][ 1 ])
-      self.updateThreshold(newThresh)
+      self.updateThreshold(newThresh, chemical)
 
       if (!d3.event.sourceEvent) return
 

@@ -1,8 +1,9 @@
 <template>
   <!--title-->
   <span class="comps-title"><b>Calendar View</b></span>
-  <button class="uk-button uk-button-primary uk-align-right" @click="openPanel"> Config  <i class="uk-icon-cog"></i>
+  <button class="uk-button uk-button-primary uk-align-right" @click="openPanel"> <i class="uk-icon-cog"></i>
   </button>
+  <div class="calendar-legend uk-align-right" v-el:legend></div>
   <!--params-->
   <div class="uk-width-1-1 uk-flex uk-flex-wrap">
     Sensor:&nbsp;  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
@@ -13,7 +14,7 @@
   </div>
   <!--body-->
   <div class="uk-width-1-1 uk-flex container">
-    <div class="uk-width-1-2">
+    <div class="container-left">
       <b>April</b>
       <div class="uk-width-1-1 chart" v-el:april></div>
       <b>August</b>
@@ -21,12 +22,13 @@
       <b>December</b>
       <div class="uk-width-1-1 chart" v-el:december></div>
     </div>
-    <div class="uk-width-1-2 full-height uk-flex hour-container">
+    <div class="container-right full-height uk-flex hour-container">
+      <div class="hour-time-label" v-if="hoursData.length"><div class="item" v-for="h in hourArr">{{h}}</div></div>
       <div class="hour-chart-item" v-for="hour in hoursData">
-        &nbsp;{{hour.display}}<i class="uk-icon-close uk-align-right" @click="closeHour(hour)"></i>
+        <div class="day-label">{{hour.display}} <i class="uk-icon-close" @click="closeHour(hour)"></i></div>
         <div class="uk-width-1-1 full-height"
              :id="'Day'+hour.day"
-             :draw="drawHours(hour)">
+             :draw="drawHours(hour, selectedChemicals)">
         </div>
       </div>
     </div>
@@ -64,7 +66,7 @@
   import {selectedBar, timeToken, threshold} from '../vuex/getters'
   import {updateSelectedTime, updateSelectedChemical} from '../vuex/actions'
   import config from '../commons/config'
-
+  import CalendarLegend from '../charts/CalendarLegend'
   let dataByTime = null
 
   let { chemicalOpts, sensorOpts } = config
@@ -73,6 +75,10 @@
     chemicalsMap[ d ] = true
   })
 
+  let hourArr = []
+  for (let i = 0; i < 24; i++) {
+    hourArr.push(i)
+  }
   export default {
     vuex: {
       getters: { selectedBar, timeToken, threshold },
@@ -100,6 +106,7 @@
       },
       selectedChemicals () {
         this.update()
+        this.legendChart && this.legendChart.update(this.selectedChemicals)
       },
       selectedSensor () {
         this.update()
@@ -119,6 +126,7 @@
     },
     data () {
       return {
+        hourArr,
         chemicalsMap,
         chemicalOpts,
         sensorOpts,
@@ -133,14 +141,14 @@
       drawHours ({ day, data }) {
         this.$nextTick(() => {
           new Hour('#Day' + day)
-            .draw(data, this.threshold, this.selectedChemicals)
+            .draw(data, +day, this.threshold, this.selectedChemicals)
             .on('clickHour', this.clickHour)
         })
       },
       clickDay (day, data) {
         let d = new Date(+day)
         if (!this.hoursDataMap[ day ]) {
-          this.hoursData = this.hoursData.concat([ { day, data, display: 1 + d.getMonth() + ' ' + d.getDate() } ])
+          this.hoursData = this.hoursData.concat([ { day, data, display: 1 + d.getMonth() + '/' + d.getDate() } ])
         }
       },
       clickHour (hour, ch) {
@@ -241,8 +249,8 @@
       this.chartDecember = new Calendar(this.$els.december)
       this.chartDecember.on('clickDay', this.clickDay)
 
-//      this.chartHour = new Hour(this.$els.hour)
-
+      this.legendChart = new CalendarLegend(this.$els.legend)
+      this.legendChart && this.selectedChemicals && this.legendChart.update(this.selectedChemicals)
       this.preProcess()
       this.update()
     }
@@ -251,7 +259,19 @@
 <style lang="less" scoped>
   @right: 40px;
   @hour-wid: 50px;
+  @container-left-width: 250px;
+  .calendar-legend {
+    width: 40px;
+    height: 40px;
+  }
   .container {
+    .container-left {
+      width: @container-left-width;
+    }
+    .container-right {
+      width: calc(~"100% - 11px - " @container-left-width);
+      margin-left: 10px;
+    }
     height: calc(~"100% - 60px");
     .left {
       width: calc(~"100% - " @right);
@@ -267,9 +287,26 @@
     .hour-chart-item {
       width: @hour-wid;
       height: 100%;
+      margin-left: 2px;
+      .day-label {
+        width: 100%;
+        height: 20px;
+        text-align: center;
+      }
     }
     .hour-container {
       overflow: scroll;
+    }
+    .hour-time-label {
+      margin-top: 20px;
+      margin-left: 3px;
+      border-left: 1px dashed #ddd;
+      .item {
+        margin-top: 2px;
+        height: 4%;
+        width: 20px;
+        text-align: center;
+      }
     }
   }
 </style>

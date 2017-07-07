@@ -88,11 +88,11 @@
         this.$nextTick(() => {
           let chart = new Histogram(selector)
           chart.on({ updateThreshold: this.updateT })
-          chart.draw(chartData, this.threshold[ chemical ])
+          chart.draw(chartData, this.threshold[ chemical ], chemical)
         })
       },
-      updateT (t) {
-        this.updateThreshold(this.selectedBar.chemical, t)
+      updateT (t, chemical) {
+        this.updateThreshold(chemical, t)
       },
       // 分布图数据处理
       processData (data, month) {
