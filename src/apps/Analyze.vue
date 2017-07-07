@@ -1,81 +1,159 @@
 <template>
   <div id="App"
-       class="animated"
-       namespace="App"
-       transition="fadeUD">
-    <div class="uk-width-1-1 uk-grid top">
-      <div class="select-menu uk-width-1-6 uk-panel uk-panel-box">
-        <select-menu></select-menu>
-      </div>
-      <div class="calendar uk-width-1-6 uk-panel uk-panel-box">
-        <calendar></calendar>
-      </div>
-      <div class="iso-map uk-width-1-2 uk-panel uk-panel-box">
-        <iso-map></iso-map>
-      </div>
-      <div class="distribute uk-width-1-6 uk-panel uk-panel-box">
-        <distribute-view></distribute-view>
+       class="uk-width-1-1"
+       namespace="App">
+    <div class="uk-navbar uk-width-1-1">
+      <b class="uk-navbar-brand app-title">VAST Challenge Mini Challenge 2</b>
+      <div class="legend uk-align-right uk-flex">
+        <div v-for="c in colorsArr" class="uk-width-1-1 uk-flex uk-text-middle">
+          <div class="legend-item" :style="{background: c.color[1]}"></div>
+          <span :style="{color: c.color[1]}" class="uk-text-bold">{{c.name}}</span>
+        </div>
       </div>
     </div>
-    <div class="uk-width-1-1 bottom">
-      <div class="time-line uk-panel uk-panel-box">
+    <div class="uk-width-1-1 uk-grid app-top clear-grid-margin">
+      <!--<div class="select-menu uk-width-1-6 uk-panel-box uk-padding-remove">-->
+      <!--<select-menu></select-menu>-->
+      <!--</div>-->
+      <div class="calendar uk-width-1-2">
+        <!--<ul class="uk-tab" data-uk-tab>-->
+        <!--<li class="{'uk-active': op.active === activeCal.value} uk-text-bold" v-for="op in calenderView">-->
+        <!--<a href="" @click="switchCalendar(op)">{{op.text}}</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <div class="uk-width-1-1 full-height">
+          <component :is="activeCal.comp"></component>
+        </div>
+
+      </div>
+      <div class="iso-map uk-width-1-2">
+        <iso-map></iso-map>
+      </div>
+      <!--<div class="distribute uk-width-1-6 uk-panel-box">-->
+      <!--<distribute-view></distribute-view>-->
+      <!--</div>-->
+    </div>
+    <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin">
+      <div class="time-line uk-width-1-1 uk-panel">
         <time-line></time-line>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import '../commons/base.less'
-  import IsoMap from '../components/IsoMap.vue'
+  import DistributeView from '../components/DistributeView.vue'
   import SelectMenu from '../components/SelectMenu.vue'
   import TimeLine from '../components/TimeLine.vue'
-  import DistributeView from '../components/DistributeView.vue'
   import Calendar from '../components/Calendar.vue'
+  import Correlation from '../components/Correlation.vue'
+  import IsoMap from '../components/IsoMap.vue'
+
+  import sensorData from '../data/sensor.json'
+  import storage from '../commons/storage'
+  import Process from './dataProcess.worker'
+  import banner from '../../assets/images/display.jpg'
+  import {setSCTToken, setChemicalToken, setTimeToken, setCorrelation} from '../vuex/actions'
+  import config from '../commons/config'
+
+  let colorMap = config.colorMap
 
   export default{
+    vuex: {
+      actions: { setSCTToken, setChemicalToken, setTimeToken, setCorrelation }
+    },
+    components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar, Correlation },
     data () {
       return {
-        links: []
+        banner,
+        calenderView: [ {
+          value: 'calendar',
+          text: 'Calendar',
+          comp: 'Calendar'
+        }, {
+          value: 'correlation',
+          text: 'Correlation',
+          comp: 'Correlation'
+        } ],
+        activeCal: {
+          value: 'calendar',
+          text: 'Calendar',
+          comp: 'Calendar'
+        },
+        colorsArr: Object.keys(colorMap).map((d) => {
+          return {
+            name: d,
+            color: colorMap[ d ]
+          }
+        })
       }
     },
-    components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar },
     methods: {
-      transitionAppBeforeEnter () {
-        this.$fLogs.log('[App]transitionBeforeEnter')
+      switchCalendar (op) {
+        this.activeCal = op
       }
     },
     ready () {
-      this.show = true
-      this.links = [ {
-        url: 'https://confluence.b.360.cn/pages/viewpage.action?pageId=10092607',
-        text: '教程'
-      }, {
-        url: 'http://10.95.24.22:5011/package/@qnpm/skyfenv',
-        text: 'skyfenv'
-      }, {
-        url: '/mochatest/index',
-        text: 'Mocha单元测试'
-      } ]
-      this.$fLogs.info('[APP]HelloWorld is ready !!!')
+      this.$fLogs.info('[APP]Analyze is ready !!!')
+    },
+    created () {
+      let wk = new Process()
+      wk.postMessage({ sensorData })
+      wk.onmessage = (evt) => {
+        let { bySensor, byChemical, byTime, pearsonSameChemical } = evt.data
+        console.log(evt.data, 'evt===')
+        let dataToken = storage.set(bySensor, 'sctData')
+        this.setSCTToken(dataToken)
+        let chemicalToken = storage.set(byChemical, 'byChemical')
+        this.setChemicalToken(chemicalToken)
+        let timeToken = storage.set(byTime, 'byTime')
+        this.setTimeToken(timeToken)
+
+        let pearsonToken = storage.set(pearsonSameChemical, 'pearsonSameChemical')
+        this.setCorrelation(pearsonToken)
+      }
     }
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
+  @import "../commons/base.less";
   @import "../commons/base.vars.less";
-
+  @title-h: 40px;
+  @body-top-h: 60%;
   #App {
-    margin: 0;
-    padding: 0;
     height: 100%;
-    width: 100%;
-    .top {
+    .app-top {
       height: 60%;
+      .calendar {
+        height: 100%;
+        border-right: 1px dashed #ddd;
+      }
     }
-    .bottom {
-      height: 39%
+    .app-bottom {
+      margin-top: 8px;
+      height: calc(~"39% - " @title-h);
+      .time-line {
+        height: 100%;
+        border-top: 1px dashed #ddd;
+      }
     }
-    .time-line {
+    .clear-grid-margin {
+      margin-left: 0;
+    }
+    .app-title {
+      height: @title-h;
+      color: #0459a2;
+    }
+    .full-height {
       height: 100%;
+    }
+    .legend {
+      width: 550px;
+      margin-top: 10px;
+      .legend-item {
+        height: 100%;
+        width: 30px;
+        border-radius: 10px;
+      }
     }
   }
 </style>
