@@ -147,7 +147,6 @@ export default class {
     return this
   }
   clearISOLine () {
-    d3.select(this.el).select('svg').select('.iso-map-g').remove()
     d3.select(this.el).selectAll('.iso-line').remove()
     return this
   }
@@ -335,37 +334,6 @@ export default class {
     // if (windData) this.drawWind()
     // this.drawPeriodLine(current, periodData, chemical)
     // // this.drawISOLine(factory, maxValue, maxRadius)
-    return this
-  }
-
-  drawISOLine1 ({points, domain}) {
-    let linear = d3.scale.linear()
-      .domain(domain)
-      .range([0, 1])
-    // let containerG = d3.select(this.el).select('.map-g').append('g').attr('class', 'iso-map-g')
-    // containerG.selectAll('.point')
-    //   .data(points)
-    //   .enter()
-    //   .append('circle')
-    //   .attr('class', 'point')
-    //   .attr('cx', d => d.x * this.scale)
-    //   .attr('cy', d => d.y * -this.scale)
-    //   .attr('r', 1)
-    //   .attr('fill', 'red')
-    //   .attr('fill-opacity', d => linear(d.value))
-    d3.select(this.el).select('svg').select('.iso-map-g').remove()
-    d3.select(this.el).select('svg').append('g')
-      .attr('class', 'iso-map-g')
-      .selectAll('.point')
-      .data(points)
-      .enter()
-      .append('circle')
-      .attr('class', 'point')
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('r', 1)
-      .attr('fill', 'red')
-      .attr('fill-opacity', d => linear(d.value))
     return this
   }
   on (name, cb) {
