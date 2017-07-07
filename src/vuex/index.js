@@ -101,6 +101,9 @@ const mutations = {
   },
   [types.UPDATE_SELECTED_CHEMICAL] (state, ch) {
     state.selectedChemical = ch
+  },
+  [types.UPDATE_SELECTED_FACTORY] (state, fa) {
+    state.factory = fa
   }
 }
 

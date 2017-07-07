@@ -3,21 +3,49 @@
   </button>
   <div class="uk-text-bold">
     <span class="comps-title"><b>ISOMap View</b></span>
-    <span v-if="selectedBar"> - {{factory}}</span></div> {{selectedHour}}
+    <span v-if="selectedBar"> - {{factory}}</span></div>
+    <span class="tip-title">Current Time</span>{{selectedHour}}
+    <template v-if="selectedHour">
+      <span class="tip-title">Show ISOMap Layer</span> <input type="checkbox" v-model="showISO">
+      <span class="tip-title">Hours before and after</span> <input type="number" v-model="timeBeforeAndAfter">
+    </template>
   <div class="chart" v-el:chart></div>
-  <dialog></dialog>
+  <dialog v-ref:menu>
+    <div slot="title">Config Panel</div>
+    <div slot="body">
+      <div class="uk-width-1-1">
+        <span>Factory</span>
+        <button v-for="op in factoryOpts"
+                class="uk-button"
+                :class="{'uk-button-primary': op===selectedFactory}"
+                @click="switchFactory(op)">
+          {{op}}
+        </button>
+      </div>
+      <div class="uk-width-1-1">
+        <span>Time before and after</span>
+        <input type="number" v-model="timeBeforeAndAfter">
+      </div>
+      <div class="uk-width-1-1">
+        <span>Show ISOMap Layer</span>
+        <input type="checkbox" v-model="showISO">
+      </div>
+      <br>
+      <button class="uk-button uk-button-success uk-align-right" @click="configConfirm"> Confirm </button>
+    </div>
+  </dialog>
 </template>
 <script>
   import {selectedBar, factory, windToken, chemicalToken, timeToken, selectedChemical, selectedHour} from '../vuex/getters'
+  import {switchFactory} from '../vuex/actions'
   import Dialog from './Dialog.vue'
   import storage from '../commons/storage'
   import config from '../commons/config'
   import ISOMap from '../charts/ISOMap'
 
-  let { sensorsLoc, factoriesLoc, sensorOpts } = config
+  let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
   let windData = null
   let sensorData = null
-  let timeBeforeAndAfter = 4
 
   const formatFunc = (t) => {
     return 1 + t.getMonth() + '/' + t.getDate() + '/' + t.getFullYear() + ' ' + (t.getHours()) + ':00'
@@ -48,7 +76,8 @@
   export default {
     components: {Dialog},
     vuex: {
-      getters: { selectedBar, factory, windToken, chemicalToken, timeToken, selectedChemical, selectedHour }
+      getters: { selectedBar, factory, windToken, chemicalToken, timeToken, selectedChemical, selectedHour },
+      actions: {switchFactory}
     },
     watch: {
       windToken () {
@@ -69,21 +98,29 @@
     },
     computed: {
       updateStr () {
-        return this.selectedHour + this.selectedChemical + this.factory
+        return this.selectedHour + this.selectedChemical + this.factory + this.timeBeforeAndAfter + this.showISO
       }
     },
     data () {
       return {
+        timeBeforeAndAfter: 3,
+        factoryOpts,
         chartIns: null,
         playData: {},
         factorySensorAngle: {},
         factorySenorDist: {},
-        playId: null
+        playId: null,
+        selectedFactory: null,
+        showISO: false
       }
     },
     methods: {
+      configConfirm () {
+//        this.update()
+        this.$refs.menu.close()
+      },
       openDialog () {
-        // openDialog
+        this.$refs.menu.show()
       },
       update () {
         // todo 处理数据 画图
@@ -125,7 +162,8 @@
 
         this.chartIns
           .drawPeriodLine({factory: this.factory, chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
-          .drawISOLine({ sensorData: datas, factory: this.factory, maxValue, maxRadius })
+        this.showISO && this.chartIns.drawISOLine({ chemical: this.selectedChemical, sensorData: datas, factory: this.factory, maxValue, maxRadius })
+        !this.showISO && this.chartIns.clearISOLine()
         windMap[ currentTime ] && this.chartIns.drawWind(windMap[ currentTime ])
         this.index = (this.index + 1) % Object.keys(sensorData).length
       },
@@ -148,7 +186,7 @@
         let oneHour = 1000 * 60 * 60
         let currentTimeStamp = +new Date(currentTime)
         let timeArr = [currentTime]
-        for (let i = 0; i < timeBeforeAndAfter; i++) {
+        for (let i = 0; i < this.timeBeforeAndAfter; i++) {
           timeArr.push(formatFunc(new Date(currentTimeStamp - oneHour * (i + 1))))
           timeArr.push(formatFunc(new Date(currentTimeStamp + oneHour * (i + 1))))
         }
@@ -176,6 +214,7 @@
             })
           }
           periodWind
+          console.log(t, windMap[t])
           if (windMap[t]) {
             periodWind[t] = windMap[t]
           }
@@ -209,11 +248,17 @@
     },
     ready () {
       this.chartIns = new ISOMap(this.$els.chart)
+      this.chartIns.on('clickFactory', this.switchFactory)
     }
   }
 </script>
 <style lang="less" scoped>
   .chart {
-    height: calc(~"100% - 20px");
+    height: calc(~"100% - 40px");
+  }
+  .tip-title {
+    /*font-weight: bold;*/
+    margin-left: 10px;
+    margin-right: 2px;
   }
 </style>

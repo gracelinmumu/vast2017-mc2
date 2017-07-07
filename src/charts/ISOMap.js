@@ -99,15 +99,28 @@ export default class {
       .attr('fill', 'none')
       .attr('stroke', '#888')
       .attr('stroke-dasharray', '3, 3')
+      .on('click', (d) => this.trigger('clickFactory', d))
+    factory.append('circle')
+        .attr('r', nodeSize + 3)
+        .attr('fill', 'none')
+        .attr('stroke', '#888')
+        .attr('stroke-dasharray', '3, 3')
+        .on('click', (d) => this.trigger('clickFactory', d))
     factory.append('image')
       .attr('xlink:href', (d) => factoryImg)
       .attr('width', nodeSize)
       .attr('height', nodeSize)
       .attr('x', -nodeSize * 0.5)
       .attr('y', -nodeSize * 0.5)
+      .attr('cursor', 'pointer')
+      .on('click', (d) => this.trigger('clickFactory', d))
+    // factory.append('text')
+    //   .text(d => d)
     return this
   }
-
+  trigger (cbName, ...args) {
+    if (this[cbName]) this[cbName](...args)
+  }
   drawSensor () {
     Object.keys(sensorsLoc)
       .forEach((d) => {
@@ -132,7 +145,10 @@ export default class {
       .text(d => d)
     return this
   }
-
+  clearISOLine () {
+    d3.select(this.el).selectAll('.iso-line').remove()
+    return this
+  }
   drawWind (data) {
     let containerG = d3.select(this.el).select('.wind-g')
     containerG.selectAll('path').remove()
@@ -161,12 +177,13 @@ export default class {
     return this
   }
 
-  drawISOLine ({sensorData, factory, maxValue, maxRadius}) {
+  drawISOLine ({sensorData, factory, maxValue, maxRadius, chemical}) {
     this.sensorData = sensorData
     let g = d3.select(this.el).select('#' + factory)
     d3.select(this.el).selectAll('.iso-line').remove()
-    g.append('g')
+    let containerG = g.insert('g')
       .attr('class', 'iso-g')
+      .attr('pointer-events', 'none')
 
     let radius = maxRadius
     this.rScale
@@ -178,7 +195,7 @@ export default class {
       .radius(d => this.rScale(d.value))
       .angle(d => d.angle)
 
-    var isoLine = g.selectAll('.iso-line')
+    var isoLine = containerG.selectAll('.iso-line')
       .data(this.sensorData)
       .enter()
       .append('g')
@@ -189,7 +206,8 @@ export default class {
       .attr('class', 'iso-line-path')
       .attr('d', d => radarLine(d))
       .attr('stroke-width', '1px')
-      .attr('stroke', color)
+      .attr('stroke', colorMap[chemical][1])
+      .attr('stroke-opacity', 0.5)
       .attr('fill', color)
       .attr('fill-opacity', (d, i) => i * 0)
   }
@@ -253,10 +271,11 @@ export default class {
       containerG.selectAll('.axis').selectAll('path')
         .attr('fill', 'none')
         .attr('stroke', '#888')
-      let diffRanger = [1, 60]
+      let diffRanger = [1, height]
       let minAdd = 10
       let maxResult = 1.0 / (0 + minAdd)
       let minResult = 1.0 / (180 + minAdd)
+      console.log(periodWind)
       Object.keys(periodWind).forEach((t) => {
         let result = periodWind[t].direction - angelsMap[sensor][factory]
         while (result < -180) {
@@ -282,6 +301,11 @@ export default class {
           let xx = x(d)
           let yy = periodWind[d].calcValue
           str += xx + ' ' + yy + 'L'
+          containerG.append('circle')
+            .attr('cx', xx)
+            .attr('cy', yy)
+            .attr('r', 1)
+            .attr('fill', 'blue')
         })
         str = str.substr(0, str.length - 2)
         return str
@@ -289,7 +313,8 @@ export default class {
       containerG.append('path')
         .attr('d', getDiffPath)
         .attr('fill', 'none')
-        .attr('stroke', 'red')
+        .attr('stroke', windColor)
+        .attr('stroke-width', 2)
     })
     return this
   }
@@ -302,5 +327,8 @@ export default class {
     // this.drawPeriodLine(current, periodData, chemical)
     // // this.drawISOLine(factory, maxValue, maxRadius)
     return this
+  }
+  on (name, cb) {
+    this[name] = cb
   }
 }

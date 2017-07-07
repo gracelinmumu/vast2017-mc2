@@ -3,7 +3,7 @@
        class="uk-width-1-1"
        namespace="App">
     <div class="uk-navbar uk-width-1-1 app-title">
-      <b class="uk-navbar-brand uk-text-primary">VAST Challenge MC2</b>
+      <b class="uk-navbar-brand uk-text-primary">VAST Challenge Mini Challenge 2</b>
       <div class="legend uk-align-right uk-flex">
         <div v-for="c in colorsArr" class="uk-width-1-1 uk-flex uk-text-middle">
           <div class="legend-item" :style="{background: c.color[1]}"></div>

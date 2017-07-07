@@ -70,3 +70,7 @@ export const updateSelectedTime = (store, hour) => {
 export const updateSelectedChemical = (store, ch) => {
   store.dispatch(types.UPDATE_SELECTED_CHEMICAL, ch)
 }
+
+export const updateSelectedFactory = (store, factory) => {
+  store.dispatch(types.UPDATE_SELECTED_FACTORY, factory)
+}
