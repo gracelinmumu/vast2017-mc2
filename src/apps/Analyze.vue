@@ -39,6 +39,16 @@
       </div>
     </div>
   </div>
+  <!--::-webkit-scrollbar {-->
+  <!--width: @scrollbar-width;-->
+  <!--height: @scrollbar-height;-->
+  <!--}-->
+  <!--::-webkit-scrollbar-thumb {-->
+  <!--background: @scrollbar-fg-color;-->
+  <!--}-->
+  <!--::-webkit-scrollbar-track-piece {-->
+  <!--background: @scrollbar-bg-color;-->
+  <!--}-->
 </template>
 <script>
   import DistributeView from '../components/DistributeView.vue'

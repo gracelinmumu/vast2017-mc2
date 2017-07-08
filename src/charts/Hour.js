@@ -24,17 +24,16 @@ export default class {
 
   draw (data, day, thresholdMap, chemicals) {
     this.svg.selectAll('.hour').remove()
-
-    let height = $(this.el).height()
     let pad = 2
-    let width = $(this.el).width() - pad * 2
-
+    let height = $(this.el).height() - pad * 2
+    let width = $(this.el).width()
+    console.log(width, height)
     this.svg
-      .attr('width', '100%')
+      .attr('width', width)
       .attr('height', height)
     let hourCount = 24
-    let cellH = height / hourCount
-    let cellW = width
+    let cellH = height
+    let cellW = width / hourCount - pad
     let timesArr = []
     let oneHour = 1000 * 60 * 60
     for (let i = 0; i < hourCount; i++) {
@@ -45,7 +44,7 @@ export default class {
       .enter()
       .append('g')
       .attr('class', 'hour')
-      .attr('transform', (d, i) => 'translate(' + pad + ',' + (i) * cellH + ')')
+      .attr('transform', (d, i) => 'translate(' + (i * (cellW + pad)) + ',' + pad + ')')
       .attr('cursor', 'pointer')
 
     let chLen = chemicals.length
@@ -54,25 +53,22 @@ export default class {
     chemicals.forEach((ch, index) => {
       let threshold = thresholdMap[ch]
       let chemicalData = data[ch].time
+      dangerColor
       hour.append('rect')
         .attr('width', w)
         .attr('height', h)
         .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
         .attr('y', chLen > 3 && index > 1 ? h : 0)
-        .attr('fill', d => chemicalData[d] ? (chemicalData[d] > threshold ? dangerColor : safeColor) : 'none')
-        .attr('fill-opacity', d => chemicalData[d] > threshold ? 0.8 : 0.3)
+        // .attr('fill', d => chemicalData[d] ? (chemicalData[d] > threshold ? dangerColor : safeColor) : 'none')
+        .attr('fill', d => (1 + chemicalData[d]) ? (chemicalData[d] > threshold ? colorMap[ch][1] : safeColor) : '#000')
+        .attr('fill-opacity', d => (1 + chemicalData[d]) ? (chemicalData[d] > threshold ? 0.6 : 0.3) : 0.2)
         .attr('stroke', '#ccc')
         .attr('stroke-width', 1)
         .on('click', (d) => {
           this.clickHour(d, ch)
         })
     })
-    // hour.append('rect')
-    //   .attr('width', cellW)
-    //   .attr('height', cellH)
-    //   .attr('fill', 'none')
-    //   .attr('stroke', '#fff')
-    //   .attr('stroke-width', 5)
+
     // hour.append('text')
     //   .text((d) => {
     //     console.log(d, new Date(d), new Date(d).getHours())

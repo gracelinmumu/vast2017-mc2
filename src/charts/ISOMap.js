@@ -96,17 +96,10 @@ export default class {
     factory.append('circle')
       .attr('r', nodeSize)
       .attr('fill', 'none')
-      .attr('stroke', '#888')
+      .attr('stroke', '#aaa')
       .attr('class', 'factory-circle')
       .attr('stroke-dasharray', '3, 3')
       .on('click', (d) => this.trigger('clickFactory', d))
-    factory.append('circle')
-        .attr('r', nodeSize + 3)
-        .attr('fill', 'none')
-        .attr('stroke', '#888')
-        .attr('class', 'factory-circle')
-        .attr('stroke-dasharray', '3, 3')
-        .on('click', (d) => this.trigger('clickFactory', d))
     factory.append('image')
       .attr('xlink:href', (d) => factoryImg)
       .attr('width', nodeSize)
@@ -221,7 +214,10 @@ export default class {
       .attr('fill', color)
       .attr('fill-opacity', (d, i) => i * 0)
   }
-
+  clearPeriodLine () {
+    d3.select(this.el).selectAll('.time-period-line').remove()
+    return this
+  }
   drawPeriodLine ({current, periodData, chemical, factory}) {
     d3.select(this.el).selectAll('.time-period-line').remove()
     let { domain, data, periodWind } = periodData
@@ -232,7 +228,7 @@ export default class {
       let g = d3.select(this.el).select('#Sensor' + sensor)
       let containerG = g.append('g')
         .attr('class', 'time-period-line')
-        .attr('transform', 'translate(' + nodeSize + ',' + -height + ')')
+        .attr('transform', sensor === 'S6' ? 'translate(' + nodeSize + ',' + 10 + ')' : 'translate(' + nodeSize + ',' + -height + ')')
 
       let x = d3.scale.ordinal().rangeRoundPoints([ 0, width ])
       let y = d3.scale.linear().range([ height, 0 ])

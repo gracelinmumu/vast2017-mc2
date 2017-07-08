@@ -1,8 +1,6 @@
 <template>
   <!--title-->
   <span class="comps-title"><b>Calendar View</b></span>
-  <button class="uk-button uk-button-primary uk-align-right" @click="openPanel"> <i class="uk-icon-cog"></i>
-  </button>
   <div class="calendar-legend uk-align-right" v-el:legend></div>
   <!--params-->
   <div class="uk-width-1-1 uk-flex uk-flex-wrap">
@@ -22,41 +20,17 @@
       <b>December</b>
       <div class="uk-width-1-1 chart" v-el:december></div>
     </div>
-    <div class="container-right full-height uk-flex hour-container">
-      <div class="hour-time-label" v-if="hoursData.length"><div class="item" v-for="h in hourArr">{{h}}</div></div>
-      <div class="hour-chart-item" v-for="hour in hoursData">
-        <div class="day-label">{{hour.display}} <i class="uk-icon-close" @click="closeHour(hour)"></i></div>
+    <div class="container-right full-height hour-container">
+      <div class="uk-flex hour-time-label" v-if="hoursData.length"><div class="item" v-for="h in hourArr">{{h}}</div></div>
+      <div class="uk-width-1-1 hour-chart-item uk-flex" v-for="hour in hoursData">
+        <div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
         <div class="uk-width-1-1 full-height"
-             :id="'Day'+hour.day"
-             :draw="drawHours(hour, selectedChemicals)">
+             :id="'Day'+hour.day+hour.chemical+hour.sensor"
+             :draw="drawHours(hour)">
         </div>
       </div>
     </div>
   </div>
-  <!--dialog-->
-  <dialog v-ref:menu>
-    <div slot="title">Config Panel</div>
-    <div slot="body">
-      <div class="uk-width-1-1">
-        <span>Sensor</span>
-        <button v-for="op in sensorOpts"
-                class="uk-button"
-                :class="{'uk-button-primary': op===selectedSensor}"
-                @click="updateSensor(op)">
-          {{op}}
-        </button>
-      </div>
-      <br>
-      <div class="uk-width-1-1">
-        <span>Chemical</span>
-        <template v-for="op in chemicalOpts">
-          <input type="checkbox" id="chemicals" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
-          <label for="chemicals">{{op}}</label>
-        </template>
-      </div>
-      <button class="uk-button uk-button-success uk-align-right" @click="configConfirm"> Confirm </button>
-    </div>
-  </dialog>
 </template>
 <script>
   import Calendar from '../charts/Calendar'
@@ -69,7 +43,7 @@
   import CalendarLegend from '../charts/CalendarLegend'
   let dataByTime = null
 
-  let { chemicalOpts, sensorOpts } = config
+  let { chemicalOpts, sensorOpts, colorMap } = config
   let chemicalsMap = {}
   chemicalOpts.forEach((d) => {
     chemicalsMap[ d ] = true
@@ -119,7 +93,7 @@
       hoursDataMap () {
         let dict = {}
         this.hoursData.forEach((d, index) => {
-          dict[ d.day ] = index + 1
+          dict[ d.day + d.chemical + d.sensor ] = index + 1
         })
         return dict
       }
@@ -127,6 +101,7 @@
     data () {
       return {
         hourArr,
+        colorMap,
         chemicalsMap,
         chemicalOpts,
         sensorOpts,
@@ -138,17 +113,18 @@
       closeHour (day) {
         this.hoursData.$remove(day)
       },
-      drawHours ({ day, data }) {
+      drawHours ({ day, data, chemical, sensor }) {
         this.$nextTick(() => {
-          new Hour('#Day' + day)
-            .draw(data, +day, this.threshold, this.selectedChemicals)
+          new Hour('#Day' + day + chemical + sensor)
+//            .draw(data, +day, this.threshold, this.selectedChemicals)
+            .draw(data, +day, this.threshold, [chemical])
             .on('clickHour', this.clickHour)
         })
       },
-      clickDay (day, data) {
+      clickDay (day, data, ch) {
         let d = new Date(+day)
-        if (!this.hoursDataMap[ day ]) {
-          this.hoursData = this.hoursData.concat([ { day, data, display: 1 + d.getMonth() + '/' + d.getDate() } ])
+        if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
+          this.hoursData = [ { sensor: this.selectedSensor, chemical: ch, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
         }
       },
       clickHour (hour, ch) {
@@ -258,7 +234,7 @@
 </script>
 <style lang="less" scoped>
   @right: 40px;
-  @hour-wid: 50px;
+  @hour-wid: 40px;
   @container-left-width: 250px;
   .calendar-legend {
     width: 40px;
@@ -278,33 +254,35 @@
       height: 100%;
     }
     .right {
-      overflow-x: scroll;
+      /*overflow-x: scroll;*/
     }
     .chart {
       height: calc(~"33% - 24px");
       margin-bottom: 4px;
     }
     .hour-chart-item {
-      width: @hour-wid;
-      height: 100%;
-      margin-left: 2px;
+      width: 100%;
+      height: @hour-wid;
+      margin-top: 2px;
       .day-label {
-        width: 100%;
+        width: 72px;
         height: 20px;
         text-align: center;
+        line-height: calc(@hour-wid~" - 1px");
       }
     }
     .hour-container {
-      overflow: scroll;
+      overflow-y: scroll;
     }
     .hour-time-label {
-      margin-top: 20px;
-      margin-left: 3px;
-      border-left: 1px dashed #ddd;
+      margin-left: 70px;
+      width: calc(~"100% - 70px");
+      margin-top: 3px;
+      border-bottom: 1px dashed #ddd;
       .item {
         margin-top: 2px;
-        height: 4%;
-        width: 20px;
+        height: 20px;
+        width: 4.16%;
         text-align: center;
       }
     }

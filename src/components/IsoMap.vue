@@ -132,27 +132,31 @@
         let chemical = this.selectedChemical
         let currentTime = this.selectedHour
         let windMap = this.windMap
-        let playSensor = sensorData[ currentTime ][ chemical ]
-        // 绘制时序图
-        this.chartIns
-          .drawPeriodLine({factory: this.factory, chemical, current: currentTime, periodData: this.periodData})
-        // ISO
-        if (this.showISO) {
-          let worker = new InterWk()
-          worker.postMessage({
-            sensorsLoc: sensorsLoc2,
-            sensorData: playSensor,
-            scale: 7
-          })
-          worker.onmessage = (evt) => {
-            let evtData = evt.data
-            let {points, posData, domain} = evtData
-            console.log(points)
-            this.chartIns.drawISOLine1({ points, posData, domain })
+        if (sensorData[ currentTime ]) {
+          let playSensor = sensorData[ currentTime ][ chemical ]
+          // 绘制时序图
+          this.chartIns
+            .drawPeriodLine({factory: this.factory, chemical, current: currentTime, periodData: this.periodData})
+          // ISO
+          if (this.showISO) {
+            let worker = new InterWk()
+            worker.postMessage({
+              sensorsLoc: sensorsLoc2,
+              sensorData: playSensor,
+              scale: 7
+            })
+            worker.onmessage = (evt) => {
+              let evtData = evt.data
+              let {points, posData, domain} = evtData
+              this.chartIns.drawISOLine1({ points, posData, domain })
+            }
+          } else {
+            this.chartIns.clearISOLine()
           }
         } else {
-          this.chartIns.clearISOLine()
+          this.chartIns.clearPeriodLine()
         }
+
         // 风向图
         if (windMap[ currentTime ]) {
           this.chartIns.drawWind(windMap[ currentTime ])
@@ -194,8 +198,8 @@
           // 如果数据中有该时刻
           if (sensorData[t]) {
             let sensorD = sensorData[t][chemical]
-            Object.keys(sensorD).forEach((s) => {
-              let v = sensorD[s]
+            sensorOpts.forEach((s) => {
+              let v = sensorD[s] || 0
               periodData[s][t] = v
               domain.max = Math.max(v, domain.max)
               domain.min = Math.min(v, domain.min)

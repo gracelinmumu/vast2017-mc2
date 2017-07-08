@@ -6,6 +6,18 @@
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <style>
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        ::-webkit-scrollbar-track-piece {
+            background: rgba(255, 255, 255, 0);
+        }
+    </style>
     <!--favicon-->
     <% if (assets.favicon) { %>
     <link rel="shortcut icon" href="<%= assets.favicon %>">

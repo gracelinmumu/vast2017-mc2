@@ -51,9 +51,6 @@ export default class {
       .attr('class', 'day')
       .attr('transform', d => 'translate(' + new Date(+d).getDay() * cellSize + ',' + (week(new Date(+d)) - weeksBefore) * cellSize + ')')
       .attr('cursor', 'pointer')
-      .on('click', (d) => {
-        this.clickDay(d, data[d])
-      })
     // compute
     // linear
     let chLen = selectedChemicals.length
@@ -68,6 +65,9 @@ export default class {
         .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
         .attr('y', chLen > 3 && index > 1 ? h : 0)
         .attr('fill', d => this.getColor(colorS, data[d][ch].value))
+        .on('click', (d) => {
+          this.clickDay(d, data[d], ch)
+        })
     })
     day.append('text')
       .text((d) => new Date(+d).getDate())
@@ -77,7 +77,8 @@ export default class {
         'text-anchor': 'middle',
         'dominant-baseline': 'middle',
         'font-size': '16px',
-        'fill': '#888'
+        'fill': '#888',
+        'pointer-events': 'none'
       })
     day.append('rect')
       .attr('width', cellSize)
