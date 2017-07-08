@@ -44,10 +44,11 @@
   import config from '../commons/config'
   import ISOMap from '../charts/ISOMap'
   import {formatFunc} from '../commons/utils'
+  import InterWk from './interploration.worker'
   let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
   let windData = null
   let sensorData = null
-
+  let sensorsLoc2 = JSON.parse(JSON.stringify(sensorsLoc))
   const getAngle = (s, t) => {
     let a = Math.abs(Math.atan((t[ 1 ] - s[ 1 ]) / (t[ 0 ] - s[ 0 ])))
     if (s[ 0 ] < t[ 0 ]) {
@@ -131,44 +132,37 @@
         let chemical = this.selectedChemical
         let currentTime = this.selectedHour
         let windMap = this.windMap
-        let playSensor = sensorData[ currentTime ][ chemical ]
-
-        let dataSet = Object.keys(playSensor).map((d) => {
-          return {
-            name: d,
-            value: playSensor[ d ],
-            angle: this.factorySensorAngle[ this.factory ][ d ]
-          }
-        })
-        dataSet.sort((a, b) => config.sensorSort.indexOf(a.name) - config.sensorSort.indexOf(b.name))
-        let count = 20
-        let datas = []
-        for (let i = 0; i < count; i++) {
-          let d = dataSet.map((item) => {
-            return {
-              name: item.name,
-              value: (count - i) * item.value / count,
-              angle: item.angle
+        if (sensorData[ currentTime ]) {
+          let playSensor = sensorData[ currentTime ][ chemical ]
+          // 绘制时序图
+          this.chartIns
+            .drawPeriodLine({factory: this.factory, chemical, current: currentTime, periodData: this.periodData})
+          // ISO
+          if (this.showISO) {
+            let worker = new InterWk()
+            worker.postMessage({
+              sensorsLoc: sensorsLoc2,
+              sensorData: playSensor,
+              scale: 7
+            })
+            worker.onmessage = (evt) => {
+              let evtData = evt.data
+              let {points, posData, domain} = evtData
+              this.chartIns.drawISOLine1({ points, posData, domain })
             }
-          })
-          datas.push(d)
+          } else {
+            this.chartIns.clearISOLine()
+          }
+        } else {
+          this.chartIns.clearPeriodLine()
         }
 
-        dataSet.sort((a, b) => b.value - a.value)
-        let max = dataSet[ 0 ]
-        let min = dataSet[ dataSet.length - 1 ]
-        let maxValue = max.value
-        let maxRadius = this.factorySenorDist[ this.factory ][ min.name ] * max.value / min.value
-        this.chartIns
-          .drawPeriodLine({factory: this.factory, chemical: this.selectedChemical, current: this.selectedHour, periodData: this.periodData})
-        this.showISO && this.chartIns.drawISOLine({ chemical: this.selectedChemical, sensorData: datas, factory: this.factory, maxValue, maxRadius })
-        !this.showISO && this.chartIns.clearISOLine()
+        // 风向图
         if (windMap[ currentTime ]) {
           this.chartIns.drawWind(windMap[ currentTime ])
         } else {
           this.chartIns.clearWind()
         }
-        this.index = (this.index + 1) % Object.keys(sensorData).length
       },
       processData () {
         let windMap = {}
@@ -204,8 +198,8 @@
           // 如果数据中有该时刻
           if (sensorData[t]) {
             let sensorD = sensorData[t][chemical]
-            Object.keys(sensorD).forEach((s) => {
-              let v = sensorD[s]
+            sensorOpts.forEach((s) => {
+              let v = sensorD[s] || 0
               periodData[s][t] = v
               domain.max = Math.max(v, domain.max)
               domain.min = Math.min(v, domain.min)
