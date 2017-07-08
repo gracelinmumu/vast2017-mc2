@@ -77,7 +77,6 @@ let calcInvV = function (dims, itemCount, pos, mode, c0, c1, a) {
   V[IDX2D(size - 1, size - 1, size)] = 0
 
   V.reshape(size, size)
-  console.log(V)
   let InvV = math.inv(V)
   return InvV
 }
@@ -171,6 +170,15 @@ onmessage = (evt) => {
   let count = 0
   let dists = new Array(len * (len - 1) / 2)
   let Z = Object.keys(sensorData).map((d) => sensorData[d])
+  // Z = [0.314413,
+  //   0.128337,
+  //   1.74588,
+  //   1.07116,
+  //   0.31592,
+  //   0.3642,
+  //   0.646069,
+  //   0.410145,
+  //   0.130422]
   let semigrams = new Array(len * (len - 1) / 2)
 
   // Step 1 计算两两坐标之间的距离
@@ -190,20 +198,20 @@ onmessage = (evt) => {
 
   let points = []
   let max = 0
-  for (let x = 0; x < 720; ++x) {
-    for (let y = 0; y < 720; ++y) {
-      target[0] = 1. * x / 720 * 200
-      target[1] = 1. * y / 720 * 200
+  for (let x = 50; x < 130; ++x) {
+    for (let y = 0; y < 60; ++y) {
+      target[0] = Math.round(1.0 * x / 200 * 200)
+      target[1] = Math.round(1.0 * y / 200 * 200)
       let results = interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1)
 
-      if ((y % 3 === 0) && (x % 3 === 0)) {
-        points.push({
-          x: target[0],
-          y: target[1],
-          value: results.value
-        })
-        max = Math.max(max, results.value)
-      }
+      // if ((y % 3 === 0) && (x % 3 === 0)) {
+      points.push({
+        x: target[0],
+        y: target[1],
+        value: results.value
+      })
+      max = Math.max(max, results.value)
+      // }
     }
   }
   // test
@@ -213,11 +221,13 @@ onmessage = (evt) => {
   //   target[0] = 1. * x / 720 * 200
   //   target[1] = 1. * y / 720 * 200
   //   // console.log([pos[i][0], pos[i][1]], [target[0], target[1]])
+  //   let value = interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1).value
   //   points.push({
   //     x: target[0],
   //     y: target[1],
-  //     value: interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1).value
+  //     value
   //   })
+  //   max = Math.max(max, value)
   // }
   self.postMessage({points, domain: [0, max]})
 }
