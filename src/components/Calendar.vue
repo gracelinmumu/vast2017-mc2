@@ -4,8 +4,8 @@
   <div class="calendar-legend uk-align-right" v-el:legend></div>
   <!--params-->
   <div class="uk-width-1-1 uk-flex uk-flex-wrap">
-    Sensor:&nbsp;  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
-    &nbsp;&nbsp;&nbsp;Chemicals: &nbsp; <template v-for="op in chemicalOpts">
+    Sensor:  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
+     Chemicals: <template v-for="op in chemicalOpts">
     <input type="checkbox" id="chemical" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
     <label for="chemical" :class="{'label-color': chemicalsMap[op]}">{{op}}{{chemicalsMap[op]}}</label>
   </template>
@@ -80,7 +80,7 @@
       },
       selectedChemicals () {
         this.update()
-        this.legendChart && this.legendChart.update(this.selectedChemicals)
+        // this.legendChart && this.legendChart.update(this.selectedChemicals)
       },
       selectedSensor () {
         this.update()
@@ -235,7 +235,7 @@
 <style lang="less" scoped>
   @right: 40px;
   @hour-wid: 40px;
-  @container-left-width: 250px;
+  @container-left-width: 150px;
   .calendar-legend {
     width: 40px;
     height: 40px;

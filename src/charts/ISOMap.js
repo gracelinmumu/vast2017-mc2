@@ -6,7 +6,8 @@ import $ from 'jquery'
 
 import factoryImg from '../../assets/images/factory2.png'
 import monitorImg from '../../assets/images/monitor2.png'
-
+monitorImg
+factoryImg
 import config from '../commons/config'
 let { factoriesLoc, sensorsLoc, colorMap } = config
 
@@ -24,7 +25,8 @@ Object.keys(sensorsLoc).forEach((s) => {
 })
 
 let windColor = 'rgba(189,217,252,0.5)'
-let nodeSize = 15
+let factorySize = 5
+let sensorSize = 10
 export default class {
   constructor (el) {
     this.el = el
@@ -38,7 +40,7 @@ export default class {
     this.svg = d3.select(this.el).append('svg')
       .attr('width', '100%')
       .attr('height', '100%')
-
+    this.svg.append('g').attr('class', 'iso-map-g')
     this.width = $(this.el).width()
     this.height = $(this.el).height()
     this.heightScale = this.width
@@ -111,20 +113,23 @@ export default class {
       })
 
     factory.append('circle')
-      .attr('r', nodeSize)
-      .attr('fill', 'none')
+      .attr('r', factorySize)
+      .attr('cx', factorySize * -0.5)
+      .attr('cy', factorySize * -0.5)
+      .attr('fill', '#999')
       .attr('stroke', '#aaa')
-      .attr('class', 'factory-circle')
-      .attr('stroke-dasharray', '3, 3')
-      .on('click', (d) => this.trigger('clickFactory', d))
-    factory.append('image')
-      .attr('xlink:href', (d) => factoryImg)
-      .attr('width', nodeSize)
-      .attr('height', nodeSize)
-      .attr('x', -nodeSize * 0.5)
-      .attr('y', -nodeSize * 0.5)
       .attr('cursor', 'pointer')
+      .attr('class', 'factory-circle')
+      // .attr('stroke-dasharray', '3, 3')
       .on('click', (d) => this.trigger('clickFactory', d))
+    // factory.append('image')
+    //   .attr('xlink:href', (d) => factoryImg)
+    //   .attr('width', nodeSize)
+    //   .attr('height', nodeSize)
+    //   .attr('x', -nodeSize * 0.5)
+    //   .attr('y', -nodeSize * 0.5)
+    //   .attr('cursor', 'pointer')
+    //   .on('click', (d) => this.trigger('clickFactory', d))
     // factory.append('text')
     //   .text(d => d)
     return this
@@ -150,14 +155,22 @@ export default class {
         return 'translate(' + x + ',' + y + ')'
       })
 
-    sensor.append('image')
-      .attr('xlink:href', (d) => monitorImg)
-      .attr('x', -nodeSize * 0.5 + 'px')
-      .attr('y', -nodeSize * 0.5 + 'px')
-      .attr('width', nodeSize)
-      .attr('height', nodeSize)
+    // sensor.append('image')
+    //   .attr('xlink:href', (d) => monitorImg)
+    //   .attr('x', -nodeSize * 0.5 + 'px')
+    //   .attr('y', -nodeSize * 0.5 + 'px')
+    //   .attr('width', nodeSize)
+    //   .attr('height', nodeSize)
+    sensor.append('rect')
+        .attr('x', -sensorSize * 0.5 + 'px')
+        .attr('y', -sensorSize * 0.5 + 'px')
+        .attr('width', sensorSize)
+        .attr('height', sensorSize)
+        .attr('fill', '#63c4ff')
+        .attr('stroke', '#ddd')
     sensor.append('text')
-      .attr('dy', nodeSize)
+      .attr('y', sensorSize)
+      .attr('x', -sensorSize * 2)
       .text(d => d)
     return this
   }
@@ -198,8 +211,15 @@ export default class {
     return this
   }
   highlightFactory (factory) {
-    d3.select(this.el).selectAll('.factory-circle').attr('stroke', '#888')
-    d3.select(this.el).select('#' + factory).selectAll('circle').attr('stroke', '#f00')
+    d3.select(this.el).selectAll('.factory-circle').attr({
+      'stroke': '#888',
+      'fill': '#888'
+    })
+    d3.select(this.el).select('#' + factory).selectAll('circle')
+      .attr({
+        'fill': 'rgba(255,0,0,0.4)',
+        'stroke': 'red'
+      })
     return this
   }
   drawISOLine ({sensorData, factory, maxValue, maxRadius, chemical}) {
@@ -250,7 +270,7 @@ export default class {
       let g = d3.select(this.el).select('#Sensor' + sensor)
       let containerG = g.append('g')
         .attr('class', 'time-period-line')
-        .attr('transform', sensor === 'S6' ? 'translate(' + nodeSize + ',' + 10 + ')' : 'translate(' + nodeSize + ',' + -height + ')')
+        .attr('transform', sensor === 'S6' ? 'translate(' + sensorSize + ',' + 10 + ')' : 'translate(' + sensorSize + ',' + -height + ')')
 
       let x = d3.scale.ordinal().rangeRoundPoints([ 0, width ])
       let y = d3.scale.linear().range([ height, 0 ])
@@ -360,7 +380,7 @@ export default class {
     console.log(domain)
     let linear = d3.scale.linear()
       .domain(domain)
-      .range([0, 1])
+      .range([0, 3])
     // let containerG = d3.select(this.el).select('.map-g').append('g').attr('class', 'iso-map-g')
     // containerG.selectAll('.point')
     //   .data(points)
@@ -374,10 +394,9 @@ export default class {
     //   .attr('fill-opacity', d => linear(d.value))
     let compute = d3.interpolate(d3.rgb(255, 255, 255), d3.rgb(255, 0, 0))
     compute
-    d3.select(this.el).select('svg').select('.iso-map-g').remove()
+    d3.select(this.el).select('svg').select('.iso-map-g').selectAll('point').remove()
     // console.log(points)
-    d3.select(this.el).select('svg').append('g')
-      .attr('class', 'iso-map-g')
+    d3.select(this.el).select('.iso-map-g')
       .selectAll('.point')
       .data(points)
       .enter()
@@ -393,10 +412,10 @@ export default class {
         return x
       })
       .attr('cy', d => d.$y)
-      .attr('r', 1)
+      .attr('r', d => linear(d.value))
       .attr('fill', 'red')
       // .attr('fill', d => compute(linear(d.value)))
-      .attr('fill-opacity', d => linear(d.value))
+      .attr('fill-opacity', d => 0.8 * linear(d.value) / 3)
     return this
   }
   on (name, cb) {

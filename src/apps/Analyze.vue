@@ -4,12 +4,6 @@
        namespace="App">
     <div class="uk-navbar uk-width-1-1">
       <b class="uk-navbar-brand app-title">VAST Challenge Mini Challenge 2</b>
-      <div class="legend uk-align-right uk-flex">
-        <div v-for="c in colorsArr" class="uk-width-1-1 uk-flex uk-text-middle">
-          <div class="legend-item" :style="{background: c.color[1]}"></div>
-          <span :style="{color: c.color[1]}" class="uk-text-bold">{{c.name}}</span>
-        </div>
-      </div>
     </div>
     <div class="uk-width-1-1 uk-grid app-top clear-grid-margin">
       <!--<div class="select-menu uk-width-1-6 uk-panel-box uk-padding-remove">-->

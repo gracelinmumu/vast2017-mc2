@@ -23,7 +23,7 @@ let config = {
     S9: [ 119, 42 ]
   },
   sensorSort: [ 'S4', 'S5', 'S9', 'S6', 'S7', 'S8', 'S1', 'S2', 'S3' ],
-  dangerColor: 'rgba(255, 26, 58, 1)',
+  dangerColor: 'red',
   safeColor: '#bef7c3',
   colorMap: {
     Chlorodinine: ['#f9ecf1', '#ff49dc'],
