@@ -112,7 +112,7 @@
         factorySenorDist: {},
         playId: null,
         selectedFactory: null,
-        showISO: false
+        showISO: true
       }
     },
     methods: {

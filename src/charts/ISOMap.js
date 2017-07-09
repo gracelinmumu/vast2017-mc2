@@ -41,8 +41,15 @@ export default class {
 
     this.width = $(this.el).width()
     this.height = $(this.el).height()
+    this.heightScale = this.width
     this.svg.attr('width', this.width).attr('height', this.height)
 
+    this.scaleX = d3.scale.linear()
+      .domain([40, 140])
+      .range([0, this.width])
+    this.scaleY = d3.scale.linear()
+      .domain([-40, 60])
+      .range([this.heightScale, 0])
     let defs = this.svg.append('defs')
     let arrowMarkerTarget = defs.append('marker')
       .attr('id', 'arrow-target')
@@ -65,10 +72,11 @@ export default class {
     this.windG = this.svg.append('g').attr('class', 'wind-g')
 
     let gridS = 200
-
+    gridS
     this.mapG = this.svg.append('g')
       .attr('class', 'map-g')
-      .attr('transform', 'translate(' + (this.width - gridS * this.scale) * 0.5 + ',' + this.height * 0.8 + ')')
+      // .attr('transform', 'scale(5)')
+      // .attr('transform', 'translate(' + (this.width - gridS * this.scale) * 0.5 + ',' + this.height * 0.8 + ')')
 
     // 画工厂和传感器
     this.drawFactory()
@@ -78,12 +86,18 @@ export default class {
     return this
   }
 
+  getPos (x, y) {
+    return {
+      x: this.scaleX(x),
+      y: this.scaleY(y)
+    }
+  }
   drawFactory () {
-    Object.keys(factoriesLoc)
-      .forEach((d) => {
-        let tem = factoriesLoc[ d ]
-        factoriesLoc[ d ] = [ tem[ 0 ] * this.scale, -tem[ 1 ] * this.scale ]
-      })
+    // Object.keys(factoriesLoc)
+    //   .forEach((d) => {
+    //     let tem = factoriesLoc[ d ]
+    //     factoriesLoc[ d ] = [ tem[ 0 ] * this.scale, -tem[ 1 ] * this.scale ]
+    //   })
 
     let factory = this.mapG.selectAll('.factory')
       .data(Object.keys(factoriesLoc))
@@ -91,7 +105,10 @@ export default class {
       .append('g')
       .attr('class', 'factory')
       .attr('id', d => d)
-      .attr('transform', d => 'translate(' + factoriesLoc[ d ][ 0 ] + ',' + factoriesLoc[ d ][ 1 ] + ')')
+      .attr('transform', d => {
+        let {x, y} = this.getPos(factoriesLoc[ d ][ 0 ], factoriesLoc[ d ][ 1 ])
+        return 'translate(' + x + ',' + y + ')'
+      })
 
     factory.append('circle')
       .attr('r', nodeSize)
@@ -116,11 +133,11 @@ export default class {
     if (this[cbName]) this[cbName](...args)
   }
   drawSensor () {
-    Object.keys(sensorsLoc)
-      .forEach((d) => {
-        let tem = sensorsLoc[ d ]
-        sensorsLoc[ d ] = [ tem[ 0 ] * this.scale, -tem[ 1 ] * this.scale ]
-      })
+    // Object.keys(sensorsLoc)
+    //   .forEach((d) => {
+    //     let tem = sensorsLoc[ d ]
+    //     sensorsLoc[ d ] = [ tem[ 0 ] * this.scale, -tem[ 1 ] * this.scale ]
+    //   })
 
     let sensor = this.mapG.selectAll('.sensor')
       .data(Object.keys(sensorsLoc))
@@ -128,14 +145,19 @@ export default class {
       .append('g')
       .attr('class', 'sensor')
       .attr('id', d => 'Sensor' + d)
-      .attr('transform', d => 'translate(' + sensorsLoc[ d ][ 0 ] + ',' + sensorsLoc[ d ][ 1 ] + ')')
+      .attr('transform', d => {
+        let {x, y} = this.getPos(sensorsLoc[ d ][ 0 ], sensorsLoc[ d ][ 1 ])
+        return 'translate(' + x + ',' + y + ')'
+      })
 
     sensor.append('image')
       .attr('xlink:href', (d) => monitorImg)
+      .attr('x', -nodeSize * 0.5 + 'px')
+      .attr('y', -nodeSize * 0.5 + 'px')
       .attr('width', nodeSize)
       .attr('height', nodeSize)
     sensor.append('text')
-      .attr('dy', nodeSize * 2)
+      .attr('dy', nodeSize)
       .text(d => d)
     return this
   }
@@ -150,7 +172,7 @@ export default class {
 
     this.windData = data
     let r = data.speed * 10
-    let direction = 2 * Math.PI * (180 - data.direction) / 360
+    let direction = Math.PI * (-data.direction) / 180
     let fw = 0
     let d = 'M' + fw * 0.5 + ',' + fw * 0.5 + 'L' + (fw * 0.5 + Math.sin(direction) * r) + ', ' + (fw * 0.5 + Math.cos(direction) * r)
 
@@ -335,6 +357,7 @@ export default class {
   }
 
   drawISOLine1 ({points, domain}) {
+    console.log(domain)
     let linear = d3.scale.linear()
       .domain(domain)
       .range([0, 1])
@@ -349,7 +372,10 @@ export default class {
     //   .attr('r', 1)
     //   .attr('fill', 'red')
     //   .attr('fill-opacity', d => linear(d.value))
+    let compute = d3.interpolate(d3.rgb(255, 255, 255), d3.rgb(255, 0, 0))
+    compute
     d3.select(this.el).select('svg').select('.iso-map-g').remove()
+    // console.log(points)
     d3.select(this.el).select('svg').append('g')
       .attr('class', 'iso-map-g')
       .selectAll('.point')
@@ -357,10 +383,19 @@ export default class {
       .enter()
       .append('circle')
       .attr('class', 'point')
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
+      .attr('class', 'point')
+      // .attr('cx', d => d.x)
+      // .attr('cy', d => d.y)
+      .attr('cx', d => {
+        let {x, y} = this.getPos(d.x, d.y)
+        d.$x = x
+        d.$y = y
+        return x
+      })
+      .attr('cy', d => d.$y)
       .attr('r', 1)
       .attr('fill', 'red')
+      // .attr('fill', d => compute(linear(d.value)))
       .attr('fill-opacity', d => linear(d.value))
     return this
   }
