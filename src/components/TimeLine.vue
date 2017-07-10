@@ -18,7 +18,7 @@
               @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}
         </span>
         <div class="uk-width-1-1 full-height uk-grid">
-          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index" :draw="calcAndDrawReading(bar, 'Bar-'+index)"></div>
+          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index" :draw="calcAndDrawReading(bar, '#Bar-'+index)"></div>
           <div class="uk-width-1-6 bar-item" :id="'BarDistribute-'+index"
                :draw="calcAndDrawDistribute(bar, '#BarDistribute-'+index)"></div>
         </div>
