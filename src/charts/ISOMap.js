@@ -8,8 +8,9 @@ import factoryImg from '../../assets/images/factory2.png'
 import monitorImg from '../../assets/images/monitor2.png'
 monitorImg
 factoryImg
+import {skyeyeTooltip} from '../commons/utils'
 import config from '../commons/config'
-let { factoriesLoc, sensorsLoc, colorMap } = config
+let {factoriesLoc, sensorsLoc, colorMap} = config
 let windColor = 'rgba(189,217,252,0.5)'
 const getAngles = (pos1, pos2) => {
   let radius = Math.atan((pos1[1] - pos2[1]) / (pos1[0] - pos2[0])) * 180 / Math.PI
@@ -76,8 +77,8 @@ export default class {
     gridS
     this.mapG = this.svg.append('g')
       .attr('class', 'map-g')
-      // .attr('transform', 'scale(5)')
-      // .attr('transform', 'translate(' + (this.width - gridS * this.scale) * 0.5 + ',' + this.height * 0.8 + ')')
+    // .attr('transform', 'scale(5)')
+    // .attr('transform', 'translate(' + (this.width - gridS * this.scale) * 0.5 + ',' + this.height * 0.8 + ')')
 
     // 画工厂和传感器
     this.drawFactory()
@@ -93,6 +94,7 @@ export default class {
       y: this.scaleY(y)
     }
   }
+
   drawFactory () {
     // Object.keys(factoriesLoc)
     //   .forEach((d) => {
@@ -107,7 +109,7 @@ export default class {
       .attr('class', 'factory')
       .attr('id', d => d)
       .attr('transform', d => {
-        let {x, y} = this.getPos(factoriesLoc[ d ][ 0 ], factoriesLoc[ d ][ 1 ])
+        let {x, y} = this.getPos(factoriesLoc[d][0], factoriesLoc[d][1])
         return 'translate(' + x + ',' + y + ')'
       })
 
@@ -133,9 +135,11 @@ export default class {
     //   .text(d => d)
     return this
   }
+
   trigger (cbName, ...args) {
     if (this[cbName]) this[cbName](...args)
   }
+
   drawSensor () {
     // Object.keys(sensorsLoc)
     //   .forEach((d) => {
@@ -150,7 +154,7 @@ export default class {
       .attr('class', 'sensor')
       .attr('id', d => 'Sensor' + d)
       .attr('transform', d => {
-        let {x, y} = this.getPos(sensorsLoc[ d ][ 0 ], sensorsLoc[ d ][ 1 ])
+        let {x, y} = this.getPos(sensorsLoc[d][0], sensorsLoc[d][1])
         return 'translate(' + x + ',' + y + ')'
       })
 
@@ -161,23 +165,25 @@ export default class {
     //   .attr('width', nodeSize)
     //   .attr('height', nodeSize)
     sensor.append('rect')
-        .attr('x', -sensorSize * 0.5 + 'px')
-        .attr('y', -sensorSize * 0.5 + 'px')
-        .attr('width', sensorSize)
-        .attr('height', sensorSize)
-        .attr('fill', '#63c4ff')
-        .attr('stroke', '#ddd')
+      .attr('x', -sensorSize * 0.5 + 'px')
+      .attr('y', -sensorSize * 0.5 + 'px')
+      .attr('width', sensorSize)
+      .attr('height', sensorSize)
+      .attr('fill', '#63c4ff')
+      .attr('stroke', '#ddd')
     sensor.append('text')
       .attr('y', sensorSize)
       .attr('x', -sensorSize * 2)
       .text(d => d)
     return this
   }
+
   clearISOLine () {
     d3.select(this.el).select('svg').select('.iso-map-g').remove()
     d3.select(this.el).selectAll('.iso-line').remove()
     return this
   }
+
   drawWind (data) {
     let containerG = d3.select(this.el).select('.wind-g')
     containerG.selectAll('path').remove()
@@ -205,10 +211,12 @@ export default class {
     }
     return this
   }
+
   clearWind () {
     d3.select(this.el).select('.wind-g').selectAll('path').remove()
     return this
   }
+
   highlightFactory (factory) {
     d3.select(this.el).selectAll('.factory-circle').attr({
       'stroke': '#888',
@@ -221,6 +229,7 @@ export default class {
       })
     return this
   }
+
   drawISOLine ({sensorData, factory, maxValue, maxRadius, chemical}) {
     this.sensorData = sensorData
     let g = d3.select(this.el).select('#' + factory)
@@ -231,8 +240,8 @@ export default class {
 
     let radius = maxRadius
     this.rScale
-      .range([ 0, radius ])
-      .domain([ 0, maxValue ])
+      .range([0, radius])
+      .domain([0, maxValue])
 
     var radarLine = d3.svg.line.radial()
       .interpolate('basis-closed')
@@ -255,32 +264,45 @@ export default class {
       .attr('fill', color)
       .attr('fill-opacity', (d, i) => i * 0)
   }
+
   clearPeriodLine () {
     d3.select(this.el).selectAll('.time-period-line').remove()
     return this
   }
+
   drawPeriodLine ({current, periodData, chemical, factory}) {
     d3.select(this.el).selectAll('.time-period-line').remove()
-    let { domain, data, periodWind } = periodData
+    let {domain, data, periodWind} = periodData
     let width = 60
     let height = 30
     Object.keys(data).forEach((sensor) => {
-      let sensorData = data[ sensor ]
+      let sensorData = data[sensor]
       let g = d3.select(this.el).select('#Sensor' + sensor)
+      g.attr('cursor', 'pointer')
+        .on('mouseover', (d) => {
+          let display = {
+            time: current,
+            chemical: chemical,
+            reading: sensorData[current]
+          }
+          skyeyeTooltip.show(display, d3.event)
+        })
+        .on('mouseout', (d) => {
+          skyeyeTooltip.hide()
+        })
       let containerG = g.append('g')
         .attr('class', 'time-period-line')
         .attr('transform', sensor === 'S6' ? 'translate(' + sensorSize + ',' + 10 + ')' : 'translate(' + sensorSize + ',' + -height + ')')
-
-      let x = d3.scale.ordinal().rangeRoundPoints([ 0, width ])
-      let y = d3.scale.linear().range([ height, 0 ])
+      let x = d3.scale.ordinal().rangeRoundPoints([0, width])
+      let y = d3.scale.linear().range([height, 0])
       x.domain(Object.keys(sensorData))
-      y.domain([ domain.min, domain.max ])
+      y.domain([domain.min, domain.max])
 
       let line = d3.svg.line()
         .x((d) => x(d))
-        .y((d) => y(sensorData[ d ]))
+        .y((d) => y(sensorData[d]))
       containerG.selectAll('path')
-        .data([ Object.keys(sensorData) ])
+        .data([Object.keys(sensorData)])
         .enter()
         .append('path')
         .attr('d', line)
@@ -290,10 +312,20 @@ export default class {
 
       containerG.append('circle')
         .attr('cx', x(current))
-        .attr('cy', y(sensorData[ current ]))
+        .attr('cy', y(sensorData[current]))
         .attr('r', 2)
         .attr('fill', 'red')
-
+        .on('mouseover', (d) => {
+          let display = {
+            time: current,
+            chemical: chemical,
+            reading: sensorData[current]
+          }
+          skyeyeTooltip.show(display, d3.event)
+        })
+        .on('mouseout', (d) => {
+          skyeyeTooltip.hide()
+        })
       var xAxis = d3.svg.axis()
         .scale(x)
         .ticks(0)
@@ -365,7 +397,7 @@ export default class {
     return this
   }
 
-  draw ({ periodData, sensorData, windData, factory, maxValue, maxRadius, current, chemical }) {
+  draw ({periodData, sensorData, windData, factory, maxValue, maxRadius, current, chemical}) {
     // this.windData = windData
     // this.sensorData = sensorData
     // this.periodData = periodData
@@ -415,8 +447,15 @@ export default class {
       .attr('fill', 'red')
       // .attr('fill', d => compute(linear(d.value)))
       .attr('fill-opacity', d => 0.8 * linear(d.value) / 3)
+      // .on('mouseover', (d) => {
+      //   skyeyeTooltip.show({'x': d.$x, 'y': d.$y, 'value': d.value}, d3.event)
+      // })
+      // .on('mouseout', (d) => {
+      //   skyeyeTooltip.hide()
+      // })
     return this
   }
+
   on (name, cb) {
     this[name] = cb
   }

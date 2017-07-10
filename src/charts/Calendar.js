@@ -4,6 +4,7 @@
 import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
+import {skyeyeTooltip, formatFunc} from '../commons/utils'
 let {chemicalOpts, safeColor, dangerColor} = config
 
 export default class {
@@ -69,6 +70,20 @@ export default class {
         .attr('stroke', '#fff')
         .on('click', (d) => {
           this.clickDay(d, data[d], ch)
+        })
+        .on('mouseover', (d) => {
+          let display = {
+            time: formatFunc(new Date(+d)),
+            chemical: ch,
+            count: data[d][ch].value
+          }
+          // chemicalOpts.forEach((c) => {
+          //   display[c] = data[d][c].value
+          // })
+          skyeyeTooltip.show(display, d3.event)
+        })
+        .on('mouseout', (d) => {
+          skyeyeTooltip.hide()
         })
     })
     day.append('text')

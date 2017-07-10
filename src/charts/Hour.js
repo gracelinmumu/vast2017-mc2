@@ -4,7 +4,7 @@
 import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
-import {formatFunc} from '../commons/utils'
+import {formatFunc, skyeyeTooltip} from '../commons/utils'
 let {dangerColor, safeColor, colorMap} = config
 safeColor
 colorMap
@@ -66,6 +66,17 @@ export default class {
         .attr('stroke-width', 1)
         .on('click', (d) => {
           this.clickHour(d, ch)
+        })
+        .on('mouseover', (d) => {
+          let display = {
+            time: d,
+            chemical: ch,
+            reading: chemicalData[d]
+          }
+          skyeyeTooltip.show(display, d3.event)
+        })
+        .on('mouseout', (d) => {
+          skyeyeTooltip.hide()
         })
     })
 

@@ -4,6 +4,7 @@
 import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
+import {skyeyeTooltip} from '../commons/utils'
 let {windColor} = config
 let domainMap = {
   4: [new Date('3/31/2016 23:00:00'), new Date('5/1/2016 1:00:00')],
@@ -75,6 +76,13 @@ export default class {
       .attr('marker-end', 'url(#arrow-target)')
       .attr('fill', windColor)
       .attr('stroke', windColor)
+      .on('mouseover', (d) => {
+        let {speed, direction, date} = d
+        skyeyeTooltip.show({time: date, speed, direction}, d3.event)
+      })
+      .on('mouseout', (d) => {
+        skyeyeTooltip.hide()
+      })
     this.clearHighLight()
     return this
   }
