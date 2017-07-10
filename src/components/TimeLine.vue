@@ -1,6 +1,11 @@
 <template>
   <div class="uk-width-1-1">
     <span class="comps-title"><b>Reading View</b></span>
+    <div class="uk-align-right"> Month<button v-for="month in monthOpts"
+                       class="uk-button"
+                       :class="{'uk-button-primary': selectedMonth===month}"
+                       @click="switchMonth(month)">M{{month}}
+    </button></div>
     <button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>
     </button>
   </div>
@@ -40,6 +45,7 @@
   import SelectMenu from './SelectMenu.vue'
   import storage from '../commons/storage'
   import Histogram from '../charts/Histogram'
+  import config from '../commons/config'
   import {
     month,
     chemical,
@@ -48,17 +54,21 @@
     threshold,
     sctDataToken,
     sctBarChart,
-    isPlay,
     selectedBar
   } from '../vuex/getters'
-  import {removeSCTChart, updateSelectedBar, switchPlay, updateThreshold} from '../vuex/actions'
+  import {switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold} from '../vuex/actions'
 
   let allData = null
-
+  let monthOpts = config.monthOpts
   export default {
     vuex: {
-      getters: { month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, isPlay, selectedBar },
-      actions: { removeSCTChart, updateSelectedBar, switchPlay, updateThreshold }
+      getters: { selectedMonth: month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, selectedBar },
+      actions: { switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold }
+    },
+    data () {
+      return {
+        monthOpts
+      }
     },
     watch: {
       sctDataToken () {

@@ -1,15 +1,15 @@
 <template>
   <div class="uk-width-1-1 top">
-    <div class="uk-width-1-1">
-      <p class="p-title">Month</p>
-      <div class="uk-width-1-1 uk-flex uk-flex-wrap">
-        <button :class="{'uk-button-primary': op === month}"
-                class="uk-button"
-                v-for="op in monthOpts"
-                @click="switchMonth(op)">M{{op}}
-        </button>
-      </div>
-    </div>
+    <!--<div class="uk-width-1-1">-->
+      <!--<p class="p-title">Month</p>-->
+      <!--<div class="uk-width-1-1 uk-flex uk-flex-wrap">-->
+        <!--<button :class="{'uk-button-primary': op === month}"-->
+                <!--class="uk-button"-->
+                <!--v-for="op in monthOpts"-->
+                <!--@click="switchMonth(op)">M{{op}}-->
+        <!--</button>-->
+      <!--</div>-->
+    <!--</div>-->
     <hr>
     <div class="uk-width-1-1">
       <p class="p-title">Chemical</p>

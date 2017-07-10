@@ -4,7 +4,7 @@
 import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
-let {colorMap, chemicalOpts} = config
+let {chemicalOpts, safeColor, dangerColor} = config
 
 export default class {
   constructor (el) {
@@ -25,7 +25,7 @@ export default class {
 
     let colorScale = {}
     chemicalOpts.forEach((ch) => {
-      let compute = d3.interpolate(colorMap[ch][0], colorMap[ch][1])
+      let compute = d3.interpolate(safeColor, dangerColor)
       let linear = d3.scale.linear()
         .domain([0, domainMap[ch]])
         .range([ 0, 1 ])
@@ -53,18 +53,20 @@ export default class {
       .attr('cursor', 'pointer')
     // compute
     // linear
-    let chLen = selectedChemicals.length
+    let chLen = chemicalOpts.length
     let w = chLen < 4 ? cellSize / chLen : cellSize / 2
     let h = chLen > 3 ? cellSize / 2 : cellSize
 
-    selectedChemicals.forEach((ch, index) => {
+    chemicalOpts.forEach((ch, index) => {
       let colorS = colorScale[ch]
+      let noColor = selectedChemicals.indexOf(ch) === -1
       day.append('rect')
         .attr('width', w)
         .attr('height', h)
         .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
         .attr('y', chLen > 3 && index > 1 ? h : 0)
-        .attr('fill', d => this.getColor(colorS, data[d][ch].value))
+        .attr('fill', d => noColor ? 'none' : this.getColor(colorS, data[d][ch].value))
+        .attr('stroke', '#fff')
         .on('click', (d) => {
           this.clickDay(d, data[d], ch)
         })
@@ -76,7 +78,6 @@ export default class {
       .attr({
         'text-anchor': 'middle',
         'dominant-baseline': 'middle',
-        'font-size': '16px',
         'fill': '#888',
         'pointer-events': 'none'
       })

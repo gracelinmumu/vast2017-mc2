@@ -255,4 +255,7 @@
     margin-left: 10px;
     margin-right: 2px;
   }
+  input[type="number"] {
+    width: 30px;
+  }
 </style>

@@ -4,8 +4,8 @@
   <div class="calendar-legend uk-align-right" v-el:legend></div>
   <!--params-->
   <div class="uk-width-1-1 uk-flex uk-flex-wrap">
-    Sensor:&nbsp;  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
-    &nbsp;&nbsp;&nbsp;Chemicals: &nbsp; <template v-for="op in chemicalOpts">
+    Sensor:  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
+     Chemicals: <template v-for="op in chemicalOpts">
     <input type="checkbox" id="chemical" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
     <label for="chemical" :class="{'label-color': chemicalsMap[op]}">{{op}}{{chemicalsMap[op]}}</label>
   </template>
@@ -38,7 +38,7 @@
   import Hour from '../charts/Hour'
   import storage from '../commons/storage'
   import {selectedBar, timeToken, threshold} from '../vuex/getters'
-  import {updateSelectedTime, updateSelectedChemical} from '../vuex/actions'
+  import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
   import config from '../commons/config'
   import CalendarLegend from '../charts/CalendarLegend'
   let dataByTime = null
@@ -56,7 +56,7 @@
   export default {
     vuex: {
       getters: { selectedBar, timeToken, threshold },
-      actions: {updateSelectedTime, updateSelectedChemical}
+      actions: {updateSelectedTime, updateSelectedChemical, switchMonth}
     },
     components: { Dialog },
     watch: {
@@ -80,7 +80,7 @@
       },
       selectedChemicals () {
         this.update()
-        this.legendChart && this.legendChart.update(this.selectedChemicals)
+        // this.legendChart && this.legendChart.update(this.selectedChemicals)
       },
       selectedSensor () {
         this.update()
@@ -123,6 +123,8 @@
       },
       clickDay (day, data, ch) {
         let d = new Date(+day)
+        let month = 1 + d.getMonth()
+        this.switchMonth(month)
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
           this.hoursData = [ { sensor: this.selectedSensor, chemical: ch, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
         }
@@ -235,7 +237,7 @@
 <style lang="less" scoped>
   @right: 40px;
   @hour-wid: 40px;
-  @container-left-width: 250px;
+  @container-left-width: 150px;
   .calendar-legend {
     width: 40px;
     height: 40px;
