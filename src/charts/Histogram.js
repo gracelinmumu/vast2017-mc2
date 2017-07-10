@@ -143,7 +143,7 @@ export default class {
         .duration(brush.empty() ? 0 : 750)
         .call(brush.extent([ [ ext[ 0 ][ 0 ], 0 ], defaultExtent[ 1 ] ]))
         .call(brush.event)
-      self.updateThreshold(this.chemical, newThresh)
+      self.updateThreshold(newThresh, this.chemical)
     }
 
     return this
