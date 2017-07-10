@@ -30,7 +30,7 @@ export default class {
     let width = $(self.el).width()
     let height = $(self.el).height()
     let widthBar
-    console.log('height', height)
+    // console.log('height', height)
     self.svg.attr('height', height)
       .attr('width', width)
 
@@ -57,7 +57,7 @@ export default class {
       widthBar = width / 744
     }
     y.domain([0, d3.max(data)])
-    console.log('max', d3.max(data))
+    // console.log('max', d3.max(data))
 
     // self.svg.append('g')
     //   .attr('class', 'x axis')
@@ -79,14 +79,14 @@ export default class {
     //   .style('text-anchor', 'end')
     //   .text('Value')
 
-    console.log('data', data)
+    // console.log('data', data)
     let xMonth = []
     if (month === 4) {
       xMonth = d3.time.hours(new Date(2016, month, 1), new Date(2016, month, 30))
     } else {
       xMonth = d3.time.hours(new Date(2016, month, 1), new Date(2016, month, 31))
     }
-    console.log(xMonth)
+    // console.log(xMonth)
 
     // self.svg.selectAll('bar')
     let rect = container.selectAll('.bar')

@@ -125,24 +125,24 @@
       },
       calcAndDrawDiff (ch, selector) {
         // ch里面有factory和month
-        console.log(ch)
+        // console.log(ch)
         let { month, factory } = ch
         this.month = month
         this.factory = factory
-        console.log('DirectionDiff calcAndDrawDiff', month)
-        console.log(this.diffChart)
+        // console.log('DirectionDiff calcAndDrawDiff', month)
+        // console.log(this.diffChart)
 
         // todo: 从哪里获得传感器信息？
         this.sensor = 'S6'
 
         // 容器选择器
-        console.log(selector)
+        // console.log(selector)
 
         // 绘图数据是data
-        console.log('wind data', windData)
+        // console.log('wind data', windData)
         let data = windData
 
-        console.log(this.factory)
+        // console.log(this.factory)
         // Step1 处理数据
         // todo: factor and sensor loc
         let factoryLoc = {}
@@ -151,14 +151,14 @@
         let sensorLoc = {}
         sensorLoc.x = localSensorsLoc[this.sensor][0]
         sensorLoc.y = localSensorsLoc[this.sensor][1]
-        console.log('diff processdata', month, factoryLoc, sensorLoc)
+        // console.log('diff processdata', month, factoryLoc, sensorLoc)
         let chartData = this.processData(data, month, factoryLoc, sensorLoc)
         chartData
 
         // this.threshold 不同化学物质的阈值
         // Step2绘图
         this.$nextTick(() => {
-          console.log('next tick of direction diff vue')
+          // console.log('next tick of direction diff vue')
           let chart = new DiffChart(selector)
           this.diffCharts[selector] = chart
           chart.draw(chartData, month)

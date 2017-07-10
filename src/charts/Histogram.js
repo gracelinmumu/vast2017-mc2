@@ -146,7 +146,7 @@ export default class {
         .duration(brush.empty() ? 0 : 750)
         .call(brush.extent([ [ ext[ 0 ][ 0 ], 0 ], defaultExtent[ 1 ] ]))
         .call(brush.event)
-      console.log('threshold 99999999999999999999999999999999999999999999999999999999999999999', newThresh, self.chemical)
+      // console.log('threshold 99999999999999999999999999999999999999999999999999999999999999999', newThresh, self.chemical)
       self.updateThreshold(newThresh, self.chemical) // todo
     }
 
@@ -154,7 +154,7 @@ export default class {
   }
 
   update (threshold) {
-    console.log('histogram hello', threshold)
+    // console.log('histogram hello', threshold)
     this.svg.select('.histogram')
       .selectAll('.bar')
       .selectAll('rect')
