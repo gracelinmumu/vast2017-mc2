@@ -38,7 +38,7 @@
   import Hour from '../charts/Hour'
   import storage from '../commons/storage'
   import {selectedBar, timeToken, threshold} from '../vuex/getters'
-  import {updateSelectedTime, updateSelectedChemical} from '../vuex/actions'
+  import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
   import config from '../commons/config'
   import CalendarLegend from '../charts/CalendarLegend'
   let dataByTime = null
@@ -56,7 +56,7 @@
   export default {
     vuex: {
       getters: { selectedBar, timeToken, threshold },
-      actions: {updateSelectedTime, updateSelectedChemical}
+      actions: {updateSelectedTime, updateSelectedChemical, switchMonth}
     },
     components: { Dialog },
     watch: {
@@ -123,6 +123,8 @@
       },
       clickDay (day, data, ch) {
         let d = new Date(+day)
+        let month = 1 + d.getMonth()
+        this.switchMonth(month)
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
           this.hoursData = [ { sensor: this.selectedSensor, chemical: ch, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
         }

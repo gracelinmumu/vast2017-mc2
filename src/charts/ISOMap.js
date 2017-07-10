@@ -10,7 +10,7 @@ monitorImg
 factoryImg
 import config from '../commons/config'
 let { factoriesLoc, sensorsLoc, colorMap } = config
-
+let windColor = 'rgba(189,217,252,0.5)'
 const getAngles = (pos1, pos2) => {
   let radius = Math.atan((pos1[1] - pos2[1]) / (pos1[0] - pos2[0])) * 180 / Math.PI
   return radius
@@ -24,7 +24,6 @@ Object.keys(sensorsLoc).forEach((s) => {
   })
 })
 
-let windColor = 'rgba(189,217,252,0.5)'
 let factorySize = 5
 let sensorSize = 10
 export default class {

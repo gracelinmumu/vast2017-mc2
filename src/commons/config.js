@@ -31,7 +31,9 @@ let config = {
     Appluimonia: ['#e4f4f5', '#0082ff'],
     'AGOC-3A': ['#d4c1dc', '#7b4fde'] // '#fbcf00'
   },
-  colorText: '#63c4ff'
+  colorText: '#63c4ff',
+  windColor: '#888'
+  // windColor: '#000'
 }
 
 export default config
