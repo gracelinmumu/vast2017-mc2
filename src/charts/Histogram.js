@@ -8,8 +8,9 @@ import config from '../commons/config.js'
 let {dangerColor, safeColor} = config
 
 export default class {
-  constructor (el) {
+  constructor (el, chemical) {
     this.el = el
+    this.chemical = chemical
     this.updateThreshold = null
     this.brush = null
     this.height = -1
@@ -142,7 +143,7 @@ export default class {
         .duration(brush.empty() ? 0 : 750)
         .call(brush.extent([ [ ext[ 0 ][ 0 ], 0 ], defaultExtent[ 1 ] ]))
         .call(brush.event)
-      self.updateThreshold(newThresh)
+      self.updateThreshold(this.chemical, newThresh)
     }
 
     return this

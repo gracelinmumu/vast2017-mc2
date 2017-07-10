@@ -106,7 +106,7 @@
         // this.threshold 不同化学物质的阈值
         // Step2绘图
         this.$nextTick(() => {
-          let chart = new Histogram(selector)
+          let chart = new Histogram(selector, bar.chemical)
           // new
           this.histCharts[selector] = chart
           this.barChemical = bar.chemical
