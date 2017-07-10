@@ -10,6 +10,7 @@ monitorImg
 factoryImg
 import {skyeyeTooltip} from '../commons/utils'
 import config from '../commons/config'
+
 let {factoriesLoc, sensorsLoc, colorMap} = config
 let windColor = 'rgba(189,217,252,0.5)'
 const getAngles = (pos1, pos2) => {
@@ -447,12 +448,40 @@ export default class {
       .attr('fill', 'red')
       // .attr('fill', d => compute(linear(d.value)))
       .attr('fill-opacity', d => 0.8 * linear(d.value) / 3)
-      // .on('mouseover', (d) => {
-      //   skyeyeTooltip.show({'x': d.$x, 'y': d.$y, 'value': d.value}, d3.event)
-      // })
-      // .on('mouseout', (d) => {
-      //   skyeyeTooltip.hide()
-      // })
+    // .on('mouseover', (d) => {
+    //   skyeyeTooltip.show({'x': d.$x, 'y': d.$y, 'value': d.value}, d3.event)
+    // })
+    // .on('mouseout', (d) => {
+    //   skyeyeTooltip.hide()
+    // })
+    return this
+  }
+
+  getPath (arr) {
+    let str = 'M'
+    arr.forEach((d, index) => {
+      // let {x, y} = this.getPos(d[0], d[1])
+      str += (d[0] + ' ' + d[1])
+      index !== (arr.length - 1) && (str += ' L')
+    })
+    return str
+  }
+
+  drawISOLine2 ({contours}) {
+    d3.select(this.el).select('svg').select('.iso-map-g').selectAll('path').remove()
+    // console.log(points)
+    let g = d3.select(this.el).select('.iso-map-g')
+    contours.forEach(contour => {
+      g.selectAll('.iso-line')
+        .data(contour)
+        .enter()
+        .append('path')
+        .attr('class', 'iso-line')
+        .attr('d', d => this.getPath(d))
+        .attr('fill', 'none')
+        .attr('stroke', 'red')
+    })
+
     return this
   }
 

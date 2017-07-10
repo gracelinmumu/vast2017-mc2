@@ -84,6 +84,7 @@ export default class {
         skyeyeTooltip.hide()
       })
     this.clearHighLight()
+    wind
     return this
   }
   clearHighLight () {

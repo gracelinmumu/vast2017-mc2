@@ -3,6 +3,7 @@
  */
 // import Krigins from './Kriging'
 import math from '../../plugins/math.min'
+import MarchingSquaresJS from '../../plugins/marchingsquares-isocontours.min'
 const getDist = (s, t) => {
   let dist = Math.pow((s[0] - t[0]), 2) + Math.pow((s[1] - t[1]), 2)
   return Math.sqrt(dist)
@@ -10,6 +11,15 @@ const getDist = (s, t) => {
 
 const IDX2D = (x, y, cols) => {
   return x * cols + y
+}
+
+let w = 990
+let h = 760
+let xScale = (x) => {
+  (x - 40) * (w) / (140 - 40)
+}
+let yScale = (x) => {
+  (x - 60) * (h) / (-60 - 40)
 }
 
 Array.prototype.reshape = function (rows, cols) {
@@ -165,7 +175,10 @@ function linearFitting (n, x, y) {
 onmessage = (evt) => {
   let data = evt.data
   let {sensorsLoc, sensorData} = data
-  let pos = Object.keys(sensorsLoc).map(d => sensorsLoc[d])
+  let pos = Object.keys(sensorsLoc).map(d => {
+    let p = sensorsLoc[d]
+    return [xScale(p[0]), xScale(p[1])]
+  })
   let len = pos.length
   let count = 0
   let dists = new Array(len * (len - 1) / 2)
@@ -180,7 +193,8 @@ onmessage = (evt) => {
   //   0.410145,
   //   0.130422]
   let semigrams = new Array(len * (len - 1) / 2)
-
+  let maxValue = Math.max(...Z)
+  let min = Math.min(...Z)
   // Step 1 计算两两坐标之间的距离
   for (let i = 0; i < len; ++i)
     for (let j = 0; j < i; ++j) {
@@ -195,15 +209,18 @@ onmessage = (evt) => {
   let dims = 2
   let InvV = calcInvV(dims, len, pos, mode, c0, c1, a)
   let target = new Array(dims)
-
+  var values = new Array(w * h)
+  values.reshape(w, h)
+  values
+  let contours = []
   let points = []
   let max = 0
-  for (let x = 50; x < 130; ++x) {
-    for (let y = 0; y < 60; ++y) {
-      target[0] = Math.round(1.0 * x / 200 * 200)
-      target[1] = Math.round(1.0 * y / 200 * 200)
+  for (let x = 0; x < w; ++x) {
+    for (let y = 0; y < h; ++y) {
+      target[0] = Math.round(1.0 * x / w * w)
+      target[1] = Math.round(1.0 * y / h * h)
       let results = interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1)
-
+      values[x][y] = results.value
       // if ((y % 3 === 0) && (x % 3 === 0)) {
       points.push({
         x: target[0],
@@ -213,6 +230,11 @@ onmessage = (evt) => {
       max = Math.max(max, results.value)
       // }
     }
+  }
+  let isoCount = 10
+  let step = (maxValue - min) / isoCount
+  for (let i = 0; i < isoCount; i++) {
+    contours.push(MarchingSquaresJS.isoContours(values, min + step * i))
   }
   // test
   // for (let i = 0; i < len; ++i) {
@@ -229,5 +251,5 @@ onmessage = (evt) => {
   //   })
   //   max = Math.max(max, value)
   // }
-  self.postMessage({points, domain: [0, max]})
+  self.postMessage({points, contours, domain: [0, max]})
 }

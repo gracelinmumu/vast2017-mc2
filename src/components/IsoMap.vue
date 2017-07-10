@@ -147,8 +147,13 @@
             })
             worker.onmessage = (evt) => {
               let evtData = evt.data
-              let {points, posData, domain} = evtData
-              this.chartIns.drawISOLine1({ points, posData, domain })
+              let {points, posData, domain, contours} = evtData
+              points
+              posData
+              domain
+              console.log(contours, 'contours')
+//              this.chartIns.drawISOLine1({ points, posData, domain })
+              this.chartIns.drawISOLine2({ contours })
             }
           } else {
             this.chartIns.clearISOLine()
