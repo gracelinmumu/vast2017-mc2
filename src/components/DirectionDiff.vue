@@ -1,35 +1,20 @@
 <template>
-  <div class="container uk-width-1-1">
-      <div class="uk-width-1-1" v-for="(index, ch) in diffChart"> <!--diffChart-->
-        <i class="uk-icon-close uk-align-right"></i>
-        <span class="uk-badge uk-badge-primary">{{ch.factory}} - {{ch.sensor}}</span>
-        <div class="uk-width-1-1 chart" :id="'DirectionDiff-'+index" :draw="calcAndDrawDiff(ch, '#DirectionDiff-'+index)"></div>
-      </div>
-  </div>
+    <div class="container uk-width-1-1">
+        <div class="uk-width-1-1" v-for="(index, ch) in diffChart"> <!--diffChart-->
+            <i class="uk-icon-close uk-align-right"></i>
+            <span class="uk-badge uk-badge-primary">{{ch.factory}} - {{ch.sensor}}</span>
+            <div class="uk-width-1-1 chart" :id="'DirectionDiff-'+index"
+                 :draw="calcAndDrawDiff(ch, sensor, '#DirectionDiff-'+index)"></div>
+        </div>
+    </div>
 </template>
 <script>
-  import {sctBarChart, diffChart, sctDataToken, threshold, windToken} from '../vuex/getters'
+  import {month, sensor, sctBarChart, diffChart, sctDataToken, threshold, windToken} from '../vuex/getters'
   import config from '../commons/config'
   import storage from '../commons/storage'
   import DiffChart from '../charts/DiffChart'
 
-  let localFactoriesLoc = {
-    'Roadrunner': [ 89, 27 ],
-    'Kasios': [ 90, 21 ],
-    'Radiance': [ 109, 26 ],
-    'Indigo': [ 120, 22 ]
-  }
-  let localSensorsLoc = {
-    S1: [ 62, 21 ],
-    S2: [ 66, 35 ],
-    S3: [ 76, 41 ],
-    S4: [ 88, 45 ],
-    S5: [ 103, 43 ],
-    S6: [ 102, 22 ],
-    S7: [ 89, 3 ],
-    S8: [ 74, 7 ],
-    S9: [ 119, 42 ]
-  }
+  let {sensorsLoc, factoriesLoc} = config
 
   const calDiffSizePercent = (factoryLoc, sensorLoc, windDirection) => {
     let dx = factoryLoc.x - sensorLoc.x
@@ -58,18 +43,12 @@
 
     return scoreSize
   }
+
   let allData = null
   let windData = null
-  let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
-  // let sensorsLoc2 = JSON.parse(JSON.stringify(sensorsLoc))
-
-  console.log('sensorOpts', sensorOpts, 'sssssssssssssssssssssssssssssssssss')
-  console.log('factoryOpts', factoryOpts, 'ssssssssssssssssssssssssssssssssssssss')
-  console.log('Loc', sensorsLoc, factoriesLoc, 'sssssssssssssssssssssssssssssssssssssssssssssss')
-
   export default {
     vuex: {
-      getters: { sctBarChart, diffChart, sctDataToken, threshold, windToken }
+      getters: {month, sensor, sctBarChart, diffChart, sctDataToken, threshold, windToken}
     },
     watch: {
       sctDataToken () {
@@ -86,22 +65,21 @@
           if (this.threshold) this.update()
         }
       },
-      factory: {
-        deep: true,
-        handler () {
-          if (this.factory) this.update()
-        }
+      factory () {
+        if (this.factory) this.update()
       },
       selectedBar: {
         deep: true,
         handler () {
           if (this.selectedBar) this.update()
         }
+      },
+      month () {
+        this.update()
       }
     },
     data () {
       return {
-        sensor: null,
         factory: null,
         diffCharts: {},
         selectedFactory: null,
@@ -113,47 +91,34 @@
     methods: {
       update () {
         // todo 处理数据 画图
-        let factoryLoc = {}
-        factoryLoc.x = localFactoriesLoc[this.factory][0]
-        factoryLoc.y = localFactoriesLoc[this.factory][1]
-        let sensorLoc = {}
-        sensorLoc.x = localSensorsLoc[this.sensor][0]
-        sensorLoc.y = localSensorsLoc[this.sensor][1]
+        let factoryLoc = {
+          x: factoriesLoc[this.factory][0],
+          y: factoriesLoc[this.factory][1]
+        }
+        let sensorLoc = {
+          x: sensorsLoc[this.sensor][0],
+          y: sensorsLoc[this.sensor][1]
+        }
         this.processData(windData, this.month, factoryLoc, sensorLoc)
-        // this.drawDiff()
         return
       },
-      calcAndDrawDiff (ch, selector) {
-        // ch里面有factory和month
-        // console.log(ch)
-        let { month, factory } = ch
+      calcAndDrawDiff (ch, sensor, selector) {
+        let {month, factory} = ch
         this.month = month
         this.factory = factory
-        // console.log('DirectionDiff calcAndDrawDiff', month)
-        // console.log(this.diffChart)
-
-        // todo: 从哪里获得传感器信息？
-        this.sensor = 'S6'
-
-        // 容器选择器
-        // console.log(selector)
 
         // 绘图数据是data
-        // console.log('wind data', windData)
         let data = windData
 
-        // console.log(this.factory)
         // Step1 处理数据
         // todo: factor and sensor loc
         let factoryLoc = {}
-        factoryLoc.x = localFactoriesLoc[this.factory][0]
-        factoryLoc.y = localFactoriesLoc[this.factory][1]
+        factoryLoc.x = factoriesLoc[this.factory][0]
+        factoryLoc.y = factoriesLoc[this.factory][1]
         let sensorLoc = {}
-        sensorLoc.x = localSensorsLoc[this.sensor][0]
-        sensorLoc.y = localSensorsLoc[this.sensor][1]
-        // console.log('diff processdata', month, factoryLoc, sensorLoc)
+        sensorLoc.x = sensorsLoc[sensor][0]
+        sensorLoc.y = sensorsLoc[sensor][1]
         let chartData = this.processData(data, month, factoryLoc, sensorLoc)
-        chartData
 
         // this.threshold 不同化学物质的阈值
         // Step2绘图
@@ -167,17 +132,20 @@
       // 风向差异图数据处理
       processData (data, month, factoryLoc, sensorLoc) {
         let tmpdataValues = []
-        for (let i = 0; i < data.length; i++) {
-          let d = data[i].date
-          let m = new Date(d).getMonth() + 1
-          if (m === month) {
-            // console.log('calDiffSizePercent', calDiffSizePercent(factoryLoc, sensorLoc, data[i].direction))
-            tmpdataValues.push({
-              x: data[i].date,
-              y: calDiffSizePercent(factoryLoc, sensorLoc, data[i].direction)
-            })
+        if (data) {
+          for (let i = 0; i < data.length; i++) {
+            let d = data[i].date
+            let m = new Date(d).getMonth() + 1
+            if (m === month) {
+              // console.log('calDiffSizePercent', calDiffSizePercent(factoryLoc, sensorLoc, data[i].direction))
+              tmpdataValues.push({
+                x: data[i].date,
+                y: calDiffSizePercent(factoryLoc, sensorLoc, data[i].direction)
+              })
+            }
           }
         }
+
         return tmpdataValues
       }
     }
@@ -242,7 +210,7 @@
     z-index: 2;
     font-size: 8px;
     cursor: pointer;
-  }
+    }
   .mouseovertip {
     position: absolute;
     border-radius: 3px;
@@ -262,14 +230,10 @@
   .mouseover_linechart {
     stroke: yellow;
   }
-
-  /*let colored line become unable to be mouseovered*/
   .colored_line {
     pointer-events: none;
     z-index: 3;
   }
-
-  /*let colored point become unable to be mouseovered*/
   .colored_point {
     pointer-events: none;
   }

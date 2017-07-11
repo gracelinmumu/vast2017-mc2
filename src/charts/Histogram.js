@@ -4,14 +4,13 @@
 import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config.js'
-
+import {skyeyeTooltip} from '../commons/utils'
 let {dangerColor, safeColor} = config
-
+skyeyeTooltip
 export default class {
   constructor (el, chemical) {
     this.el = el
     this.chemical = chemical
-    // console.log('cccccccccccccccccccccccccccccccccccccccc', chemical, this.chemical)
     this.updateThreshold = null
     this.brush = null
     this.height = -1
@@ -94,7 +93,13 @@ export default class {
       .attr('height', d => scale(d.y))
       .attr('fill', d => d.x > threshold ? dangerColor : safeColor)
       .attr('stroke', '#fff')
-
+      // .on('mouseover', (d, index) => {
+      //   console.log(d)
+      //   skyeyeTooltip.show(d, d3.event)
+      // })
+      // .on('mouseout', d => {
+      //   skyeyeTooltip.hide()
+      // })
     rect.append('text')
       .text(d => d.x.toFixed(2))
       .attr('x', 0)
