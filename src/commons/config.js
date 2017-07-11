@@ -32,7 +32,11 @@ let config = {
     'AGOC-3A': ['#d4c1dc', '#7b4fde'] // '#fbcf00'
   },
   colorText: '#63c4ff',
-  windColor: '#888'
+  windColor: '#888',
+  currentTime: {
+    color: '#f2753f',
+    width: 2
+  }
   // windColor: '#000'
 }
 

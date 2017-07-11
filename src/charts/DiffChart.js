@@ -3,7 +3,8 @@
  */
 import d3 from 'd3'
 import $ from 'jquery'
-
+import config from '../commons/config'
+let {currentTime} = config
 export default class {
   constructor (el) {
     this.el = el
@@ -29,8 +30,8 @@ export default class {
     this.margin = {
       top: 10,
       bottom: 10,
-      left: 10,
-      right: 10
+      left: 0,
+      right: 0
     }
     return this
   }
@@ -39,7 +40,7 @@ export default class {
     let width = this.width - this.margin.left - this.margin.right
     let height = this.height - this.margin.top - this.margin.bottom
     // this.svg.attr('height', height) // ?
-
+    this.svg.selectAll('g').remove()
     this.data = data
 
     this.axisXScale = d3.time.scale()
@@ -56,7 +57,23 @@ export default class {
 
     // console.log('before linechart')
   }
-
+  clearCurrent () {
+    this.svg.selectAll('.highlight').remove()
+    return this
+  }
+  highlightCurrent (time) {
+    this.clearCurrent()
+    this.svg.append('line')
+      .attr('x1', this.axisXScale(new Date(time)))
+      .attr('x2', this.axisXScale(new Date(time)))
+      .attr('y2', this.height)
+      .attr('y1', 0)
+      .attr('stroke', currentTime.color)
+      .attr('stroke-width', currentTime.width)
+      .attr('pointer-events', 'none')
+      .attr('class', 'highlight')
+    return this
+  }
   update () {
     let data = this.data
     this.svg.selectAll('.areadiff').remove()

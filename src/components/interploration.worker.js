@@ -167,14 +167,14 @@ function linearFitting (n, x, y) {
 onmessage = (evt) => {
   let data = evt.data
   let {sensorsLoc, sensorData, width, height} = data
-
-  let w = Math.ceil(height)
-  let h = Math.ceil(width)
+  let scaleWidth = Math.ceil(Math.min(width, height))
+  let w = scaleWidth
+  let h = scaleWidth
   let xScale = (x) => {
     return (x - 40) * (w) / (140 - 40)
   }
   let yScale = (x) => {
-    return (x - 60) * (h) / (-60 - 40)
+    return (x - 60) * (h) / (-40 - 60)
   }
   let pos = Object.keys(sensorsLoc).map(d => {
     let p = sensorsLoc[d]
@@ -184,7 +184,9 @@ onmessage = (evt) => {
   let len = pos.length
   let count = 0
   let dists = new Array(len * (len - 1) / 2)
-  let Z = Object.keys(sensorData).map((d) => sensorData[d])
+  let Z = Object.keys(sensorsLoc).map((d) => {
+    return sensorData[d]
+  })
   let semigrams = new Array(len * (len - 1) / 2)
   let maxValue = Math.max(...Z)
   let min = Math.min(...Z)
@@ -209,10 +211,10 @@ onmessage = (evt) => {
   let max = 0
   for (let x = 0; x < w; ++x) {
     for (let y = 0; y < h; ++y) {
-      target[0] = Math.round(1.0 * x / w * w)
-      target[1] = Math.round(1.0 * y / h * h)
+      target[0] = x
+      target[1] = y
       let results = interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1)
-      values[x][y] = results.value
+      values[y][x] = results.value
       if ((y % 5 === 0) && (x % 5 === 0)) {
         points.push({
           x: target[0],
@@ -226,14 +228,17 @@ onmessage = (evt) => {
   let isoCount = 10
   let step = (maxValue - min) / isoCount
   for (let i = 0; i < isoCount; i++) {
-    contours.push(MarchingSquaresJS.isoContours(values, min + step * i, step))
+    contours.push({
+      level: +i,
+      contour: MarchingSquaresJS.isoContours(values, min + step * i, step)
+    })
   }
   // test
   // for (let i = 0; i < len; ++i) {
-  //   let x = math.floor(pos[i][0] / 200 * 720)
-  //   let y = math.floor(pos[i][1] / 200 * 720)
-  //   target[0] = 1. * x / 720 * 200
-  //   target[1] = 1. * y / 720 * 200
+  //   // let x = math.floor(xScale(pos[i][0]))
+  //   // let y = math.floor(yScale(pos[i][1]))
+  //   target[0] = pos[i][0]
+  //   target[1] = pos[i][1]
   //   // console.log([pos[i][0], pos[i][1]], [target[0], target[1]])
   //   let value = interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1).value
   //   points.push({

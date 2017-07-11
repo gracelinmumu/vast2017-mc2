@@ -1,20 +1,33 @@
 <template>
-    <div class="container uk-width-1-1">
-        <div class="uk-width-1-1" v-for="(index, ch) in diffChart"> <!--diffChart-->
-            <i class="uk-icon-close uk-align-right"></i>
-            <span class="uk-badge uk-badge-primary">{{ch.factory}} - {{ch.sensor}}</span>
-            <div class="uk-width-1-1 chart" :id="'DirectionDiff-'+index"
-                 :draw="calcAndDrawDiff(ch, sensor, '#DirectionDiff-'+index)"></div>
+    <div class="uk-width-1-1 uk-flex full-height">
+        <div class="container uk-width-5-6">
+            <div class="uk-width-1-1" v-for="(index, ch) in diffChart">
+                <i class="uk-icon-close uk-align-right"></i>
+                <span class="uk-badge uk-badge-primary">{{ch.factory}} - {{ch.sensor}}</span>
+                <div class="uk-width-1-1 chart" :id="'DirectionDiff-'+ch.sensor+ch.factory"
+                     :draw="calcAndDrawDiff(ch, '#DirectionDiff-'+ch.sensor+ch.factory)"></div>
+            </div>
+        </div>
+        <div class="uk-width-1-6">
+            <p class="p-title">Sort</p>
+            <!--<div class="uk-width-1-1 uk-flex uk-flex-wrap uk-flex-space-between">-->
+                <!--<button v-for="op in factoryOpts"-->
+                        <!--class="uk-button"-->
+                        <!--:class="{'uk-button-primary': op === factory}"-->
+                        <!--@click="switchFactory(op)"> {{op}}-->
+                <!--</button>-->
+            <!--</div>-->
         </div>
     </div>
 </template>
 <script>
-  import {month, sensor, sctBarChart, diffChart, sctDataToken, threshold, windToken} from '../vuex/getters'
+  import {month, sensor, factory, diffChart, windToken, selectedHour} from '../vuex/getters'
+  import {addDiffChart, switchFactory} from '../vuex/actions'
   import config from '../commons/config'
   import storage from '../commons/storage'
   import DiffChart from '../charts/DiffChart'
 
-  let {sensorsLoc, factoriesLoc} = config
+  let {sensorsLoc, factoriesLoc, sensorOpts, factoryOpts} = config
 
   const calDiffSizePercent = (factoryLoc, sensorLoc, windDirection) => {
     let dx = factoryLoc.x - sensorLoc.x
@@ -45,76 +58,61 @@
   }
 
   let allData = null
+  allData
   let windData = null
   export default {
     vuex: {
-      getters: {month, sensor, sctBarChart, diffChart, sctDataToken, threshold, windToken}
+      getters: {month, sensor, factory, diffChart, windToken, selectedHour},
+      actions: {addDiffChart, switchFactory}
     },
     watch: {
-      sctDataToken () {
-        allData = storage.get(this.sctDataToken)
-        allData
+      selectedHour () {
+        Object.keys(this.diffCharts).forEach((chart) => {
+          this.diffCharts[chart].highlightCurrent(this.selectedHour)
+        })
+      },
+      factory () {
+        this.addChart()
       },
       windToken () {
         if (this.windToken) windData = storage.get(this.windToken)
-        windData
-      },
-      threshold: {
-        deep: true,
-        handler () {
-          if (this.threshold) this.update()
-        }
-      },
-      factory () {
-        if (this.factory) this.update()
-      },
-      selectedBar: {
-        deep: true,
-        handler () {
-          if (this.selectedBar) this.update()
-        }
       },
       month () {
-        this.update()
+        this.diffChart.forEach((chart, index) => {
+          let selector = '#DirectionDiff-' + chart.sensor + chart.factory
+          this.diffCharts[selector].clearCurrent()
+          this.calcAndDrawDiff(chart, selector)
+        })
       }
     },
     data () {
       return {
-        factory: null,
+        factoryOpts,
         diffCharts: {},
         selectedFactory: null,
-        factorySensorAngle: {},
-        factoryOpts: null,
-        month: null
+        factorySensorAngle: {}
       }
     },
     methods: {
-      update () {
-        // todo 处理数据 画图
-        let factoryLoc = {
-          x: factoriesLoc[this.factory][0],
-          y: factoriesLoc[this.factory][1]
+      addChart () {
+        if (this.factory) {
+          sensorOpts.forEach((sensor) => {
+            this.addDiffChart({ sensor, factory: this.factory, month: this.month })
+          })
         }
-        let sensorLoc = {
-          x: sensorsLoc[this.sensor][0],
-          y: sensorsLoc[this.sensor][1]
-        }
-        this.processData(windData, this.month, factoryLoc, sensorLoc)
-        return
       },
-      calcAndDrawDiff (ch, sensor, selector) {
-        let {month, factory} = ch
-        this.month = month
-        this.factory = factory
-
+      calcAndDrawDiff (ch, selector) {
+        if (!windData && this.windToken) windData = storage.get(this.windToken)
+        let {factory, sensor} = ch
+        let month = this.month
         // 绘图数据是data
         let data = windData
 
         // Step1 处理数据
         // todo: factor and sensor loc
         let factoryLoc = {}
-        factoryLoc.x = factoriesLoc[this.factory][0]
-        factoryLoc.y = factoriesLoc[this.factory][1]
+        factoryLoc.x = factoriesLoc[factory][0]
+        factoryLoc.y = factoriesLoc[factory][1]
         let sensorLoc = {}
         sensorLoc.x = sensorsLoc[sensor][0]
         sensorLoc.y = sensorsLoc[sensor][1]
@@ -124,9 +122,11 @@
         // Step2绘图
         this.$nextTick(() => {
           // console.log('next tick of direction diff vue')
-          let chart = new DiffChart(selector)
-          this.diffCharts[selector] = chart
-          chart.draw(chartData, month)
+          if (!this.diffCharts[selector]) {
+            let chart = new DiffChart(selector)
+            this.diffCharts[selector] = chart
+          }
+          this.diffCharts[selector].draw(chartData, month)
         })
       },
       // 风向差异图数据处理
@@ -148,6 +148,13 @@
 
         return tmpdataValues
       }
+    },
+    created () {
+      factoryOpts.forEach((factory) => {
+        sensorOpts.forEach((sensor) => {
+          this.addDiffChart({ sensor, factory, month: this.month })
+        })
+      })
     }
   }
 </script>

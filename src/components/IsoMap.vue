@@ -3,7 +3,7 @@
   </button>
     <span class="comps-title"><b>ISOMap View</b></span>
     <div class="uk-width-1-1 uk-flex uk-flex-wrap">
-      <span class="tip-title" v-if="selectedHour"> Current Time: </span>  <b class="label-color">{{selectedHour}}</b>
+      <!--<span class="tip-title" v-if="selectedHour"> Current Time: </span>  <b class="label-color">{{selectedHour}}</b>-->
       <span class="tip-title" v-if="factory"> Factory: </span>  <b class="label-color">{{factory}}</b>
     <template class="uk-width-1-1" v-if="selectedHour">
       <span class="tip-title">Show ISOMap: </span> <input type="checkbox" v-model="showISO">
@@ -105,7 +105,7 @@
     },
     data () {
       return {
-        timeBeforeAndAfter: 3,
+        timeBeforeAndAfter: 5,
         factoryOpts,
         chartIns: null,
         playData: {},
@@ -143,7 +143,6 @@
             let worker = new InterWk()
             let width = $(this.$els.chart).width()
             let height = $(this.$els.chart).height()
-            console.log(width, height)
             worker.postMessage({
               sensorsLoc: sensorsLoc2,
               sensorData: playSensor,
@@ -157,7 +156,6 @@
               points
               posData
               domain
-              console.log(contours, 'contours')
 //              this.chartIns.drawISOLine1({ points, posData, domain })
               this.chartIns.drawISOLine2({ contours })
             }

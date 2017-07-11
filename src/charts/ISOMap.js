@@ -44,12 +44,12 @@ export default class {
     this.svg.append('g').attr('class', 'iso-map-g')
     this.width = $(this.el).width()
     this.height = $(this.el).height()
-    this.heightScale = this.width
+    this.heightScale = Math.min(this.width, this.height)
     this.svg.attr('width', this.width).attr('height', this.height)
 
     this.scaleX = d3.scale.linear()
       .domain([40, 140])
-      .range([0, this.width])
+      .range([0, this.heightScale])
     this.scaleY = d3.scale.linear()
       .domain([-40, 60])
       .range([this.heightScale, 0])
@@ -409,7 +409,7 @@ export default class {
   }
 
   drawISOLine1 ({points, domain}) {
-    console.log(domain)
+    console.log(points)
     let linear = d3.scale.linear()
       .domain(domain)
       .range([0, 3])
@@ -435,14 +435,13 @@ export default class {
       .append('circle')
       .attr('class', 'point')
       .attr('class', 'point')
-      // .attr('cx', d => d.x)
-      // .attr('cy', d => d.y)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-      .attr('r', d => linear(d.value))
-      .attr('fill', 'red')
+      .attr('r', 5)
+      .attr('fill', 'green')
       // .attr('fill', d => compute(linear(d.value)))
-      .attr('fill-opacity', d => 0.8 * linear(d.value) / 3)
+      .attr('fill-opacity', d => 0.8 * linear(d.value))
+      // .attr('fill-opacity', 1)
     // .on('mouseover', (d) => {
     //   skyeyeTooltip.show({'x': d.$x, 'y': d.$y, 'value': d.value}, d3.event)
     // })
@@ -464,25 +463,20 @@ export default class {
 
   drawISOLine2 ({contours}) {
     d3.select(this.el).select('svg').select('.iso-map-g').selectAll('path').remove()
-    // console.log(points)
     let g = d3.select(this.el).select('.iso-map-g')
 
-    let contour = g.selectAll('.iso-line')
-      .data(contours)
-      .enter()
-      .append('g')
-      .attr('class', 'iso-line')
-
-    contour
-      .selectAll('path')
-      .data(d => d)
-      .enter()
-      .append('path')
-      .attr('d', d => this.getPath(d))
-      // .attr('fill', 'rgba(' + Math.round(255 * Math.random()) +', 200, 200, 0.3)')
-      .attr('fill', 'none')
-      .attr('stroke', 'red')
-
+    contours.forEach((d) => {
+      let isoG = g
+        .append('g')
+        .attr('class', 'iso-line')
+      isoG.selectAll('path')
+        .data(d.contour)
+        .enter()
+        .append('path')
+        .attr('d', d => this.getPath(d))
+        .attr('fill', 'none')
+        .attr('stroke', 'rgba(255,0,0,' + d.level * 0.1 + ')')
+    })
     return this
   }
 

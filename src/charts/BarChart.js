@@ -5,7 +5,7 @@ import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config.js'
 import {skyeyeTooltip, formatFunc} from '../commons/utils'
-let {dangerColor, safeColor} = config
+let {dangerColor, safeColor, currentTime} = config
 
 export default class {
   constructor (el) {
@@ -23,51 +23,37 @@ export default class {
 
   draw (data, threshold, month) {
     let self = this
-    month = month - 1
     self.svg.selectAll('.barchart').remove()
     let container = self.svg.append('g').attr('class', 'barchart')
 
     let width = $(self.el).width()
     let height = $(self.el).height()
-    let widthBar
-    self.svg.attr('height', height)
+    this.height = height
+    let widthBar = month === 4 ? width / 720 : width / 744
+    self.svg
+      .attr('height', height)
       .attr('width', width)
 
     let x = d3.time.scale()
       .rangeRound([0, width])
+    x.domain([new Date((month) + '/1/2016 00:00:00'), month === 12 ? new Date('1/1/2017 00:00:00') : new Date((month + 1) + '/1/2016 00:00:00')])
 
     let y = d3.scale.linear().range([height, 0])
-    if (month === 4) {
-      x.domain([new Date(2016, month, 1), new Date(2016, month, 30)])
-      widthBar = width / 720
-    } else {
-      x.domain([new Date(2016, month, 1), new Date(2016, month, 31)])
-      widthBar = width / 744
-    }
-    y.domain([0, d3.max(data)])
-    let xMonth = []
-    if (month === 4) {
-      xMonth = d3.time.hours(new Date(2016, month, 1), new Date(2016, month, 30))
-    } else {
-      xMonth = d3.time.hours(new Date(2016, month, 1), new Date(2016, month, 31))
-    }
-    // console.log(xMonth)
-
-    // self.svg.selectAll('bar')
+    y.domain([0, d3.max(data, d => d.value)])
     let rect = container.selectAll('.bar')
       .data(data)
       .enter().append('g')
       .attr('class', 'bar')
-      .attr('transform', (d, index) => 'translate(' + x(xMonth[index]) + ',' + y(d) + ')')
-
+      .attr('transform', (d, index) => 'translate(' + x(d.time) + ',' + y(d.value) + ')')
+    this.x = x
     rect.append('rect')
       .style('fill', d => d > threshold ? dangerColor : safeColor)
       .attr('width', widthBar)
-      .attr('height', (d) => height - y(d))
+      .attr('height', (d) => height - y(d.value))
       .on('mouseover', (d, index) => {
         let display = {
-          time: formatFunc(xMonth[index]),
-          value: d
+          time: formatFunc(d.time),
+          value: d.value
         }
         skyeyeTooltip.show(display, d3.event)
       })
@@ -84,8 +70,28 @@ export default class {
       .selectAll('rect')
       .style('fill', d => {
         // console.log('bar chart hello update', d, threshold)
-        return d > threshold ? dangerColor : safeColor
+        return d.value > threshold ? dangerColor : safeColor
       })
+  }
+
+  clearHighlight () {
+    this.svg.selectAll('.highlight').remove()
+    return this
+  }
+
+  highlightCurrent (time) {
+    this.clearHighlight()
+    let x = this.x(new Date(time))
+    this.svg.append('line')
+      .attr('x1', x)
+      .attr('x2', x)
+      .attr('y1', 0)
+      .attr('y2', this.height)
+      .attr('class', 'highlight')
+      .attr('stroke', currentTime.color)
+      .attr('stroke-width', currentTime.width)
+      .attr('pointer-events', 'none')
+    return this
   }
 
   on (eventsMap) {

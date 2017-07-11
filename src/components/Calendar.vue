@@ -238,7 +238,7 @@
 <style lang="less" scoped>
   @right: 40px;
   @hour-wid: 40px;
-  @container-left-width: 150px;
+  @container-left-width: 250px;
   .calendar-legend {
     width: 40px;
     height: 40px;

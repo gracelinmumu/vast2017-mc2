@@ -6,17 +6,15 @@
                        :class="{'uk-button-primary': selectedMonth===month}"
                        @click="switchMonth(month)">M{{month}}
     </button></div>
-    <button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>
-    </button>
+    <!--<button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>-->
+    <!--</button>-->
   </div>
   <div class="uk-width-1-1 top panel">
     <div class="content">
       <div v-for="(index,bar) in sctBarChart"
            class="uk-width-1-1 bar-container">
         <i class="uk-icon-close uk-align-right" @click="closeBar(index,bar)"></i>
-        <span class="uk-badge uk-badge-primary"
-              @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}
-        </span>
+        <span class="uk-badge uk-badge-primary">{{bar.sensor}} - {{bar.chemical}}</span>
         <div class="uk-width-1-1 full-height uk-grid">
           <div class="uk-width-5-6 bar-item" :id="'Bar-'+index" :draw="calcAndDrawReading(bar, '#Bar-'+index)"></div>
           <div class="uk-width-1-6 bar-item" :id="'BarDistribute-'+index"
@@ -28,7 +26,7 @@
   <div class="uk-width-1-1 middle panel">
     <direction-diff></direction-diff>
   </div>
-  <div class="uk-width-1-1 bottom panel">
+  <div class="uk-width-5-6 bottom panel">
     <wind></wind>
   </div>
   <dialog v-ref:menu>
@@ -55,23 +53,25 @@
     threshold,
     sctDataToken,
     sctBarChart,
-    selectedBar
+    selectedBar,
+    selectedHour
   } from '../vuex/getters'
-  import {switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold} from '../vuex/actions'
+  import {switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold, addSCTCharts} from '../vuex/actions'
 
   let allData = null
-  let monthOpts = config.monthOpts
+  let {monthOpts, chemicalOpts} = config
   export default {
     vuex: {
-      getters: { selectedMonth: month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, selectedBar },
-      actions: { switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold }
+      getters: { selectedMonth: month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, selectedBar, selectedHour },
+      actions: { switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold, addSCTCharts }
     },
     data () {
       return {
         bar: null,
         histCharts: {},
         barCharts: {},
-        monthOpts
+        monthOpts,
+        barChartMap: {}
       }
     },
     watch: {
@@ -83,36 +83,48 @@
         handler () {
           this.update()
         }
+      },
+      selectedHour () {
+        this.updateCurrent()
+      },
+      selectedMonth () {
+        this.updateMonth()
       }
     },
     components: { Wind, DirectionDiff, Dialog, SelectMenu },
     methods: {
+      updateMonth () {
+        this.sctBarChart.forEach((bar, index) => {
+          let selector = '#BarDistribute-' + index
+//          this.barChartMap[selector] && (this.barChartMap[selector].clearHighlight())
+          this.calcAndDrawReading(bar, selector)
+        })
+      },
       // todo 处理数据，绘制一个分布图
       calcAndDrawDistribute (bar, selector) {
+        if (!allData && this.sctDataToken) {
+          allData = storage.get(this.sctDataToken)
+        }
         // 柱状图相关数据
-        console.log(bar)
         let { month, chemical } = bar
-        console.log(month, chemical)
-
-        // 容器选择器
-        console.log(selector)
 
         // 绘图数据是data
-        let data = allData[ bar.sensor ][ bar.chemical ]
-        console.log(data)
+        if (allData) {
+          let data = allData[ bar.sensor ][ bar.chemical ]
 
-        // Step1 处理数据
-        let chartData = this.processData(data, month)
-        // this.threshold 不同化学物质的阈值
-        // Step2绘图
-        this.$nextTick(() => {
-          let chart = new Histogram(selector, bar.chemical)
-          // new
-          this.histCharts[selector] = chart
-          this.barChemical = bar.chemical
-          chart.on({ updateThreshold: this.updateT })
-          chart.draw(chartData, this.threshold[ chemical ], chemical)
-        })
+          // Step1 处理数据
+          let chartData = this.processData(data, month)
+          // this.threshold 不同化学物质的阈值
+          // Step2绘图
+          this.$nextTick(() => {
+            let chart = new Histogram(selector, bar.chemical)
+            // new
+            this.histCharts[selector] = chart
+            this.barChemical = bar.chemical
+            chart.on({ updateThreshold: this.updateT })
+            chart.draw(chartData, this.threshold[ chemical ], chemical)
+          })
+        }
       },
       updateT (t, chemical) {
         this.updateThreshold(chemical, t)
@@ -126,6 +138,13 @@
           let selector = '#Bar-' + index
           this.barCharts[selector].update(this.threshold[this.barChemical])
         }
+      },
+      updateCurrent () {
+        let time = this.selectedHour
+        this.sctBarChart.forEach((chart, index) => {
+          let selector = '#Bar-' + index
+          this.barCharts[selector].highlightCurrent(time)
+        })
       },
       // 分布图数据处理
       processData (data, month) {
@@ -149,12 +168,18 @@
           while (t !== hoursOfDay[ ii ]) {
             ii = (ii + 1) % 24
             if (m === month) {
-              dataValues.push(0)
+              dataValues.push({
+                value: 0,
+                time: new Date(d)
+              })
             }
           }
 
           if (m === month) {
-            dataValues.push(data[ d ])
+            dataValues.push({
+              value: data[ d ],
+              time: new Date(d)
+            })
           }
 
           ii = (ii + 1) % 24
@@ -163,44 +188,35 @@
       },
       // todo 绘制一个读数图
       calcAndDrawReading (bar, selector) {
+        if (!allData && this.sctDataToken) {
+          allData = storage.get(this.sctDataToken)
+        }
         // 柱状图相关数据
-        console.log(bar)
-        let { month, chemical } = bar
-        console.log('calcAndDrawReading', month, chemical)
-
-        // 容器选择器
-        console.log(selector)
-
+        let { chemical } = bar
+        let month = this.selectedMonth
         // 绘图数据是data
-        let data = allData[ bar.sensor ][ bar.chemical ]
-        console.log(data)
+        if (allData) {
+          let data = allData[ bar.sensor ][ bar.chemical ]
 
-        // Step1 处理数据
-        let chartData = this.processReadingData(data, month)
-        // this.threshold 不同化学物质的阈值
-        // Step2绘图
-        this.$nextTick(() => {
-          let chart = new BarChart(selector)
-          // new
-          this.barCharts[selector] = chart
-          chart.on({ updateThreshold: this.updateT })
-          chart.on({ updateCurrent: this.updateC })
-          chart.draw(chartData, this.threshold[ chemical ], month)
-        })
-
-        // todo @ruike 处理数据，绘图
-        // let data = allData[ bar.sensor ][ bar.chemical ]
-        // console.log(data)
-        // 绘图类可以参考Histogram的写法
-        // tip1 记得暴露updateThreshold()方法，这样分布图中的threshold更新时，读数图也同步更新
-        // 你可以试一下，threshold更新时，日历图已经更新了
-        // Tip2 记得暴露updateCurrent()更新当前时间
-      },
-      drawWind () {
-        // @ruike
-      },
-      drawDirectionDiff () {
-        // @ruike
+          // Step1 处理数据
+          let chartData = this.processReadingData(data, month)
+          // this.threshold 不同化学物质的阈值
+          // Step2绘图
+          this.$nextTick(() => {
+            let chart = null
+            if (!this.barChartMap[selector]) {
+              chart = new BarChart(selector)
+              chart.on({ updateThreshold: this.updateT })
+              chart.on({ updateCurrent: this.updateC })
+              this.barChartMap[selector] = chart
+            }
+            chart = this.barChartMap[selector]
+            // new
+            this.barCharts[selector] = chart
+            chart.clearHighlight()
+            chart.draw(chartData, this.threshold[ chemical ], month)
+          })
+        }
       },
       openDialog () {
         this.$refs.menu.show()
@@ -211,6 +227,12 @@
       closeBar (index, bar) {
         this.removeSCTChart(index)
       }
+    },
+    created () {
+      chemicalOpts.forEach((chemical) => {
+        this.addSCTCharts({ chemical, month: this.selectedMonth })
+      })
+      return this
     }
   }
 </script>
@@ -237,6 +259,8 @@
   }
   .middle {
     height: @middle;
+    border-top: 1px solid deepskyblue;
+    border-bottom: 1px solid deepskyblue;
   }
   .bottom {
     height: @bottom;
