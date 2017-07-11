@@ -12,8 +12,8 @@ export const switchSensor = (store, month) => {
   store.dispatch(types.SWITCH_SENSOR, month)
 }
 
-export const switchFactory = (store, month) => {
-  store.dispatch(types.SWITCH_FACTORY, month)
+export const switchFactory = (store, factory) => {
+  store.dispatch(types.SWITCH_FACTORY, factory)
 }
 
 export const updateThreshold = (store, key, value) => {

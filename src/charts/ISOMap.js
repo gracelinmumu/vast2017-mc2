@@ -467,22 +467,18 @@ export default class {
     // console.log(points)
     let g = d3.select(this.el).select('.iso-map-g')
 
-    let contour = g.selectAll('.iso-line')
-      .data(contours)
-      .enter()
-      .append('g')
-      .attr('class', 'iso-line')
-
-    contour
-      .selectAll('path')
-      .data(d => d)
-      .enter()
-      .append('path')
-      .attr('d', d => this.getPath(d))
-      // .attr('fill', 'rgba(' + Math.round(255 * Math.random()) +', 200, 200, 0.3)')
-      .attr('fill', 'none')
-      .attr('stroke', 'red')
-
+    contours.forEach((d) => {
+      let isoG = g
+        .append('g')
+        .attr('class', 'iso-line')
+      isoG.selectAll('path')
+        .data(d.contour)
+        .enter()
+        .append('path')
+        .attr('d', d => this.getPath(d))
+        .attr('fill', 'none')
+        .attr('stroke', 'rgba(255,0,0,' + d.level * 0.1 + ')')
+    })
     return this
   }
 

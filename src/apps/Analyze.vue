@@ -4,12 +4,10 @@
        namespace="App">
     <div class="uk-navbar uk-width-1-1">
       <b class="uk-navbar-brand app-title">VAST Challenge Mini Challenge 2</b>
+      <span class="uk-align-right uk-clearfix current uk-text-bold" v-show="selectedHour">Selected Time:  {{selectedHour}}</span>
     </div>
     <div class="uk-width-1-1 uk-grid app-top clear-grid-margin">
-      <!--<div class="select-menu uk-width-1-6 uk-panel-box uk-padding-remove">-->
-      <!--<select-menu></select-menu>-->
-      <!--</div>-->
-      <div class="calendar uk-width-1-2">
+      <div class="calendar uk-width-1-3">
         <!--<ul class="uk-tab" data-uk-tab>-->
         <!--<li class="{'uk-active': op.active === activeCal.value} uk-text-bold" v-for="op in calenderView">-->
         <!--<a href="" @click="switchCalendar(op)">{{op.text}}</a>-->
@@ -20,7 +18,7 @@
         </div>
 
       </div>
-      <div class="iso-map uk-width-1-2">
+      <div class="iso-map uk-width-2-3">
         <iso-map></iso-map>
       </div>
       <!--<div class="distribute uk-width-1-6 uk-panel-box">-->
@@ -28,7 +26,10 @@
       <!--</div>-->
     </div>
     <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin">
-      <div class="time-line uk-width-1-1 uk-panel">
+      <div class="project uk-width-1-3 uk-panel">
+        <project></project>
+      </div>
+      <div class="time-line uk-width-2-3 uk-panel">
         <time-line></time-line>
       </div>
     </div>
@@ -52,21 +53,24 @@
   import Calendar from '../components/Calendar.vue'
   import Correlation from '../components/Correlation.vue'
   import IsoMap from '../components/IsoMap.vue'
+  import Project from '../components/Project.vue'
 
   import sensorData from '../data/sensor.json'
   import storage from '../commons/storage'
   import Process from './dataProcess.worker'
   import banner from '../../assets/images/display.jpg'
   import {setSCTToken, setChemicalToken, setTimeToken, setCorrelation} from '../vuex/actions'
+  import {selectedHour} from '../vuex/getters'
   import config from '../commons/config'
 
   let colorMap = config.colorMap
 
   export default{
     vuex: {
-      actions: { setSCTToken, setChemicalToken, setTimeToken, setCorrelation }
+      actions: { setSCTToken, setChemicalToken, setTimeToken, setCorrelation },
+      getters: {selectedHour}
     },
-    components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar, Correlation },
+    components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar, Correlation, Project },
     data () {
       return {
         banner,
@@ -126,6 +130,12 @@
   @body-top-h: 60%;
   #App {
     height: 100%;
+    .current {
+      line-height: @title-h;
+      color: #f2753f;
+      margin-left: 0;
+      margin-bottom: 0;
+    }
     .app-top {
       height: 60%;
       .calendar {
@@ -136,9 +146,10 @@
     .app-bottom {
       margin-top: 8px;
       height: calc(~"39% - " @title-h);
+      border-top: 1px dashed #ddd;
       .time-line {
         height: 100%;
-        border-top: 1px dashed #ddd;
+        border-left: 1px dashed #ddd;
       }
     }
     .clear-grid-margin {

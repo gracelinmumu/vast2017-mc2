@@ -5,11 +5,11 @@ import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
 import {skyeyeTooltip} from '../commons/utils'
-let {windColor} = config
+let {windColor, currentTime} = config
 let domainMap = {
-  4: [new Date('3/31/2016 23:00:00'), new Date('5/1/2016 1:00:00')],
-  8: [new Date('7/31/2016 23:00:00'), new Date('9/1/2016 1:00:00')],
-  12: [new Date('11/30/2016 23:00:00'), new Date('1/1/2017 1:00:00')]
+  4: [new Date('4/1/2016 00:00:00'), new Date('5/1/2016 1:00:00')],
+  8: [new Date('8/1/2016 00:00:00'), new Date('9/1/2016 1:00:00')],
+  12: [new Date('12/1/2016 00:00:00'), new Date('1/1/2017 1:00:00')]
 }
 
 export default class {
@@ -97,7 +97,9 @@ export default class {
       .attr('x2', this.x(hour))
       .attr('y1', 0)
       .attr('y2', this.height)
-      .attr('stroke', 'red')
+      .attr('stroke', currentTime.color)
+      .attr('stroke-width', currentTime.width)
+      .attr('pointer-events', 'none')
     return this
   }
   on (evt, cb) {

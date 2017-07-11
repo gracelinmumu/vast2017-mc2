@@ -226,7 +226,10 @@ onmessage = (evt) => {
   let isoCount = 10
   let step = (maxValue - min) / isoCount
   for (let i = 0; i < isoCount; i++) {
-    contours.push(MarchingSquaresJS.isoContours(values, min + step * i, step))
+    contours.push({
+      level: +i,
+      contour: MarchingSquaresJS.isoContours(values, min + step * i, step)
+    })
   }
   // test
   // for (let i = 0; i < len; ++i) {
