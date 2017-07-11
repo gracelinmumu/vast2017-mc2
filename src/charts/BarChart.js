@@ -30,7 +30,8 @@ export default class {
     let height = $(self.el).height()
     this.height = height
     let widthBar = month === 4 ? width / 720 : width / 744
-    self.svg.attr('height', height)
+    self.svg
+      .attr('height', height)
       .attr('width', width)
 
     let x = d3.time.scale()

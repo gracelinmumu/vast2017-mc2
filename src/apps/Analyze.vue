@@ -7,7 +7,7 @@
       <span class="uk-align-right uk-clearfix current uk-text-bold" v-show="selectedHour">Selected Time:  {{selectedHour}}</span>
     </div>
     <div class="uk-width-1-1 uk-grid app-top clear-grid-margin">
-      <div class="calendar uk-width-1-3">
+      <div class="calendar uk-width-1-2">
         <!--<ul class="uk-tab" data-uk-tab>-->
         <!--<li class="{'uk-active': op.active === activeCal.value} uk-text-bold" v-for="op in calenderView">-->
         <!--<a href="" @click="switchCalendar(op)">{{op.text}}</a>-->
@@ -18,7 +18,7 @@
         </div>
 
       </div>
-      <div class="iso-map uk-width-2-3">
+      <div class="iso-map uk-width-1-2">
         <iso-map></iso-map>
       </div>
       <!--<div class="distribute uk-width-1-6 uk-panel-box">-->
@@ -26,10 +26,10 @@
       <!--</div>-->
     </div>
     <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin">
-      <div class="project uk-width-1-3 uk-panel">
-        <project></project>
-      </div>
-      <div class="time-line uk-width-2-3 uk-panel">
+      <!--<div class="project uk-width-1-3 uk-panel">-->
+        <!--<project></project>-->
+      <!--</div>-->
+      <div class="time-line uk-width-1-1 uk-panel">
         <time-line></time-line>
       </div>
     </div>
