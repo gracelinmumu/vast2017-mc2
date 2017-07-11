@@ -7,7 +7,8 @@
     Sensor:  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
      Chemicals: <template v-for="op in chemicalOpts">
     <input type="checkbox" id="chemical" value="chemicalsMap[op]" v-model="chemicalsMap[op]">
-    <label for="chemical" :class="{'label-color': chemicalsMap[op]}">{{op}}{{chemicalsMap[op]}}</label>
+    <div :style="{'background': chemicalsMap[op]}"></div>
+    <label for="chemical" :class="{'label-color': chemicalsMap[op]}" :style="{'color': colorMap[op][1]}">{{op}}</label>
   </template>
   </div>
   <!--body-->

@@ -43,6 +43,7 @@
   <!--::-webkit-scrollbar-track-piece {-->
   <!--background: @scrollbar-bg-color;-->
   <!--}-->
+  <div id="SkyeyeTooltip"></div>
 </template>
 <script>
   import DistributeView from '../components/DistributeView.vue'
@@ -159,5 +160,15 @@
         border-radius: 10px;
       }
     }
+  }
+  #SkyeyeTooltip {
+    position: fixed;
+    z-index: 1010;
+    line-height: @font-size-l;
+    font-weight: bold;
+    padding: @margin-m;
+    color: #fff;
+    border: 1px solid @color-bd;
+    background: @color-card-bg;
   }
 </style>

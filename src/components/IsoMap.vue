@@ -45,6 +45,7 @@
   import ISOMap from '../charts/ISOMap'
   import {formatFunc} from '../commons/utils'
   import InterWk from './interploration.worker'
+  import $ from 'jquery'
   let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
   let windData = null
   let sensorData = null
@@ -140,15 +141,25 @@
           // ISO
           if (this.showISO) {
             let worker = new InterWk()
+            let width =  $(this.$els.chart).width()
+            let height = $(this.$els.chart).height()
+            console.log(width, height)
             worker.postMessage({
               sensorsLoc: sensorsLoc2,
               sensorData: playSensor,
-              scale: 7
+              scale: 7,
+              width,
+              height
             })
             worker.onmessage = (evt) => {
               let evtData = evt.data
-              let {points, posData, domain} = evtData
-              this.chartIns.drawISOLine1({ points, posData, domain })
+              let {points, posData, domain, contours} = evtData
+              points
+              posData
+              domain
+              console.log(contours, 'contours')
+//              this.chartIns.drawISOLine1({ points, posData, domain })
+              this.chartIns.drawISOLine2({ contours })
             }
           } else {
             this.chartIns.clearISOLine()
