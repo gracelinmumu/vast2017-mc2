@@ -141,7 +141,7 @@
           // ISO
           if (this.showISO) {
             let worker = new InterWk()
-            let width =  $(this.$els.chart).width()
+            let width = $(this.$els.chart).width()
             let height = $(this.$els.chart).height()
             console.log(width, height)
             worker.postMessage({

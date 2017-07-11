@@ -5,7 +5,7 @@ import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
 let {colorMap} = config
-
+colorMap
 export default class {
   constructor (el) {
     this.el = el
@@ -38,9 +38,10 @@ export default class {
       .attr('height', h + 'px')
       .attr('x', (d, index) => index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
       .attr('y', (d, index) => chLen > 3 && index > 1 ? h : 0)
-      .attr('fill', d => colorMap[d][1])
-      .attr('fill-opacity', 0.6)
-      .attr('stroke', '#ddd')
+      // .attr('fill', d => colorMap[d][1])
+      // .attr('fill-opacity', 0.6)
+      .attr('fill', 'none')
+      .attr('stroke', '#888')
     legend.append('text')
       .text(d => d.substr(0, 1) === 'A' ? d.substr(0, 2) : d.substr(0, 1))
       .attr('x', (d, index) => (index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w) + w * 0.5)
@@ -48,7 +49,7 @@ export default class {
       .attr({
         'text-anchor': 'middle',
         'dominant-baseline': 'middle',
-        'fill': '#ddd'
+        'fill': '#888'
       })
     return this
   }

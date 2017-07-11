@@ -22,6 +22,11 @@
       </div>
     </div>
     <hr>
+
+    <button class="uk-button uk-button-success uk-align-right" @click="addBar"> Add Reading Bars </button>
+    <br>
+    <br>
+    <hr>
     <!--<div class="uk-width-1-1">-->
       <!--<p class="p-title">Sensor</p>-->
       <!--<div class="uk-width-1-1 uk-flex uk-flex-wrap">-->
@@ -32,11 +37,6 @@
         <!--</button>-->
       <!--</div>-->
     <!--</div>-->
-
-    <button class="uk-button uk-button-success uk-align-right" @click="addBar"> Add Reading Bars </button>
-    <br>
-    <br>
-    <hr>
     <div class="uk-width-1-1">
       <p class="p-title">Factory</p>
       <div class="uk-width-1-1 uk-flex uk-flex-wrap">
@@ -61,6 +61,7 @@
   import {month, sensor, chemical, factory} from '../vuex/getters'
   import {switchMonth, switchChemical, switchFactory, switchSensor, addSCTChart, addDiffChart, addSCTCharts} from '../vuex/actions'
   import config from '../commons/config'
+  let {sensorOpts} = config
   export default {
     vuex: {
       getters: { month, sensor, chemical, factory },
@@ -84,9 +85,16 @@
         }
       },
       addDiff () {
-        if (this.sensor && this.factory) this.addDiffChart({ sensor: this.sensor, factory: this.factory, month: this.month })
+        if (this.factory) {
+          sensorOpts.forEach((sensor) => {
+            this.addDiffChart({ sensor, factory: this.factory, month: this.month })
+          })
+        }
         this.$dispatch('close-dialog')
       }
+    },
+    ready () {
+//      this.addDiff()
     }
   }
 </script>

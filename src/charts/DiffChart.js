@@ -64,16 +64,10 @@ export default class {
       .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
       .attr('class', 'areadiff')
     let area = d3.svg.area()
-      .x(d => {
-        // console.log(d.x)
-        // console.log(new Date(d.x))
-        // console.log(this.axisXScale(new Date(d.x)))
-        return this.axisXScale(new Date(d.x))
-      })
+      .x(d => this.axisXScale(new Date(d.x)))
       .y1(d => this.axisYScale(d.y))
       .y0(this.axisYScale(0))
-    // console.log('diffchartjs path', this.axisXScale, this.axisXScale(new Date('4/1/2016 3:00')), 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    // console.log('diffchartjs path', data, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
     g.append('path')
       .datum(data)
       .attr('fill', 'steelblue')

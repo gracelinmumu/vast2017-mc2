@@ -12,7 +12,7 @@ const state = {
   month: 4,
   chemical: [],
   factory: 'Roadrunner',
-  sensor: [],
+  sensor: 'S6',
   threshold: {
     Chlorodinine: 3.0,
     Methylosmolene: 10,
