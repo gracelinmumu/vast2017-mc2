@@ -18,7 +18,7 @@
               @click="drawBar(bar)">{{bar.sensor}} - {{bar.chemical}} - {{bar.month}}
         </span>
         <div class="uk-width-1-1 full-height uk-grid">
-          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index" :draw="calcAndDrawReading(bar, 'Bar-'+index)"></div>
+          <div class="uk-width-5-6 bar-item" :id="'Bar-'+index" :draw="calcAndDrawReading(bar, '#Bar-'+index)"></div>
           <div class="uk-width-1-6 bar-item" :id="'BarDistribute-'+index"
                :draw="calcAndDrawDistribute(bar, '#BarDistribute-'+index)"></div>
         </div>
@@ -45,6 +45,7 @@
   import SelectMenu from './SelectMenu.vue'
   import storage from '../commons/storage'
   import Histogram from '../charts/Histogram'
+  import BarChart from '../charts/BarChart'
   import config from '../commons/config'
   import {
     month,
@@ -67,12 +68,21 @@
     },
     data () {
       return {
+        bar: null,
+        histCharts: {},
+        barCharts: {},
         monthOpts
       }
     },
     watch: {
       sctDataToken () {
         allData = storage.get(this.sctDataToken)
+      },
+      threshold: {
+        deep: true,
+        handler () {
+          this.update()
+        }
       }
     },
     components: { Wind, DirectionDiff, Dialog, SelectMenu },
@@ -96,13 +106,27 @@
         // this.threshold 不同化学物质的阈值
         // Step2绘图
         this.$nextTick(() => {
-          let chart = new Histogram(selector)
+          // console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb', bar.chemical)
+          let chart = new Histogram(selector, bar.chemical)
+          // new
+          this.histCharts[selector] = chart
+          this.barChemical = bar.chemical
           chart.on({ updateThreshold: this.updateT })
           chart.draw(chartData, this.threshold[ chemical ], chemical)
         })
       },
       updateT (t, chemical) {
         this.updateThreshold(chemical, t)
+      },
+      update () {
+        for (let index = 0; index < this.sctBarChart.length; index++) {
+          let selector = '#BarDistribute-' + index
+          this.histCharts[selector].update(this.threshold[this.barChemical])
+        }
+        for (let index = 0; index < this.sctBarChart.length; index++) {
+          let selector = '#Bar-' + index
+          this.barCharts[selector].update(this.threshold[this.barChemical])
+        }
       },
       // 分布图数据处理
       processData (data, month) {
@@ -115,11 +139,59 @@
         })
         return dataValues
       },
+      processReadingData (data, month) {
+        let dataValues = []
+        let t = 0
+        let hoursOfDay = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+        let ii = 0
+        Object.keys(data).forEach((d) => {
+          let m = new Date(d).getMonth() + 1
+          t = new Date(d).getHours()
+          while (t !== hoursOfDay[ ii ]) {
+            ii = (ii + 1) % 24
+            if (m === month) {
+              dataValues.push(0)
+            }
+          }
+
+          if (m === month) {
+            dataValues.push(data[ d ])
+          }
+
+          ii = (ii + 1) % 24
+        })
+        return dataValues
+      },
       // todo 绘制一个读数图
       calcAndDrawReading (bar, selector) {
-        // todo @ruike 处理数据，绘图
+        // 柱状图相关数据
+        console.log(bar)
+        let { month, chemical } = bar
+        console.log('calcAndDrawReading', month, chemical)
+
+        // 容器选择器
+        console.log(selector)
+
+        // 绘图数据是data
         let data = allData[ bar.sensor ][ bar.chemical ]
         console.log(data)
+
+        // Step1 处理数据
+        let chartData = this.processReadingData(data, month)
+        // this.threshold 不同化学物质的阈值
+        // Step2绘图
+        this.$nextTick(() => {
+          let chart = new BarChart(selector)
+          // new
+          this.barCharts[selector] = chart
+          chart.on({ updateThreshold: this.updateT })
+          chart.on({ updateCurrent: this.updateC })
+          chart.draw(chartData, this.threshold[ chemical ], month)
+        })
+
+        // todo @ruike 处理数据，绘图
+        // let data = allData[ bar.sensor ][ bar.chemical ]
+        // console.log(data)
         // 绘图类可以参考Histogram的写法
         // tip1 记得暴露updateThreshold()方法，这样分布图中的threshold更新时，读数图也同步更新
         // 你可以试一下，threshold更新时，日历图已经更新了
