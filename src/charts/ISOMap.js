@@ -437,13 +437,8 @@ export default class {
       .attr('class', 'point')
       // .attr('cx', d => d.x)
       // .attr('cy', d => d.y)
-      .attr('cx', d => {
-        let {x, y} = this.getPos(d.x, d.y)
-        d.$x = x
-        d.$y = y
-        return x
-      })
-      .attr('cy', d => d.$y)
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
       .attr('r', d => linear(d.value))
       .attr('fill', 'red')
       // .attr('fill', d => compute(linear(d.value)))
@@ -471,16 +466,22 @@ export default class {
     d3.select(this.el).select('svg').select('.iso-map-g').selectAll('path').remove()
     // console.log(points)
     let g = d3.select(this.el).select('.iso-map-g')
-    contours.forEach(contour => {
-      g.selectAll('.iso-line')
-        .data(contour)
-        .enter()
-        .append('path')
-        .attr('class', 'iso-line')
-        .attr('d', d => this.getPath(d))
-        .attr('fill', 'none')
-        .attr('stroke', 'red')
-    })
+
+    let contour = g.selectAll('.iso-line')
+      .data(contours)
+      .enter()
+      .append('g')
+      .attr('class', 'iso-line')
+
+    contour
+      .selectAll('path')
+      .data(d => d)
+      .enter()
+      .append('path')
+      .attr('d', d => this.getPath(d))
+      // .attr('fill', 'rgba(' + Math.round(255 * Math.random()) +', 200, 200, 0.3)')
+      .attr('fill', 'none')
+      .attr('stroke', 'red')
 
     return this
   }

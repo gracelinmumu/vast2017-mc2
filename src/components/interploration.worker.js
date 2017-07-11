@@ -3,6 +3,7 @@
  */
 // import Krigins from './Kriging'
 import math from '../../plugins/math.min'
+// import MarchingSquaresJS from '../../plugins/marchingsquares-isobands.min'
 import MarchingSquaresJS from '../../plugins/marchingsquares-isocontours.min'
 const getDist = (s, t) => {
   let dist = Math.pow((s[0] - t[0]), 2) + Math.pow((s[1] - t[1]), 2)
@@ -11,15 +12,6 @@ const getDist = (s, t) => {
 
 const IDX2D = (x, y, cols) => {
   return x * cols + y
-}
-
-let w = 990
-let h = 760
-let xScale = (x) => {
-  (x - 40) * (w) / (140 - 40)
-}
-let yScale = (x) => {
-  (x - 60) * (h) / (-60 - 40)
 }
 
 Array.prototype.reshape = function (rows, cols) {
@@ -174,24 +166,25 @@ function linearFitting (n, x, y) {
 
 onmessage = (evt) => {
   let data = evt.data
-  let {sensorsLoc, sensorData} = data
+  let {sensorsLoc, sensorData, width, height} = data
+
+  let w = Math.ceil(height)
+  let h = Math.ceil(width)
+  let xScale = (x) => {
+    return (x - 40) * (w) / (140 - 40)
+  }
+  let yScale = (x) => {
+    return (x - 60) * (h) / (-60 - 40)
+  }
   let pos = Object.keys(sensorsLoc).map(d => {
     let p = sensorsLoc[d]
-    return [xScale(p[0]), xScale(p[1])]
+    return [xScale(p[0]), yScale(p[1])]
   })
+
   let len = pos.length
   let count = 0
   let dists = new Array(len * (len - 1) / 2)
   let Z = Object.keys(sensorData).map((d) => sensorData[d])
-  // Z = [0.314413,
-  //   0.128337,
-  //   1.74588,
-  //   1.07116,
-  //   0.31592,
-  //   0.3642,
-  //   0.646069,
-  //   0.410145,
-  //   0.130422]
   let semigrams = new Array(len * (len - 1) / 2)
   let maxValue = Math.max(...Z)
   let min = Math.min(...Z)
@@ -211,7 +204,6 @@ onmessage = (evt) => {
   let target = new Array(dims)
   var values = new Array(w * h)
   values.reshape(w, h)
-  values
   let contours = []
   let points = []
   let max = 0
@@ -221,20 +213,20 @@ onmessage = (evt) => {
       target[1] = Math.round(1.0 * y / h * h)
       let results = interpolation(dims, target, len, pos, Z, InvV, mode, a, c0, c1)
       values[x][y] = results.value
-      // if ((y % 3 === 0) && (x % 3 === 0)) {
-      points.push({
-        x: target[0],
-        y: target[1],
-        value: results.value
-      })
-      max = Math.max(max, results.value)
-      // }
+      if ((y % 5 === 0) && (x % 5 === 0)) {
+        points.push({
+          x: target[0],
+          y: target[1],
+          value: results.value
+        })
+        max = Math.max(max, results.value)
+      }
     }
   }
   let isoCount = 10
   let step = (maxValue - min) / isoCount
   for (let i = 0; i < isoCount; i++) {
-    contours.push(MarchingSquaresJS.isoContours(values, min + step * i))
+    contours.push(MarchingSquaresJS.isoContours(values, min + step * i, step))
   }
   // test
   // for (let i = 0; i < len; ++i) {
