@@ -78,6 +78,7 @@ export default class {
     this.svg.selectAll('.highlight').remove()
     return this
   }
+
   highlightCurrent (time) {
     this.clearHighlight()
     let x = this.x(new Date(time))
