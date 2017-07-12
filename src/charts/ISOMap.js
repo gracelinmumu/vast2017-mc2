@@ -3,7 +3,7 @@
  */
 import d3 from 'd3'
 import $ from 'jquery'
-
+import SaveSvgAsPngLib from 'save-svg-as-png'
 import factoryImg from '../../assets/images/factory2.png'
 import monitorImg from '../../assets/images/monitor2.png'
 monitorImg
@@ -497,7 +497,14 @@ export default class {
     })
     return this
   }
-
+  getDataURI (callbackFun) {
+    let g = d3.select(this.el).select('svg')
+      // .select('.iso-map-g')
+    let svgNode = g.node()
+    SaveSvgAsPngLib.svgAsDataUri(svgNode, { scale: 0.5 }, (res) => {
+      callbackFun(res)
+    })
+  }
   on (name, cb) {
     this[name] = cb
   }

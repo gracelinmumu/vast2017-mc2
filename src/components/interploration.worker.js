@@ -225,7 +225,7 @@ onmessage = (evt) => {
       }
     }
   }
-  let isoCount = 10
+  let isoCount = 8
   let step = (maxValue - min) / isoCount
   for (let i = 0; i < isoCount; i++) {
     contours.push({

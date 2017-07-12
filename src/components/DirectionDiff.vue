@@ -71,9 +71,9 @@
           this.diffCharts[chart].highlightCurrent(this.selectedHour)
         })
       },
-      factory () {
-        this.addChart()
-      },
+//      factory () {
+//        this.addChart()
+//      },
       windToken () {
         if (this.windToken) windData = storage.get(this.windToken)
       },

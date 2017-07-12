@@ -9,9 +9,18 @@
     <template class="uk-width-1-1" v-if="selectedHour">
       <span class="tip-title">Show ISOMap: </span> <input type="checkbox" v-model="showISO">
       <span class="tip-title">Hours before and after: </span> <input type="number" v-model="timeBeforeAndAfter">
+      <span class="tip-title">Snapshot </span><button @click="addSnapShot"><i class="uk-icon-camera"></i></button>
     </template>
     </div>
-  <div class="chart" v-el:chart></div>
+  <div class="uk-width-1-1 chart-container uk-flex">
+    <div class="chart" v-el:chart></div>
+    <div class="snap-list">
+      <div class="uk-thumbnail" v-for="snap in snapList">
+        <img :src="snap.src" alt="">
+        <div class="uk-thumbnail-caption"><span :style="{color: colorMap[snap.chemical][1]}">{{snap.chemical}}</span><br>{{snap.time}}</div>
+      </div>
+    </div>
+  </div>
   <dialog v-ref:menu>
     <div slot="title">Config Panel</div>
     <div slot="body">
@@ -119,10 +128,19 @@
         factorySenorDist: {},
         playId: null,
         selectedFactory: null,
-        showISO: true
+        showISO: true,
+        snapList: []
       }
     },
     methods: {
+      addSnapShot () {
+        this.$nextTick(() => {
+          this.chartIns && this.chartIns.getDataURI(this.addToSnapList)
+        })
+      },
+      addToSnapList (dataUri) {
+        this.snapList.push({src: dataUri, time: this.selectedHour, chemical: this.selectedChemical})
+      },
       configConfirm () {
 //        this.update()
         this.$refs.menu.close()
@@ -262,8 +280,18 @@
   }
 </script>
 <style lang="less" scoped>
+  @snap-width: 150px;
+  .chart-container {
+    height: calc(~"100% - 50px");
+  }
   .chart {
     height: calc(~"100% - 40px");
+    width: calc(~"100% - "@snap-width);
+  }
+  .snap-list {
+    width: @snap-width;
+    height: calc(~"100% - 40px");
+    overflow-y: scroll;
   }
   .tip-title {
     /*font-weight: bold;*/
