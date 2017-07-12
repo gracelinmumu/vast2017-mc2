@@ -74,3 +74,7 @@ export const updateSelectedChemical = (store, ch) => {
 export const updateSelectedFactory = (store, factory) => {
   store.dispatch(types.UPDATE_SELECTED_FACTORY, factory)
 }
+
+export const switchTimelineState = (store, s) => {
+  store.dispatch(types.SWITCH_TIMELINE_STATE, s)
+}

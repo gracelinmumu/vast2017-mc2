@@ -61,7 +61,7 @@ export default class {
       .attr('y1', height)
       .attr('x2', width)
       .attr('y2', height)
-      .attr('stroke', '#000')
+      .attr('stroke', '#ddd')
     let wind = g.selectAll('.wind')
       .data(data)
       .enter()
@@ -73,7 +73,7 @@ export default class {
         let direction = Math.PI * (-d.direction) / 180
         return 'M' + xx + ', ' + height + 'L' + (xx + Math.sin(direction) * r) + ',' + (height + Math.cos(direction) * r)
       })
-      .attr('marker-end', 'url(#arrow-target)')
+      // .attr('marker-end', 'url(#arrow-target)')
       .attr('fill', windColor)
       .attr('stroke', windColor)
       .on('mouseover', (d) => {

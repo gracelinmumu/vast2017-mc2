@@ -25,9 +25,15 @@
       <!--<distribute-view></distribute-view>-->
       <!--</div>-->
     </div>
-    <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin">
+    <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin" :class="{'app-bottom-top': timeLineState==='top'}">
       <!--<div class="project uk-width-1-3 uk-panel">-->
         <!--<project></project>-->
+      <!--</div>-->
+      <!--<div class="uk-width-1-1">-->
+        <!--<span class="center uk-align-center">-->
+          <!--<i v-if="timeLineState==='bottom'" class="uk-icon-expand"  @click="goUp"></i>-->
+          <!--<i v-else class="uk-icon-compress"  @click="goDown"></i>-->
+        <!--</span>-->
       <!--</div>-->
       <div class="time-line uk-width-1-1 uk-panel">
         <time-line></time-line>
@@ -60,7 +66,7 @@
   import Process from './dataProcess.worker'
   import banner from '../../assets/images/display.jpg'
   import {setSCTToken, setChemicalToken, setTimeToken, setCorrelation} from '../vuex/actions'
-  import {selectedHour} from '../vuex/getters'
+  import {selectedHour, timeLineState} from '../vuex/getters'
   import config from '../commons/config'
 
   let colorMap = config.colorMap
@@ -68,7 +74,7 @@
   export default{
     vuex: {
       actions: { setSCTToken, setChemicalToken, setTimeToken, setCorrelation },
-      getters: {selectedHour}
+      getters: {selectedHour, timeLineState}
     },
     components: { IsoMap, SelectMenu, TimeLine, DistributeView, Calendar, Correlation, Project },
     data () {
@@ -109,7 +115,6 @@
       wk.postMessage({ sensorData })
       wk.onmessage = (evt) => {
         let { bySensor, byChemical, byTime, pearsonSameChemical } = evt.data
-        console.log(evt.data, 'evt===')
         let dataToken = storage.set(bySensor, 'sctData')
         this.setSCTToken(dataToken)
         let chemicalToken = storage.set(byChemical, 'byChemical')
@@ -130,9 +135,15 @@
   @body-top-h: 60%;
   #App {
     height: 100%;
+    .center {
+      width: 10px;
+      i {
+        color: @color-main;
+      }
+    }
     .current {
       line-height: @title-h;
-      color: #f2753f;
+      color: #00a8e6;
       margin-left: 0;
       margin-bottom: 0;
     }
@@ -145,12 +156,23 @@
     }
     .app-bottom {
       margin-top: 8px;
-      height: calc(~"39% - " @title-h);
+      height: calc(~"39% - 20px - " @title-h);
       border-top: 1px dashed #ddd;
+      background-color: #fff;
       .time-line {
         height: 100%;
+        background-color: #fff;
         border-left: 1px dashed #ddd;
       }
+    }
+    .app-down {
+      margin-top: 8px;
+      height: calc(~"39% - 20px - " @title-h);
+    }
+    .app-bottom-top {
+      margin-top: calc(~"-50% + " @title-h);
+      height: 100%;
+      background: #fff;
     }
     .clear-grid-margin {
       margin-left: 0;

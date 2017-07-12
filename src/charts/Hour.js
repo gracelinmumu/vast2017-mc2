@@ -27,7 +27,6 @@ export default class {
     let pad = 2
     let height = $(this.el).height() - pad * 2
     let width = $(this.el).width()
-    console.log(width, height)
     this.svg
       .attr('width', width)
       .attr('height', height)
@@ -61,7 +60,7 @@ export default class {
         .attr('y', chLen > 3 && index > 1 ? h : 0)
         // .attr('fill', d => chemicalData[d] ? (chemicalData[d] > threshold ? dangerColor : safeColor) : 'none')
         .attr('fill', d => (1 + chemicalData[d]) ? (chemicalData[d] > threshold ? dangerColor : safeColor) : '#000')
-        .attr('fill-opacity', d => (1 + chemicalData[d]) ? (chemicalData[d] > threshold ? 0.6 : 0.3) : 0.2)
+        .attr('fill-opacity', d => (1 + chemicalData[d]) ? (chemicalData[d] > threshold ? 0.6 : 0.3) : 0.8)
         .attr('stroke', '#ccc')
         .attr('stroke-width', 1)
         .on('click', (d) => {

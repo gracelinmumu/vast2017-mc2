@@ -5,6 +5,7 @@
     <div class="uk-width-1-1 uk-flex uk-flex-wrap">
       <!--<span class="tip-title" v-if="selectedHour"> Current Time: </span>  <b class="label-color">{{selectedHour}}</b>-->
       <span class="tip-title" v-if="factory"> Factory: </span>  <b class="label-color">{{factory}}</b>
+      <span class="tip-title" v-if="selectedChemical"> chemical: <b :style="{color: colorMap[selectedChemical][1]}">{{selectedChemical}}</b></span>
     <template class="uk-width-1-1" v-if="selectedHour">
       <span class="tip-title">Show ISOMap: </span> <input type="checkbox" v-model="showISO">
       <span class="tip-title">Hours before and after: </span> <input type="number" v-model="timeBeforeAndAfter">
@@ -46,7 +47,7 @@
   import {formatFunc} from '../commons/utils'
   import InterWk from './interploration.worker'
   import $ from 'jquery'
-  let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
+  let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts, colorMap } = config
   let windData = null
   let sensorData = null
   let sensorsLoc2 = JSON.parse(JSON.stringify(sensorsLoc))
@@ -96,15 +97,20 @@
       },
       factory () {
         this.chartIns && this.chartIns.highlightFactory(this.factory)
+      },
+      selectedHour () {
+        this.chartIns.clearISOLine()
+        this.update()
       }
     },
     computed: {
       updateStr () {
-        return this.selectedHour + this.selectedChemical + this.factory + this.timeBeforeAndAfter + this.showISO
+        return this.selectedChemical + this.factory + this.timeBeforeAndAfter + this.showISO
       }
     },
     data () {
       return {
+        colorMap,
         timeBeforeAndAfter: 5,
         factoryOpts,
         chartIns: null,
@@ -157,7 +163,7 @@
               posData
               domain
 //              this.chartIns.drawISOLine1({ points, posData, domain })
-              this.chartIns.drawISOLine2({ contours })
+              this.chartIns.drawISOLine2({ contours, chemical })
             }
           } else {
             this.chartIns.clearISOLine()

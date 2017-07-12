@@ -42,6 +42,7 @@
   import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
   import config from '../commons/config'
   import CalendarLegend from '../charts/CalendarLegend'
+  import {formatFunc} from '../commons/utils'
   let dataByTime = null
 
   let { chemicalOpts, sensorOpts, colorMap } = config
@@ -128,6 +129,18 @@
         this.switchMonth(month)
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
           this.hoursData = [ { sensor: this.selectedSensor, chemical: ch, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
+          let dataSelect = data[ch]
+          let hour
+          if (dataSelect) {
+            if (dataSelect.value) {
+              let time = dataSelect.time
+              let times = Object.keys(time).filter((d) => time[d] > this.threshold[ch])
+              times.length && (hour = times[0])
+            } else {
+              hour = formatFunc(d)
+            }
+          }
+          hour && this.clickHour(hour, ch)
         }
       },
       clickHour (hour, ch) {
