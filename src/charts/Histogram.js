@@ -91,7 +91,7 @@ export default class {
       // .attr('height', hei)
       .attr('width', wid)
       .attr('height', d => scale(d.y))
-      .attr('fill', d => d.x > threshold ? dangerColor : safeColor)
+      .style('fill', d => d > threshold ? dangerColor : safeColor)
       .attr('stroke', '#fff')
       // .on('mouseover', (d, index) => {
       //   console.log(d)
@@ -134,7 +134,6 @@ export default class {
       .attr('shap-rendering', 'crispEdges')
 
     // let chemical = this.chemical
-    // console.log('dddddddddddddddddddddddddddddddddddddddddd', chemical)
     function brushended () {
       let ext = brush.extent()
 
@@ -151,7 +150,6 @@ export default class {
         .duration(brush.empty() ? 0 : 750)
         .call(brush.extent([ [ ext[ 0 ][ 0 ], 0 ], defaultExtent[ 1 ] ]))
         .call(brush.event)
-      // console.log('threshold 99999999999999999999999999999999999999999999999999999999999999999', newThresh, self.chemical)
       self.updateThreshold(newThresh, self.chemical) // todo
     }
 

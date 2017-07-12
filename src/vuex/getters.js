@@ -15,3 +15,5 @@ export const correlationToken = state => state.correlationToken
 
 export const selectedHour = state => state.selectedHour
 export const selectedChemical = state => state.selectedChemical
+
+export const timeLineState = state => state.timeLineState

@@ -5,12 +5,22 @@
     <div class="uk-width-1-1 uk-flex uk-flex-wrap">
       <!--<span class="tip-title" v-if="selectedHour"> Current Time: </span>  <b class="label-color">{{selectedHour}}</b>-->
       <span class="tip-title" v-if="factory"> Factory: </span>  <b class="label-color">{{factory}}</b>
+      <span class="tip-title" v-if="selectedChemical"> chemical: <b :style="{color: colorMap[selectedChemical][1]}">{{selectedChemical}}</b></span>
     <template class="uk-width-1-1" v-if="selectedHour">
       <span class="tip-title">Show ISOMap: </span> <input type="checkbox" v-model="showISO">
       <span class="tip-title">Hours before and after: </span> <input type="number" v-model="timeBeforeAndAfter">
+      <span class="tip-title">Snapshot </span><button @click="addSnapShot"><i class="uk-icon-camera"></i></button>
     </template>
     </div>
-  <div class="chart" v-el:chart></div>
+  <div class="uk-width-1-1 chart-container uk-flex">
+    <div class="chart" v-el:chart></div>
+    <div class="snap-list">
+      <div class="uk-thumbnail" v-for="snap in snapList">
+        <img :src="snap.src" alt="">
+        <div class="uk-thumbnail-caption"><span :style="{color: colorMap[snap.chemical][1]}">{{snap.chemical}}</span><br>{{snap.time}}</div>
+      </div>
+    </div>
+  </div>
   <dialog v-ref:menu>
     <div slot="title">Config Panel</div>
     <div slot="body">
@@ -46,7 +56,7 @@
   import {formatFunc} from '../commons/utils'
   import InterWk from './interploration.worker'
   import $ from 'jquery'
-  let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts } = config
+  let { sensorsLoc, factoriesLoc, sensorOpts, factoryOpts, colorMap } = config
   let windData = null
   let sensorData = null
   let sensorsLoc2 = JSON.parse(JSON.stringify(sensorsLoc))
@@ -96,15 +106,20 @@
       },
       factory () {
         this.chartIns && this.chartIns.highlightFactory(this.factory)
+      },
+      selectedHour () {
+        this.chartIns.clearISOLine()
+        this.update()
       }
     },
     computed: {
       updateStr () {
-        return this.selectedHour + this.selectedChemical + this.factory + this.timeBeforeAndAfter + this.showISO
+        return this.selectedChemical + this.factory + this.timeBeforeAndAfter + this.showISO
       }
     },
     data () {
       return {
+        colorMap,
         timeBeforeAndAfter: 5,
         factoryOpts,
         chartIns: null,
@@ -113,10 +128,19 @@
         factorySenorDist: {},
         playId: null,
         selectedFactory: null,
-        showISO: true
+        showISO: true,
+        snapList: []
       }
     },
     methods: {
+      addSnapShot () {
+        this.$nextTick(() => {
+          this.chartIns && this.chartIns.getDataURI(this.addToSnapList)
+        })
+      },
+      addToSnapList (dataUri) {
+        this.snapList.push({src: dataUri, time: this.selectedHour, chemical: this.selectedChemical})
+      },
       configConfirm () {
 //        this.update()
         this.$refs.menu.close()
@@ -157,7 +181,7 @@
               posData
               domain
 //              this.chartIns.drawISOLine1({ points, posData, domain })
-              this.chartIns.drawISOLine2({ contours })
+              this.chartIns.drawISOLine2({ contours, chemical })
             }
           } else {
             this.chartIns.clearISOLine()
@@ -256,8 +280,18 @@
   }
 </script>
 <style lang="less" scoped>
+  @snap-width: 150px;
+  .chart-container {
+    height: calc(~"100% - 50px");
+  }
   .chart {
     height: calc(~"100% - 40px");
+    width: calc(~"100% - "@snap-width);
+  }
+  .snap-list {
+    width: @snap-width;
+    height: calc(~"100% - 40px");
+    overflow-y: scroll;
   }
   .tip-title {
     /*font-weight: bold;*/

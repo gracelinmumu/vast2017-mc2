@@ -1,11 +1,16 @@
 <template>
   <div class="uk-width-1-1">
     <span class="comps-title"><b>Reading View</b></span>
-    <div class="uk-align-right"> Month<button v-for="month in monthOpts"
-                       class="uk-button"
-                       :class="{'uk-button-primary': selectedMonth===month}"
-                       @click="switchMonth(month)">M{{month}}
-    </button></div>
+    <i v-if="timeLineState==='bottom'" class="uk-icon-expand uk-icon-small"  @click="switchTimelineState('top')"></i>
+    <i v-else class="uk-icon-compress uk-icon-small"  @click="switchTimelineState('bottom')"></i>
+    <div class="uk-align-right"> Month
+      <button class="uk-button" :class="{'uk-button-primary': selectedMonth===month}">Three Months</button>
+      <button v-for="month in monthOpts"
+         class="uk-button"
+         :class="{'uk-button-primary': selectedMonth===month}"
+         @click="switchMonth(month)">M{{month}}
+      </button>
+    </div>
     <!--<button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>-->
     <!--</button>-->
   </div>
@@ -54,16 +59,17 @@
     sctDataToken,
     sctBarChart,
     selectedBar,
-    selectedHour
+    selectedHour,
+    timeLineState
   } from '../vuex/getters'
-  import {switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold, addSCTCharts} from '../vuex/actions'
+  import {switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold, addSCTCharts, switchTimelineState} from '../vuex/actions'
 
   let allData = null
   let {monthOpts, chemicalOpts} = config
   export default {
     vuex: {
-      getters: { selectedMonth: month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, selectedBar, selectedHour },
-      actions: { switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold, addSCTCharts }
+      getters: { selectedMonth: month, chemical, sensor, factory, threshold, sctDataToken, sctBarChart, selectedBar, selectedHour, timeLineState },
+      actions: { switchMonth, removeSCTChart, updateSelectedBar, switchPlay, updateThreshold, addSCTCharts, switchTimelineState }
     },
     data () {
       return {
@@ -93,6 +99,9 @@
     },
     components: { Wind, DirectionDiff, Dialog, SelectMenu },
     methods: {
+      clickUp () {
+        console.log('go up')
+      },
       updateMonth () {
         this.sctBarChart.forEach((bar, index) => {
           let selector = '#BarDistribute-' + index
@@ -237,10 +246,15 @@
   }
 </script>
 <style lang="less" scoped>
+  @import "../commons/base.vars.less";
   @bottom: 60px;
   @middle: 100px;
+  @reading-view-height: 80px;
   .panel {
     border: 1px solid #ddd;
+  }
+  i {
+    color: @color-main;
   }
   .top {
     height: calc(~"100% - 20px - " @bottom ~"-" @middle);
@@ -252,7 +266,7 @@
         color: red;
       }
       .bar-container {
-        height: 100px;
+        height: @reading-view-height;
         border-bottom: 1px solid #ddd;
       }
     }
@@ -267,7 +281,7 @@
   }
   .bar-item {
     height: calc(~"100% - 20px");
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
   }
   .full-height {
     height: 100%;

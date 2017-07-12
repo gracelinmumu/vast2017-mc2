@@ -31,7 +31,8 @@ const state = {
     sensor: 'S3'
   },
   selectedHour: null,
-  selectedChemical: null
+  selectedChemical: null,
+  timeLineState: 'bottom'
 }
 
 const mutations = {
@@ -104,6 +105,9 @@ const mutations = {
   },
   [types.UPDATE_SELECTED_FACTORY] (state, fa) {
     state.factory = fa
+  },
+  [types.SWITCH_TIMELINE_STATE] (state, s) {
+    state.timeLineState = s
   }
 }
 

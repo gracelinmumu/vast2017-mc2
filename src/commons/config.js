@@ -23,18 +23,19 @@ let config = {
     S9: [ 119, 42 ]
   },
   sensorSort: [ 'S4', 'S5', 'S9', 'S6', 'S7', 'S8', 'S1', 'S2', 'S3' ],
-  dangerColor: 'red',
-  safeColor: '#bef7c3',
+  dangerColor: 'rgb(229,57,53)',
+  // safeColor: '#bef7c3',
+  safeColor: '#ddd',
   colorMap: {
-    Chlorodinine: ['#f9ecf1', '#ff49dc'],
-    Methylosmolene: ['#ffebb5', '#ed650a'],
-    Appluimonia: ['#e4f4f5', '#0082ff'],
-    'AGOC-3A': ['#d4c1dc', '#7b4fde'] // '#fbcf00'
+    Chlorodinine: ['#f9ecf1', 'rgb(150,40,27)'],
+    Methylosmolene: ['#ffebb5', 'rgb(210,84,0)'],
+    Appluimonia: ['#e4f4f5', 'rgb(77,182,172)'],
+    'AGOC-3A': ['#d4c1dc', 'rgb(129, 199, 132)'] // '#fbcf00'
   },
   colorText: '#63c4ff',
   windColor: '#888',
   currentTime: {
-    color: '#f2753f',
+    color: '#00a8e6',
     width: 2
   }
   // windColor: '#000'

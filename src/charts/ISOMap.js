@@ -3,7 +3,7 @@
  */
 import d3 from 'd3'
 import $ from 'jquery'
-
+import SaveSvgAsPngLib from 'save-svg-as-png'
 import factoryImg from '../../assets/images/factory2.png'
 import monitorImg from '../../assets/images/monitor2.png'
 monitorImg
@@ -26,8 +26,8 @@ Object.keys(sensorsLoc).forEach((s) => {
   })
 })
 
-let factorySize = 5
-let sensorSize = 10
+let factorySize = 20
+let sensorSize = 16
 export default class {
   constructor (el) {
     this.el = el
@@ -114,24 +114,24 @@ export default class {
         return 'translate(' + x + ',' + y + ')'
       })
 
-    factory.append('circle')
-      .attr('r', factorySize)
-      .attr('cx', factorySize * -0.5)
-      .attr('cy', factorySize * -0.5)
-      .attr('fill', '#999')
-      .attr('stroke', '#aaa')
-      .attr('cursor', 'pointer')
-      .attr('class', 'factory-circle')
-      // .attr('stroke-dasharray', '3, 3')
-      .on('click', (d) => this.trigger('clickFactory', d))
-    // factory.append('image')
-    //   .attr('xlink:href', (d) => factoryImg)
-    //   .attr('width', nodeSize)
-    //   .attr('height', nodeSize)
-    //   .attr('x', -nodeSize * 0.5)
-    //   .attr('y', -nodeSize * 0.5)
+    // factory.append('circle')
+    //   .attr('r', factorySize)
+    //   .attr('cx', factorySize * -0.5)
+    //   .attr('cy', factorySize * -0.5)
+    //   .attr('fill', '#999')
+    //   .attr('stroke', '#aaa')
     //   .attr('cursor', 'pointer')
+    //   .attr('class', 'factory-circle')
+    //   // .attr('stroke-dasharray', '3, 3')
     //   .on('click', (d) => this.trigger('clickFactory', d))
+    factory.append('image')
+      .attr('xlink:href', (d) => factoryImg)
+      .attr('width', factorySize)
+      .attr('height', factorySize)
+      .attr('x', -factorySize)
+      .attr('y', -factorySize)
+      .attr('cursor', 'pointer')
+      .on('click', (d) => this.trigger('clickFactory', d))
     // factory.append('text')
     //   .text(d => d)
     return this
@@ -159,19 +159,19 @@ export default class {
         return 'translate(' + x + ',' + y + ')'
       })
 
-    // sensor.append('image')
-    //   .attr('xlink:href', (d) => monitorImg)
-    //   .attr('x', -nodeSize * 0.5 + 'px')
-    //   .attr('y', -nodeSize * 0.5 + 'px')
-    //   .attr('width', nodeSize)
-    //   .attr('height', nodeSize)
-    sensor.append('rect')
-      .attr('x', -sensorSize * 0.5 + 'px')
-      .attr('y', -sensorSize * 0.5 + 'px')
+    sensor.append('image')
+      .attr('xlink:href', (d) => monitorImg)
+      .attr('x', -sensorSize + 'px')
+      .attr('y', -sensorSize + 'px')
       .attr('width', sensorSize)
       .attr('height', sensorSize)
-      .attr('fill', '#63c4ff')
-      .attr('stroke', '#ddd')
+    // sensor.append('rect')
+    //   .attr('x', -sensorSize * 0.5 + 'px')
+    //   .attr('y', -sensorSize * 0.5 + 'px')
+    //   .attr('width', sensorSize)
+    //   .attr('height', sensorSize)
+    //   .attr('fill', '#63c4ff')
+    //   .attr('stroke', '#ddd')
     sensor.append('text')
       .attr('y', sensorSize)
       .attr('x', -sensorSize * 2)
@@ -180,7 +180,7 @@ export default class {
   }
 
   clearISOLine () {
-    d3.select(this.el).select('svg').select('.iso-map-g').remove()
+    d3.select(this.el).select('svg').select('.iso-map-g').selectAll('path').remove()
     d3.select(this.el).selectAll('.iso-line').remove()
     return this
   }
@@ -461,7 +461,7 @@ export default class {
     return str
   }
 
-  drawISOLine2 ({contours}) {
+  drawISOLine2 ({contours, chemical}) {
     d3.select(this.el).select('svg').select('.iso-map-g').selectAll('path').remove()
     let g = d3.select(this.el).select('.iso-map-g')
 
@@ -475,11 +475,36 @@ export default class {
         .append('path')
         .attr('d', d => this.getPath(d))
         .attr('fill', 'none')
-        .attr('stroke', 'rgba(255,0,0,' + d.level * 0.1 + ')')
+        // // .attr('stroke', 'rgba(255,0,0,' + d.level * 0.1 + ')')
+        // .attr('stroke', 'rgba(255,0,0,0.3)')
+        // .attr('stroke-width', d.level)
+        .attr({
+          'cursor': 'pointer',
+          'stroke-width': d.level,
+          'stroke': colorMap[chemical][1],
+          'stroke-opacity': d.level * 0.1
+        })
+        .on('mouseover', x => {
+          skyeyeTooltip.show({
+            '': 'ISO Line',
+            chemical,
+            value: d.value.toFixed(3)
+          }, d3.event)
+        })
+        .on('mouseout', x => {
+          skyeyeTooltip.hide()
+        })
     })
     return this
   }
-
+  getDataURI (callbackFun) {
+    let g = d3.select(this.el).select('svg')
+      // .select('.iso-map-g')
+    let svgNode = g.node()
+    SaveSvgAsPngLib.svgAsDataUri(svgNode, { scale: 0.5 }, (res) => {
+      callbackFun(res)
+    })
+  }
   on (name, cb) {
     this[name] = cb
   }
