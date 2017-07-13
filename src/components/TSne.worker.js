@@ -9,7 +9,7 @@ onmessage = (evt) => {
     epsilon: 10, perplexity: 30, dim: data[0].length
   })
   T.initDataRaw(data)
-  let steps = 3000
+  let steps = 4000
   for (let k = 0; k < steps; k++) {
     T.step()
   }

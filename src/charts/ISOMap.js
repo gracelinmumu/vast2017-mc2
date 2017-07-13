@@ -482,7 +482,8 @@ export default class {
           'cursor': 'pointer',
           'stroke-width': d.level,
           'stroke': colorMap[chemical][1],
-          'stroke-opacity': d.level * 0.1
+          // 'stroke-opacity': d.level * 0.1
+          'stroke-opacity': 0.3
         })
         .on('mouseover', x => {
           skyeyeTooltip.show({

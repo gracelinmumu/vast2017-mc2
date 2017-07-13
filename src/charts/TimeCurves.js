@@ -9,6 +9,9 @@ let {dangerColor, safeColor, colorMap, currentTime} = config
 safeColor
 dangerColor
 colorMap
+let pointR = 8
+let pointRB = 10
+
 export default class {
   constructor (el) {
     this.el = el
@@ -49,9 +52,11 @@ export default class {
     let yScale = d3.scale.linear().range([height, 0]).domain([yMin, yMax])
 
     let {timeLabel} = timeCurves
+
     let night = [0, 1, 2, 3, 4, 5, 6, 20, 21, 22, 23]
-    night
     let day = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+
+    night
     let pointArr = svg.selectAll('.point')
       .data(timeLabel)
       .enter()
@@ -69,7 +74,7 @@ export default class {
       .on('click', d => {
         this.trigger('clickHour', d)
       })
-    let pointR = 8
+
     this.circles = pointArr.append('circle')
       .attr('cx', 0)
       .attr('cy', 0)
@@ -95,27 +100,25 @@ export default class {
         'dominant-baseline': 'middle'
       })
     this.point = pointArr
+    let ss = 1
+    let ty = 0
+    let tx = 0
 
-    let pathStr = 'M'
-    timeLabel.forEach((d, index) => {
-      pathStr += xScale(pos[index][0]) + ' ' + yScale(pos[index][1])
-      index !== (timeLabel.length - 1) && (pathStr += ' L')
-    })
+    let line = d3.svg.line()
+      .x((d, index) => xScale(pos[index][0]) * ss + tx)
+      .y((d, index) => yScale(pos[index][1]) * ss + ty)
+      .interpolate('linear')
 
-    curve.attr('d', pathStr)
+    curve.attr('d', d => line(timeLabel))
 
     function zoomHandler () {
-      let tx = d3.event.translate[0]
-      let ty = d3.event.translate[1]
-      let ss = d3.event.scale
+      tx = d3.event.translate[0]
+      ty = d3.event.translate[1]
+      ss = d3.event.scale
       pointArr
         .attr('transform', (d, index) => 'translate(' + (xScale(pos[index][0]) * ss + tx) + ',' + (yScale(pos[index][1]) * ss + ty) + ')')
-      let pathStr = 'M'
-      timeLabel.forEach((d, index) => {
-        pathStr += xScale(pos[index][0]) * ss + tx + ' ' + (yScale(pos[index][1]) * ss + ty)
-        index !== (timeLabel.length - 1) && (pathStr += ' L')
-      })
-      curve.attr('d', pathStr)
+
+      curve.attr('d', d => line(timeLabel))
     }
 
     let zoomListener = d3.behavior.zoom()
@@ -131,6 +134,7 @@ export default class {
     this.circles
       .attr('stroke', d => d === time ? currentTime.color : '#ddd')
       .attr('stroke-width', d => d === time ? currentTime.width : 2)
+      .attr('r', d => d === time ? pointRB : pointR)
     return this
   }
 

@@ -9,6 +9,8 @@ let {dangerColor, safeColor, colorMap, currentTime} = config
 safeColor
 dangerColor
 colorMap
+let r = 2
+let rSelected = 4
 export default class {
   constructor (el) {
     this.el = el
@@ -57,7 +59,7 @@ export default class {
         // d.$y = yScale(pos[index][1])
         return yScale(pos[index][1])
       })
-      .attr('r', 3)
+      .attr('r', r)
       // .attr('fill', safeColor)
       .attr('fill', d => {
         let hour = new Date(d).getHours()
@@ -67,7 +69,7 @@ export default class {
       .attr({
         'cursor': 'pointer',
         'stroke': '#999',
-        'fill-opacity': 0.7
+        'fill-opacity': 1
       })
       .attr('class', 'point')
       .on('mouseover', d => {
@@ -105,6 +107,7 @@ export default class {
     this.point
       .attr('stroke', d => d === time ? currentTime.color : '#999')
       .attr('stroke-width', d => d === time ? currentTime.width : 1)
+      .attr('r', d => d === time ? rSelected : r)
   }
 
   trigger (evtName, ...args) {

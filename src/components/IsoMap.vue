@@ -1,6 +1,6 @@
 <template>
-  <button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>
-  </button>
+  <!--<button class="uk-button uk-button-primary uk-align-right" @click="openDialog"> Config  <i class="uk-icon-cog"></i>-->
+  <!--</button>-->
     <span class="comps-title"><b>ISOMap View</b></span>
     <div class="uk-width-1-1 uk-flex uk-flex-wrap">
       <!--<span class="tip-title" v-if="selectedHour"> Current Time: </span>  <b class="label-color">{{selectedHour}}</b>-->
@@ -12,7 +12,7 @@
       <span class="tip-title">Snapshot </span><button @click="addSnapShot"><i class="uk-icon-camera"></i></button>
     </template>
     </div>
-  <div class="uk-width-1-1 chart-container uk-flex">s
+  <div class="uk-width-1-1 chart-container uk-flex">
     <div class="chart" v-el:chart></div>
     <div class="snap-list">
       <div class="uk-thumbnail" v-for="snap in snapList">

@@ -67,18 +67,15 @@
             break
         }
       },
-      timeCurves: {
-        deep: true,
-        handler () {
-          // Step1. 布局
-          let worker = new TSne()
-          worker.postMessage(this.timeCurves.data)
-          worker.onmessage = (evt) => {
-            let evtData = evt.data
-            // Step2. 绘制
-            this.timeCurvesChart.draw({ timeCurves: this.timeCurves, pos: evtData })
-              .highlightCurrent(this.selectedHour)
-          }
+      timeCurvesDay () {
+        // Step1. 布局
+        let worker = new TSne()
+        worker.postMessage(this.timeCurves.data)
+        worker.onmessage = (evt) => {
+          let evtData = evt.data
+          // Step2. 绘制
+          this.timeCurvesChart.draw({timeCurves: this.timeCurves, pos: evtData})
+            .highlightCurrent(this.selectedHour)
         }
       }
     },
