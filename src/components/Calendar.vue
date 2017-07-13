@@ -2,6 +2,11 @@
   <!--title-->
   <span class="comps-title"><b>Calendar View</b></span>
   <div class="calendar-legend uk-align-right" v-el:legend></div>
+  <div class="uk-align-right uk-flex">
+    <div class="danger"></div>Reading ≥ Threshold
+    <div class="safe"></div>Reading < Threshold
+    <div class="black"></div>Data Missing
+  </div>
   <!--params-->
   <div class="uk-width-1-1 uk-flex uk-flex-wrap">
     Sensor:  <select v-model="selectedSensor" class="label-color"><option v-for="op in sensorOpts"> {{op}} </select>
@@ -189,6 +194,8 @@
       },
       clickHour (hour, ch) {
         console.log('clicked hour', hour, ch)
+        let time = new Date(hour)
+        this.calculateProjectData(+new Date((1 + time.getMonth()) + '/' + time.getDate() + '/2016 00:00:00'))
         this.updateSelectedTime(hour)
         this.updateSelectedChemical(ch)
       },
@@ -296,9 +303,35 @@
   }
 </script>
 <style lang="less" scoped>
+  @import "../commons/base.vars.less";
   @right: 40px;
   @hour-wid: 40px;
   @container-left-width: 250px;
+  @legend-div-size: 20px;
+  .legend-div {
+    width: calc(~"3 * "@legend-div-size);
+  }
+  .danger {
+    margin-left: @margin-m;
+    margin-right: @margin-s;
+    width: @legend-div-size;
+    height: @legend-div-size;
+    background: red;
+  }
+  .safe {
+    margin-left: @margin-m;
+    margin-right: @margin-s;
+    width: @legend-div-size;
+    height: @legend-div-size;
+    background: #ddd;
+  }
+  .black {
+    margin-left: @margin-m;
+    margin-right: @margin-s;
+    width: @legend-div-size;
+    height: @legend-div-size;
+    background: #000;
+  }
   .calendar-legend {
     width: 40px;
     height: 40px;
@@ -332,6 +365,9 @@
         height: 20px;
         text-align: center;
         line-height: calc(@hour-wid~" - 1px");
+        i {
+          color: @color-main;
+        }
       }
     }
     .hour-container {
