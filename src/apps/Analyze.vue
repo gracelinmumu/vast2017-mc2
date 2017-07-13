@@ -26,16 +26,10 @@
       <!--</div>-->
     </div>
     <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin" :class="{'app-bottom-top': timeLineState==='top'}">
-      <!--<div class="project uk-width-1-3 uk-panel">-->
-        <!--<project></project>-->
-      <!--</div>-->
-      <!--<div class="uk-width-1-1">-->
-        <!--<span class="center uk-align-center">-->
-          <!--<i v-if="timeLineState==='bottom'" class="uk-icon-expand"  @click="goUp"></i>-->
-          <!--<i v-else class="uk-icon-compress"  @click="goDown"></i>-->
-        <!--</span>-->
-      <!--</div>-->
-      <div class="time-line uk-width-1-1 uk-panel">
+      <div class="project uk-width-1-3 uk-panel">
+        <project></project>
+      </div>
+      <div class="time-line uk-width-2-3 uk-panel">
         <time-line></time-line>
       </div>
     </div>
@@ -114,7 +108,11 @@
       let wk = new Process()
       wk.postMessage({ sensorData })
       wk.onmessage = (evt) => {
-        let { bySensor, byChemical, byTime, pearsonSameChemical } = evt.data
+        let { bySensor, byChemical, byTime, pearsonSameChemical, mdsArr, timesArr } = evt.data
+        mdsArr
+        timesArr
+        console.log(timesArr)
+        console.log(mdsArr)
         let dataToken = storage.set(bySensor, 'sctData')
         this.setSCTToken(dataToken)
         let chemicalToken = storage.set(byChemical, 'byChemical')
@@ -170,7 +168,7 @@
       height: calc(~"39% - 20px - " @title-h);
     }
     .app-bottom-top {
-      margin-top: calc(~"-50% + " @title-h);
+      margin-top: calc(~"-50% + 40px");
       height: 100%;
       background: #fff;
     }

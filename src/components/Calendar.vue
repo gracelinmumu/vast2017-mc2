@@ -24,9 +24,10 @@
     <div class="container-right full-height hour-container">
       <div class="uk-flex hour-time-label" v-if="hoursData.length"><div class="item" v-for="h in hourArr">{{h}}</div></div>
       <div class="uk-width-1-1 hour-chart-item uk-flex" v-for="hour in hoursData">
-        <div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
+        <div class="day-label">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
+        <!--<div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>-->
         <div class="uk-width-1-1 full-height"
-             :id="'Day'+hour.day+hour.chemical+hour.sensor"
+             :id="'Day'+hour.day+hour.sensor"
              :draw="drawHours(hour)">
         </div>
       </div>
@@ -38,11 +39,11 @@
   import Dialog from './Dialog.vue'
   import Hour from '../charts/Hour'
   import storage from '../commons/storage'
-  import {selectedBar, timeToken, threshold} from '../vuex/getters'
-  import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
   import config from '../commons/config'
   import CalendarLegend from '../charts/CalendarLegend'
   import {formatFunc} from '../commons/utils'
+  import {selectedBar, timeToken, threshold, selectedDay} from '../vuex/getters'
+  import {updateSelectedTime, updateSelectedChemical, switchMonth, updateTimeCurves} from '../vuex/actions'
   let dataByTime = null
 
   let { chemicalOpts, sensorOpts, colorMap } = config
@@ -55,13 +56,31 @@
   for (let i = 0; i < 24; i++) {
     hourArr.push(i)
   }
+
+  let dayProjectField = []
+  chemicalOpts.forEach((ch) => {
+    sensorOpts.forEach((s) => {
+      dayProjectField.push({ch, s})
+    })
+  })
   export default {
     vuex: {
-      getters: { selectedBar, timeToken, threshold },
-      actions: {updateSelectedTime, updateSelectedChemical, switchMonth}
+      getters: { selectedBar, timeToken, threshold, selectedDay },
+      actions: {updateSelectedTime, updateSelectedChemical, switchMonth, updateTimeCurves}
     },
     components: { Dialog },
     watch: {
+      selectedDay: {
+        deep: true,
+        handler () {
+          let {day, hour} = this.selectedDay
+          if (this.hourChartMap[day + this.selectedSensor]) {
+            this.hourChartMap[day + this.selectedSensor].highlight(hour)
+          } else {
+            this.hoursData = [ {sHour: hour, sensor: this.selectedSensor, chemical: chemicalOpts, day, data: this.april[day], display: this.selectedSensor + ' ' + (new Date(+day).getMonth() + 1) + '/' + (new Date(+day).getDate())} ].concat(this.hoursData)
+          }
+        }
+      },
       selectedBar: {
         deep: true,
         handler () {
@@ -108,27 +127,51 @@
         chemicalOpts,
         sensorOpts,
         selectedSensor: 'S6',
-        hoursData: []
+        hoursData: [],
+        hourChartMap: {}
       }
     },
     methods: {
       closeHour (day) {
         this.hoursData.$remove(day)
       },
-      drawHours ({ day, data, chemical, sensor }) {
+      drawHours ({ day, data, chemical, sensor, sHour }) {
         this.$nextTick(() => {
-          new Hour('#Day' + day + chemical + sensor)
-//            .draw(data, +day, this.threshold, this.selectedChemicals)
-            .draw(data, +day, this.threshold, [chemical])
+          let chart = new Hour('#Day' + day + sensor)
+          this.hourChartMap[day + sensor] = chart
+          //            .draw(data, +day, this.threshold, this.selectedChemicals)
+          chart.draw(data, +day, this.threshold, chemical)
             .on('clickHour', this.clickHour)
+          sHour && chart.highlight(sHour)
         })
+      },
+      calculateProjectData (day) {
+        let data = [] // 二维数组
+        let timeLabel = []
+        let oneHour = 1000 * 60 * 60
+        for (let i = 0; i < 24; i++) {
+          let time = formatFunc(new Date(+day + oneHour * i))
+          let rowData = dataByTime[time]
+          let row
+          if (rowData) {
+            row = dayProjectField.map((d) => rowData[d.ch] ? rowData[d.ch][d.s] || 0 : 0)
+          } else {
+            row = dayProjectField.map(d => 0)
+          }
+          timeLabel.push(time)
+          data.push(row)
+        }
+        let time = new Date(+day)
+        this.updateTimeCurves({day, dayDisplay: (1 + time.getMonth()) + '/' + time.getDate(), timeLabel, data})
       },
       clickDay (day, data, ch) {
         let d = new Date(+day)
         let month = 1 + d.getMonth()
         this.switchMonth(month)
+        if (!this.hourChartMap[day + this.selectedSensor]) {
+          this.hoursData = [ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
+        }
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
-          this.hoursData = [ { sensor: this.selectedSensor, chemical: ch, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
           let dataSelect = data[ch]
           let hour
           if (dataSelect) {
@@ -142,6 +185,7 @@
           }
           hour && this.clickHour(hour, ch)
         }
+        this.calculateProjectData(day)
       },
       clickHour (hour, ch) {
         console.log('clicked hour', hour, ch)
@@ -167,6 +211,9 @@
           this.chartApril.draw(april, domainMap, this.selectedChemicals)
           this.chartAugust.draw(august, domainMap, this.selectedChemicals)
           this.chartDecember.draw(december, domainMap, this.selectedChemicals)
+          this.april = april
+          this.august = august
+          this.december = december
         }
       },
       processData () {

@@ -5,7 +5,7 @@ import d3 from 'd3'
 import $ from 'jquery'
 import config from '../commons/config'
 import {formatFunc, skyeyeTooltip} from '../commons/utils'
-let {dangerColor, safeColor, colorMap} = config
+let {dangerColor, safeColor, colorMap, currentTime} = config
 safeColor
 colorMap
 export default class {
@@ -21,7 +21,15 @@ export default class {
       .attr('height', '100%')
     return this
   }
+  highlight (hour) {
+    this.hour.attr('stroke', d => d === hour ? currentTime.color : 'none')
 
+    return this
+  }
+  clearHighlight () {
+    this.hour.attr('stroke', 'none')
+    return this
+  }
   draw (data, day, thresholdMap, chemicals) {
     this.svg.selectAll('.hour').remove()
     let pad = 2
@@ -45,7 +53,6 @@ export default class {
       .attr('class', 'hour')
       .attr('transform', (d, i) => 'translate(' + (i * (cellW + pad)) + ',' + pad + ')')
       .attr('cursor', 'pointer')
-
     let chLen = chemicals.length
     let w = chLen < 4 ? cellW / chLen : cellW / 2
     let h = chLen > 3 ? (cellH - 5) / 2 : (cellH - 5)
@@ -64,6 +71,7 @@ export default class {
         .attr('stroke', '#ccc')
         .attr('stroke-width', 1)
         .on('click', (d) => {
+          this.clearHighlight()
           this.clickHour(d, ch)
         })
         .on('mouseover', (d) => {
@@ -78,7 +86,13 @@ export default class {
           skyeyeTooltip.hide()
         })
     })
-
+    this.hour = hour.append('rect')
+      .attr('class', 'highlight')
+      .attr('width', cellW)
+      .attr('height', cellH - 2)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('fill', 'none')
     // hour.append('text')
     //   .text((d) => {
     //     console.log(d, new Date(d), new Date(d).getHours())

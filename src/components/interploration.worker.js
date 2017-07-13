@@ -98,10 +98,10 @@ let interpolation = (dims, p, itemCount, pos, Z, InvV, mode, a, c0, c1) => {
     switch (mode) {
       case 1: // Spherical Mode
         D[i] = (h < a) ? c0 + c1 * (1.5 * h / a - 0.5 * Math.pow(h / a, 3)) : c0 + c1
-        break;
+        break
       case 2: // Exponential Mode
         D[i] = c0 + c1 * (1 - Math.exp(-3 * h / a))
-        break;
+        break
       case 3: // Gaussian Mode
         D[i] = c0 + c1 * (1 - Math.exp(-3 * h * h / a / a))
         break

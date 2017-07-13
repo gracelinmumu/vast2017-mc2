@@ -1,6 +1,8 @@
 /**
  * Created by huangwei on 2017/6/27.
  */
+import config from '../commons/config'
+let {sensorOpts, chemicalOpts} = config
 // 计算均值
 const getMean = (data) => {
   let sum = 0
@@ -48,6 +50,7 @@ onmessage = (evt) => {
   let bySensor = {}
   let byChemical = {}
   let byTime = {}
+  let mdsData = {}
   sensorData.forEach((d) => {
     let m = 'S' + d.monitor
     let c = d.chemical
@@ -64,6 +67,15 @@ onmessage = (evt) => {
     if (!byTime[ time ]) byTime[ time ] = {}
     if (!byTime[ time ][ c ]) byTime[ time ][ c ] = {}
     byTime[ time ][ c ][ m ] = d.reading
+    // if (+new Date(time) < +new Date('1/1/2017 00:00:00') && +new Date(time) >= +new Date('12/1/2016 00:00:00')) {
+    //   if (!mdsData[time]) {
+    //     mdsData[time] = {
+    //       [c + m]: d.reading
+    //     }
+    //   } else {
+    //     mdsData[time][c + m] = d.reading
+    //   }
+    // }
   })
   let pearsonSameSensor = {}
   Object.keys(bySensor).forEach((sensor) => {
@@ -94,6 +106,23 @@ onmessage = (evt) => {
       pearsonSameChemical.push({ name: s1 + '-' + s2, x: i, y: j, correlation: d })
     }
   }
-  self.postMessage({ bySensor, byChemical, byTime, pearsonSameChemical, pearsonSameSensor })
+  let fields = []
+  // sensorOpts.forEach((s) => {
+  //   chemicalOpts.forEach((c) => {
+  //     fields.push(c + s)
+  //   })
+  // })
+  let mdsArr = Object.keys(mdsData).map((d) => {
+    fields.forEach((f) => {
+      if (!mdsData[d][f]) {
+        mdsData[d][f] = 0
+      }
+    })
+    mdsData[d]['time'] = d
+    return mdsData[d]
+  })
+  let timesArr = Object.keys(mdsData)
+
+  self.postMessage({ bySensor, byChemical, byTime, pearsonSameChemical, pearsonSameSensor, mdsArr, timesArr })
   self.close()
 }

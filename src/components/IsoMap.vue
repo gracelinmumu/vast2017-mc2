@@ -12,10 +12,11 @@
       <span class="tip-title">Snapshot </span><button @click="addSnapShot"><i class="uk-icon-camera"></i></button>
     </template>
     </div>
-  <div class="uk-width-1-1 chart-container uk-flex">
+  <div class="uk-width-1-1 chart-container uk-flex">s
     <div class="chart" v-el:chart></div>
     <div class="snap-list">
       <div class="uk-thumbnail" v-for="snap in snapList">
+        <i class="uk-icon-close uk-align-right" @click="removeSnap(snap)"></i>
         <img :src="snap.src" alt="">
         <div class="uk-thumbnail-caption"><span :style="{color: colorMap[snap.chemical][1]}">{{snap.chemical}}</span><br>{{snap.time}}</div>
       </div>
@@ -133,6 +134,9 @@
       }
     },
     methods: {
+      removeSnap (snap) {
+        this.snapList.$remove(snap)
+      },
       addSnapShot () {
         this.$nextTick(() => {
           this.chartIns && this.chartIns.getDataURI(this.addToSnapList)
@@ -280,7 +284,11 @@
   }
 </script>
 <style lang="less" scoped>
+  @import "../commons/base.vars.less";
   @snap-width: 150px;
+  i {
+    color: @color-main;
+  }
   .chart-container {
     height: calc(~"100% - 50px");
   }

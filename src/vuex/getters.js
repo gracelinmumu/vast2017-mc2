@@ -17,3 +17,7 @@ export const selectedHour = state => state.selectedHour
 export const selectedChemical = state => state.selectedChemical
 
 export const timeLineState = state => state.timeLineState
+export const selectedDay = state => state.selectedDay
+
+export const timeCurves = state => state.timeCurves
+export const timeCurvesDay = state => state.timeCurves.day
