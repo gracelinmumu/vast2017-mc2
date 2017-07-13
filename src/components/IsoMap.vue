@@ -12,7 +12,7 @@
       <span class="tip-title">Snapshot </span><button @click="addSnapShot"><i class="uk-icon-camera"></i></button>
     </template>
     </div>
-  <div class="uk-width-1-1 chart-container uk-flex">
+  <div class="uk-width-1-1 chart-container uk-flex">s
     <div class="chart" v-el:chart></div>
     <div class="snap-list">
       <div class="uk-thumbnail" v-for="snap in snapList">
@@ -284,7 +284,11 @@
   }
 </script>
 <style lang="less" scoped>
+  @import "../commons/base.vars.less";
   @snap-width: 150px;
+  i {
+    color: @color-main;
+  }
   .chart-container {
     height: calc(~"100% - 50px");
   }

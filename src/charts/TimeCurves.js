@@ -12,6 +12,7 @@ colorMap
 export default class {
   constructor (el) {
     this.el = el
+    this.inited = false
     this.init()
   }
 
@@ -24,6 +25,7 @@ export default class {
   }
 
   draw ({timeCurves, pos}) {
+    this.inited = true
     let container = d3.select(this.el).select('svg')
     container.selectAll('.container').remove()
     let width = $(this.el).width()
@@ -35,7 +37,8 @@ export default class {
       .attr('height', height)
 
     let curve = svg.append('path')
-      .attr('stroke', '#c7e1f0')
+      .attr('stroke', '#aaa')
+      .attr('stroke-width', 2)
       .attr('fill', 'none')
 
     let xMax = Math.max(...pos.map(d => d[0]))
@@ -66,7 +69,7 @@ export default class {
       .on('click', d => {
         this.trigger('clickHour', d)
       })
-    let pointR = 6
+    let pointR = 8
     this.circles = pointArr.append('circle')
       .attr('cx', 0)
       .attr('cy', 0)

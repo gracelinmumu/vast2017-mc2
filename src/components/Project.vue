@@ -53,6 +53,7 @@
     },
     watch: {
       selectedHour () {
+        this.timeCurvesChart.inited && this.timeCurvesChart.highlightCurrent(this.selectedHour)
         let month = new Date(this.selectedHour).getMonth() + 1
         switch (month) {
           case 4:
