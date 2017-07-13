@@ -24,9 +24,10 @@
     <div class="container-right full-height hour-container">
       <div class="uk-flex hour-time-label" v-if="hoursData.length"><div class="item" v-for="h in hourArr">{{h}}</div></div>
       <div class="uk-width-1-1 hour-chart-item uk-flex" v-for="hour in hoursData">
-        <div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
+        <div class="day-label">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
+        <!--<div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>-->
         <div class="uk-width-1-1 full-height"
-             :id="'Day'+hour.day+hour.chemical+hour.sensor"
+             :id="'Day'+hour.day+hour.sensor"
              :draw="drawHours(hour)">
         </div>
       </div>
@@ -38,11 +39,11 @@
   import Dialog from './Dialog.vue'
   import Hour from '../charts/Hour'
   import storage from '../commons/storage'
-  import {selectedBar, timeToken, threshold} from '../vuex/getters'
-  import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
   import config from '../commons/config'
   import CalendarLegend from '../charts/CalendarLegend'
   import {formatFunc} from '../commons/utils'
+  import {selectedBar, timeToken, threshold, selectedDay} from '../vuex/getters'
+  import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
   let dataByTime = null
 
   let { chemicalOpts, sensorOpts, colorMap } = config
@@ -57,11 +58,21 @@
   }
   export default {
     vuex: {
-      getters: { selectedBar, timeToken, threshold },
+      getters: { selectedBar, timeToken, threshold, selectedDay },
       actions: {updateSelectedTime, updateSelectedChemical, switchMonth}
     },
     components: { Dialog },
     watch: {
+      selectedDay: {
+        deep: true,
+        handler () {
+          let {day, hour} = this.selectedDay
+          console.log(day)
+          hour
+          this.hoursData = [ {sensor: this.selectedSensor, chemical: chemicalOpts, day, data: this.april[day], display: this.selectedSensor + ' ' + (new Date(+day).getMonth() + 1) + '/' + (new Date(+day).getDate())} ].concat(this.hoursData)
+          this.hourChartMap[day + this.selectedSensor] && this.hourChartMap[day + this.selectedSensor].highlight(hour)
+        }
+      },
       selectedBar: {
         deep: true,
         handler () {
@@ -108,7 +119,8 @@
         chemicalOpts,
         sensorOpts,
         selectedSensor: 'S6',
-        hoursData: []
+        hoursData: [],
+        hourChartMap: {}
       }
     },
     methods: {
@@ -117,9 +129,10 @@
       },
       drawHours ({ day, data, chemical, sensor }) {
         this.$nextTick(() => {
-          new Hour('#Day' + day + chemical + sensor)
-//            .draw(data, +day, this.threshold, this.selectedChemicals)
-            .draw(data, +day, this.threshold, [chemical])
+          let chart = new Hour('#Day' + day + sensor)
+          this.hourChartMap[day + sensor] = chart
+          //            .draw(data, +day, this.threshold, this.selectedChemicals)
+          chart.draw(data, +day, this.threshold, chemical)
             .on('clickHour', this.clickHour)
         })
       },
@@ -127,8 +140,8 @@
         let d = new Date(+day)
         let month = 1 + d.getMonth()
         this.switchMonth(month)
+        this.hoursData = [ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
-          this.hoursData = [ { sensor: this.selectedSensor, chemical: ch, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
           let dataSelect = data[ch]
           let hour
           if (dataSelect) {
@@ -167,6 +180,9 @@
           this.chartApril.draw(april, domainMap, this.selectedChemicals)
           this.chartAugust.draw(august, domainMap, this.selectedChemicals)
           this.chartDecember.draw(december, domainMap, this.selectedChemicals)
+          this.april = april
+          this.august = august
+          this.december = december
         }
       },
       processData () {

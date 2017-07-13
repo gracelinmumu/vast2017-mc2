@@ -32,7 +32,11 @@ const state = {
   },
   selectedHour: null,
   selectedChemical: null,
-  timeLineState: 'bottom'
+  timeLineState: 'bottom',
+  selectedDay: {
+    day: null,
+    hour: null
+  }
 }
 
 const mutations = {
@@ -108,6 +112,12 @@ const mutations = {
   },
   [types.SWITCH_TIMELINE_STATE] (state, s) {
     state.timeLineState = s
+  },
+  [types.UPDATE_SELECTED_DAY] (state, day, hour) {
+    state.selectedDay = {
+      day,
+      hour
+    }
   }
 }
 

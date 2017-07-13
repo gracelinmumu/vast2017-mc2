@@ -21,7 +21,9 @@ export default class {
       .attr('height', '100%')
     return this
   }
-
+  highlight (hour) {
+    return this
+  }
   draw (data, day, thresholdMap, chemicals) {
     this.svg.selectAll('.hour').remove()
     let pad = 2

@@ -78,3 +78,7 @@ export const updateSelectedFactory = (store, factory) => {
 export const switchTimelineState = (store, s) => {
   store.dispatch(types.SWITCH_TIMELINE_STATE, s)
 }
+
+export const updateSelectedDay = (store, day, hour) => {
+  store.dispatch(types.UPDATE_SELECTED_DAY, day, hour)
+}
