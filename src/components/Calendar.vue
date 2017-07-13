@@ -43,7 +43,7 @@
   import CalendarLegend from '../charts/CalendarLegend'
   import {formatFunc} from '../commons/utils'
   import {selectedBar, timeToken, threshold, selectedDay} from '../vuex/getters'
-  import {updateSelectedTime, updateSelectedChemical, switchMonth} from '../vuex/actions'
+  import {updateSelectedTime, updateSelectedChemical, switchMonth, updateTimeCurves} from '../vuex/actions'
   let dataByTime = null
 
   let { chemicalOpts, sensorOpts, colorMap } = config
@@ -56,10 +56,17 @@
   for (let i = 0; i < 24; i++) {
     hourArr.push(i)
   }
+
+  let dayProjectField = []
+  chemicalOpts.forEach((ch) => {
+    sensorOpts.forEach((s) => {
+      dayProjectField.push({ch, s})
+    })
+  })
   export default {
     vuex: {
       getters: { selectedBar, timeToken, threshold, selectedDay },
-      actions: {updateSelectedTime, updateSelectedChemical, switchMonth}
+      actions: {updateSelectedTime, updateSelectedChemical, switchMonth, updateTimeCurves}
     },
     components: { Dialog },
     watch: {
@@ -67,10 +74,11 @@
         deep: true,
         handler () {
           let {day, hour} = this.selectedDay
-          console.log(day)
-          hour
-          this.hoursData = [ {sensor: this.selectedSensor, chemical: chemicalOpts, day, data: this.april[day], display: this.selectedSensor + ' ' + (new Date(+day).getMonth() + 1) + '/' + (new Date(+day).getDate())} ].concat(this.hoursData)
-          this.hourChartMap[day + this.selectedSensor] && this.hourChartMap[day + this.selectedSensor].highlight(hour)
+          if (this.hourChartMap[day + this.selectedSensor]) {
+            this.hourChartMap[day + this.selectedSensor].highlight(hour)
+          } else {
+            this.hoursData = [ {sHour: hour, sensor: this.selectedSensor, chemical: chemicalOpts, day, data: this.april[day], display: this.selectedSensor + ' ' + (new Date(+day).getMonth() + 1) + '/' + (new Date(+day).getDate())} ].concat(this.hoursData)
+          }
         }
       },
       selectedBar: {
@@ -127,20 +135,42 @@
       closeHour (day) {
         this.hoursData.$remove(day)
       },
-      drawHours ({ day, data, chemical, sensor }) {
+      drawHours ({ day, data, chemical, sensor, sHour }) {
         this.$nextTick(() => {
           let chart = new Hour('#Day' + day + sensor)
           this.hourChartMap[day + sensor] = chart
           //            .draw(data, +day, this.threshold, this.selectedChemicals)
           chart.draw(data, +day, this.threshold, chemical)
             .on('clickHour', this.clickHour)
+          sHour && chart.highlight(sHour)
         })
+      },
+      calculateProjectData (day) {
+        let data = [] // 二维数组
+        let timeLabel = []
+        let oneHour = 1000 * 60 * 60
+        for (let i = 0; i < 24; i++) {
+          let time = formatFunc(new Date(+day + oneHour * i))
+          let rowData = dataByTime[time]
+          let row
+          if (rowData) {
+            row = dayProjectField.map((d) => rowData[d.ch] ? rowData[d.ch][d.s] || 0 : 0)
+          } else {
+            row = dayProjectField.map(d => 0)
+          }
+          timeLabel.push(time)
+          data.push(row)
+        }
+        let time = new Date(+day)
+        this.updateTimeCurves({day, dayDisplay: (1 + time.getMonth()) + '/' + time.getDate(), timeLabel, data})
       },
       clickDay (day, data, ch) {
         let d = new Date(+day)
         let month = 1 + d.getMonth()
         this.switchMonth(month)
-        this.hoursData = [ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
+        if (!this.hourChartMap[day + this.selectedSensor]) {
+          this.hoursData = [ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
+        }
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
           let dataSelect = data[ch]
           let hour
@@ -155,6 +185,7 @@
           }
           hour && this.clickHour(hour, ch)
         }
+        this.calculateProjectData(day)
       },
       clickHour (hour, ch) {
         console.log('clicked hour', hour, ch)

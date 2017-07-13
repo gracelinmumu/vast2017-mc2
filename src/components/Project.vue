@@ -3,8 +3,8 @@
         <span class="comps-title"><b>Time Projection View</b></span>
         <div class="uk-width-1-1 uk-flex row">
             <div class="uk-width-1-2 chart-item">
-                <span class="uk-badge uk-badge-primary">Three Month</span>
-                <div v-el:all class="chart"></div>
+                <span class="uk-badge uk-badge-success">Day Time Curves {{timeCurves.dayDisplay}}</span>
+                <div v-el:timecurves class="chart"></div>
             </div>
             <div class="uk-width-1-2 chart-item">
                 <span class="uk-badge uk-badge-primary">April</span>
@@ -28,8 +28,11 @@
   import augustData from '../data/augustTSNERes.json'
   import decemberData from '../data/decemberTSNERes.json'
   import ProjectChart from '../charts/ProjectionChart'
-  import {selectedHour} from '../vuex/getters'
+  import TimeCurves from '../charts/TimeCurves'
+  import {selectedHour, timeCurvesDay, timeCurves} from '../vuex/getters'
   import {updateSelectedDay} from '../vuex/actions'
+  import TSne from './TSne.worker'
+
   let aprilDomain = {
     x: [-17.809239285164566, 16.020030518152996],
     y: [-17.012366169842696, 15.875796232120257]
@@ -42,15 +45,15 @@
     x: [-19.759709943192007, 24.05643777740353],
     y: [-23.65158361947559, 15.461593808939696]
   }
+
   export default {
     vuex: {
-      getters: {selectedHour},
+      getters: {selectedHour, timeCurvesDay, timeCurves},
       actions: {updateSelectedDay}
     },
     watch: {
       selectedHour () {
         let month = new Date(this.selectedHour).getMonth() + 1
-        console.log(month, '......')
         switch (month) {
           case 4:
             this.aprilChart.highlightCurrent(this.selectedHour)
@@ -62,18 +65,20 @@
             this.decemberChart.highlightCurrent(this.selectedHour)
             break
         }
-      }
-    },
-    computed: {
-      selectedChemicals () {
-        return Object.keys(this.chemicalsMap).filter((c) => this.chemicalsMap[c])
       },
-      hoursDataMap () {
-        let dict = {}
-        this.hoursData.forEach((d, index) => {
-          dict[d.day + d.chemical + d.sensor] = index + 1
-        })
-        return dict
+      timeCurves: {
+        deep: true,
+        handler () {
+          // Step1. 布局
+          let worker = new TSne()
+          worker.postMessage(this.timeCurves.data)
+          worker.onmessage = (evt) => {
+            let evtData = evt.data
+            // Step2. 绘制
+            this.timeCurvesChart.draw({ timeCurves: this.timeCurves, pos: evtData })
+              .highlightCurrent(this.selectedHour)
+          }
+        }
       }
     },
     data () {
@@ -81,7 +86,7 @@
         aprilChart: null,
         augustChart: null,
         decemberChart: null,
-        allMonthChart: null
+        timeCurvesChart: null
       }
     },
     methods: {
@@ -105,7 +110,8 @@
       this.decemberChart.on('clickHour', this.clickHour)
       this.decemberChart.draw(decemberData, decemberDomain)
 
-      this.allMonthChart = new ProjectChart(this.$els.all)
+      this.timeCurvesChart = new TimeCurves(this.$els.timecurves)
+        .on('clickHour', this.clickHour)
     }
   }
 </script>

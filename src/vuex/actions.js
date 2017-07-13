@@ -82,3 +82,7 @@ export const switchTimelineState = (store, s) => {
 export const updateSelectedDay = (store, day, hour) => {
   store.dispatch(types.UPDATE_SELECTED_DAY, day, hour)
 }
+
+export const updateTimeCurves = (store, opts) => {
+  store.dispatch(types.UPDATE_TIME_CURVES, opts)
+}

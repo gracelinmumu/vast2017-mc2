@@ -36,6 +36,9 @@ const state = {
   selectedDay: {
     day: null,
     hour: null
+  },
+  timeCurves: {
+    day: null, timeLabel: null, data: null, dayDisplay: ''
   }
 }
 
@@ -118,6 +121,9 @@ const mutations = {
       day,
       hour
     }
+  },
+  [types.UPDATE_TIME_CURVES] (state, opts) {
+    state.timeCurves = opts
   }
 }
 
