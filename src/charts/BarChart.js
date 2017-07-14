@@ -64,11 +64,13 @@ export default class {
   }
 
   update (threshold) {
+    // console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbb', threshold)
     // console.log('bar chart hello', threshold)
     this.svg.select('.barchart')
       .selectAll('.bar')
       .selectAll('rect')
       .style('fill', d => {
+        // console.log('vvvvvvvvvvvvvvvvvvvvvvvvvvvv', d.value, threshold)
         // console.log('bar chart hello update', d, threshold)
         return d.value > threshold ? dangerColor : safeColor
       })

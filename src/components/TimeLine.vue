@@ -143,10 +143,12 @@
         for (let index = 0; index < this.sctBarChart.length; index++) {
           let selector = '#BarDistribute-' + index
           this.histCharts[selector].update(this.threshold[this.barChemical[selector]])
+          // console.log('sssssssssssssssssssssssssssss', selector, this.barChemical[selector], this.threshold[this.barChemical[selector]])
         }
         for (let index = 0; index < this.sctBarChart.length; index++) {
           let selector = '#Bar-' + index
-          this.barCharts[selector].update(this.threshold[this.barChemical[selector]])
+          let barChemicalSelector = '#BarDistribute-' + index
+          this.barCharts[selector].update(this.threshold[this.barChemical[barChemicalSelector]])
         }
       },
       updateCurrent () {

@@ -170,7 +170,7 @@ export default class {
     svgBrush.transition()
       .duration(brush.empty() ? 0 : 750)
       .call(brush.extent([ [ this.axisScale(threshold), 0 ], [this.width, this.height] ]))
-      // .call(brush.event)
+      .call(brush.event)
 
     this.percent = this.calPercent(this.data, threshold)
     // console.log('hist update percent', this.percent)
