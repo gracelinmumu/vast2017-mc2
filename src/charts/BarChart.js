@@ -47,7 +47,7 @@ export default class {
       .attr('transform', (d, index) => 'translate(' + x(d.time) + ',' + y(d.value) + ')')
     this.x = x
     rect.append('rect')
-      .style('fill', d => d > threshold ? dangerColor : safeColor)
+      .style('fill', d => d.value > threshold ? dangerColor : safeColor)
       .attr('width', widthBar)
       .attr('height', (d) => height - y(d.value))
       .on('mouseover', (d, index) => {

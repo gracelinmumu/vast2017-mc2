@@ -91,7 +91,7 @@ export default class {
       // .attr('height', hei)
       .attr('width', wid)
       .attr('height', d => scale(d.y))
-      .style('fill', d => d > threshold ? dangerColor : safeColor)
+      .style('fill', d => d.x > threshold ? dangerColor : safeColor)
       .attr('stroke', '#fff')
       // .on('mouseover', (d, index) => {
       //   console.log(d)
@@ -144,7 +144,7 @@ export default class {
       if (!d3.event.sourceEvent) return
 
       rect.selectAll('rect')
-        .attr('fill', d => d.x > newThresh ? dangerColor : safeColor)
+        .style('fill', d => d.x > newThresh ? dangerColor : safeColor)
 
       d3.select(this).transition()
         .duration(brush.empty() ? 0 : 750)
@@ -161,7 +161,7 @@ export default class {
     this.svg.select('.histogram')
       .selectAll('.bar')
       .selectAll('rect')
-      .attr('fill', d => d.x > threshold ? dangerColor : safeColor)
+      .style('fill', d => d.x > threshold ? dangerColor : safeColor)
 
     let brush = this.brush
     let svgBrush = this.svg.select('.histogram')

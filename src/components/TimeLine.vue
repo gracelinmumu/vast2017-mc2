@@ -75,6 +75,7 @@
       return {
         bar: null,
         histCharts: {},
+        barChemical: {},
         barCharts: {},
         monthOpts,
         barChartMap: {}
@@ -129,7 +130,7 @@
             let chart = new Histogram(selector, bar.chemical)
             // new
             this.histCharts[selector] = chart
-            this.barChemical = bar.chemical
+            this.barChemical[selector] = bar.chemical
             chart.on({ updateThreshold: this.updateT })
             chart.draw(chartData, this.threshold[ chemical ], chemical)
           })
@@ -141,11 +142,11 @@
       update () {
         for (let index = 0; index < this.sctBarChart.length; index++) {
           let selector = '#BarDistribute-' + index
-          this.histCharts[selector].update(this.threshold[this.barChemical])
+          this.histCharts[selector].update(this.threshold[this.barChemical[selector]])
         }
         for (let index = 0; index < this.sctBarChart.length; index++) {
           let selector = '#Bar-' + index
-          this.barCharts[selector].update(this.threshold[this.barChemical])
+          this.barCharts[selector].update(this.threshold[this.barChemical[selector]])
         }
       },
       updateCurrent () {
