@@ -26,10 +26,10 @@
       <!--</div>-->
     </div>
     <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin" :class="{'app-bottom-top': timeLineState==='top'}">
-      <div class="project uk-width-1-3 uk-panel">
-        <project></project>
-      </div>
-      <div class="time-line uk-width-2-3 uk-panel">
+      <!--<div class="project uk-width-1-3 uk-panel">-->
+        <!--<project></project>-->
+      <!--</div>-->
+      <div class="time-line uk-width-1-1 uk-panel">
         <time-line></time-line>
       </div>
     </div>
@@ -108,11 +108,12 @@
       let wk = new Process()
       wk.postMessage({ sensorData })
       wk.onmessage = (evt) => {
-        let { bySensor, byChemical, byTime, pearsonSameChemical, mdsArr, timesArr } = evt.data
+        let { bySensor, byChemical, byTime, pearsonSameChemical, mdsArr, timesArr, redundantArr } = evt.data
         mdsArr
         timesArr
-        console.log(timesArr)
-        console.log(mdsArr)
+//        console.log(timesArr)
+//        console.log(mdsArr)
+        console.log(redundantArr)
         let dataToken = storage.set(bySensor, 'sctData')
         this.setSCTToken(dataToken)
         let chemicalToken = storage.set(byChemical, 'byChemical')

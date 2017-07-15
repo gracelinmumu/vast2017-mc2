@@ -22,6 +22,7 @@ export default class {
     return this
   }
   highlight (hour) {
+    d3.selectAll('.hour-highlight').attr('stroke', 'none')
     this.hour.attr('stroke', d => d === hour ? currentTime.color : 'none')
 
     return this
@@ -73,6 +74,7 @@ export default class {
         .on('click', (d) => {
           this.clearHighlight()
           this.clickHour(d, ch)
+          this.highlight(d)
         })
         .on('mouseover', (d) => {
           let display = {
@@ -87,7 +89,7 @@ export default class {
         })
     })
     this.hour = hour.append('rect')
-      .attr('class', 'highlight')
+      .attr('class', 'hour-highlight')
       .attr('width', cellW)
       .attr('height', cellH - 2)
       .attr('x', 0)
