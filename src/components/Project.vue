@@ -1,6 +1,10 @@
 <template>
     <div class="uk-width-1-1 full-height">
         <span class="comps-title"><b>Time Projection View</b></span>
+        <input type="radio" id="hour" value="hour" v-model="pType">
+        <label for="hour">Hour</label>
+        <input type="radio" id="day" value="day" v-model="pType">
+        <label for="day">Day</label>
         <div class="uk-width-1-1 uk-flex row">
             <div class="uk-width-1-2 chart-item">
                 <span class="uk-badge uk-badge-success">Day Time Curves {{timeCurves.dayDisplay}}</span>
@@ -77,6 +81,9 @@
           this.timeCurvesChart.draw({timeCurves: this.timeCurves, pos: evtData})
             .highlightCurrent(this.selectedHour)
         }
+      },
+      pType () {
+        console.log(this.pType, this.timeCurves)
       }
     },
     data () {
@@ -84,7 +91,8 @@
         aprilChart: null,
         augustChart: null,
         decemberChart: null,
-        timeCurvesChart: null
+        timeCurvesChart: null,
+        pType: 'hour'
       }
     },
     methods: {

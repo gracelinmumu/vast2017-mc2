@@ -236,7 +236,7 @@
           if (sensorData[t]) {
             let sensorD = sensorData[t][chemical]
             sensorOpts.forEach((s) => {
-              let v = sensorD[s] || 0
+              let v = sensorD ? sensorD[s] || 0 : 0
               periodData[s][t] = v
               domain.max = Math.max(v, domain.max)
               domain.min = Math.min(v, domain.min)

@@ -263,7 +263,7 @@
       /*height: 300px;*/
       i {
         cursor: pointer;
-        color: red;
+        color: @color-main;
       }
       .bar-container {
         height: @reading-view-height;

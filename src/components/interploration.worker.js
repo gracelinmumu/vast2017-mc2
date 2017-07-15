@@ -171,10 +171,10 @@ onmessage = (evt) => {
   let w = scaleWidth
   let h = scaleWidth
   let xScale = (x) => {
-    return (x - 40) * (w) / (140 - 40)
+    return (x - 25) * (w) / (125 - 25)
   }
   let yScale = (x) => {
-    return (x - 60) * (h) / (-40 - 60)
+    return (x - 70) * (h) / (-30 - 70)
   }
   let pos = Object.keys(sensorsLoc).map(d => {
     let p = sensorsLoc[d]
@@ -226,12 +226,12 @@ onmessage = (evt) => {
     }
   }
   let isoCount = 8
-  let step = (maxValue - min) / isoCount
+  let step = (maxValue - min * 0.1) / isoCount
   for (let i = 0; i < isoCount; i++) {
     contours.push({
       level: +i,
-      value: min + step * i,
-      contour: MarchingSquaresJS.isoContours(values, min + step * i, step)
+      value: min * 0.1 + step * i,
+      contour: MarchingSquaresJS.isoContours(values, min * 0.1 + step * i, step)
     })
   }
   // test

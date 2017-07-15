@@ -1,6 +1,10 @@
 <template>
   <!--title-->
   <span class="comps-title"><b>Calendar View</b></span>
+  <input type="radio" id="reading" value="reading" v-model="colorType">
+  <label for="reading">Reading</label>
+  <input type="radio" id="peak" value="peak" v-model="colorType">
+  <label for="peak">Peak</label>
   <div class="calendar-legend uk-align-right" v-el:legend></div>
   <div class="uk-align-right uk-flex">
     <div class="danger"></div>Reading ≥ Threshold
@@ -82,7 +86,7 @@
           if (this.hourChartMap[day + this.selectedSensor]) {
             this.hourChartMap[day + this.selectedSensor].highlight(hour)
           } else {
-            this.hoursData = [ {sHour: hour, sensor: this.selectedSensor, chemical: chemicalOpts, day, data: this.april[day], display: this.selectedSensor + ' ' + (new Date(+day).getMonth() + 1) + '/' + (new Date(+day).getDate())} ].concat(this.hoursData)
+            this.hoursData = this.hoursData.concat([ {sHour: hour, sensor: this.selectedSensor, chemical: chemicalOpts, day, data: this.april[day], display: this.selectedSensor + ' ' + (new Date(+day).getMonth() + 1) + '/' + (new Date(+day).getDate())} ])
           }
         }
       },
@@ -133,7 +137,8 @@
         sensorOpts,
         selectedSensor: 'S6',
         hoursData: [],
-        hourChartMap: {}
+        hourChartMap: {},
+        colorType: 'peak'
       }
     },
     methods: {
@@ -174,7 +179,7 @@
         let month = 1 + d.getMonth()
         this.switchMonth(month)
         if (!this.hourChartMap[day + this.selectedSensor]) {
-          this.hoursData = [ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ].concat(this.hoursData)
+          this.hoursData = this.hoursData.concat([ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ])
         }
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
           let dataSelect = data[ch]
