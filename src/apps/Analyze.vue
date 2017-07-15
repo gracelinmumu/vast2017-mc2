@@ -169,7 +169,7 @@
       height: calc(~"39% - 20px - " @title-h);
     }
     .app-bottom-top {
-      margin-top: calc(~"-50% + 40px");
+      margin-top: calc(~"-38% + 40px");
       height: 100%;
       background: #fff;
     }

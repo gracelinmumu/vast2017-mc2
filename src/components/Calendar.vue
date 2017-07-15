@@ -179,7 +179,7 @@
         let month = 1 + d.getMonth()
         this.switchMonth(month)
         if (!this.hourChartMap[day + this.selectedSensor]) {
-          this.hoursData = this.hoursData.concat([ { sensor: this.selectedSensor, chemical: chemicalOpts, day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ])
+          this.hoursData = this.hoursData.concat([ { sensor: this.selectedSensor, chemical: [ch], day, data, display: this.selectedSensor + ' ' + (1 + d.getMonth()) + '/' + d.getDate() } ])
         }
         if (!this.hoursDataMap[ day + ch + this.selectedSensor ]) {
           let dataSelect = data[ch]

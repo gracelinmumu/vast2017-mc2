@@ -75,6 +75,7 @@
       return {
         bar: null,
         histCharts: {},
+        barChemical: {},
         barCharts: {},
         monthOpts,
         barChartMap: {}
@@ -104,18 +105,21 @@
       },
       updateMonth () {
         this.sctBarChart.forEach((bar, index) => {
-          let selector = '#BarDistribute-' + index
+          let selector = '#Bar-' + index
 //          this.barChartMap[selector] && (this.barChartMap[selector].clearHighlight())
           this.calcAndDrawReading(bar, selector)
+          let distributeSelector = '#BarDistribute-' + index
+          this.calcAndDrawDistribute(bar, distributeSelector, this.selectedMonth)
         })
       },
       // todo 处理数据，绘制一个分布图
-      calcAndDrawDistribute (bar, selector) {
+      calcAndDrawDistribute (bar, selector, mMonth = null) {
         if (!allData && this.sctDataToken) {
           allData = storage.get(this.sctDataToken)
         }
         // 柱状图相关数据
         let { month, chemical } = bar
+        if (mMonth != null) month = mMonth
 
         // 绘图数据是data
         if (allData) {
@@ -126,11 +130,15 @@
           // this.threshold 不同化学物质的阈值
           // Step2绘图
           this.$nextTick(() => {
-            let chart = new Histogram(selector, bar.chemical)
-            // new
-            this.histCharts[selector] = chart
-            this.barChemical = bar.chemical
-            chart.on({ updateThreshold: this.updateT })
+            let chart = null
+            if (!this.histCharts[selector]) {
+              chart = new Histogram(selector, bar.chemical)
+              // new
+              this.histCharts[selector] = chart
+              this.barChemical[selector] = bar.chemical
+              chart.on({ updateThreshold: this.updateT })
+            }
+            chart = this.histCharts[selector]
             chart.draw(chartData, this.threshold[ chemical ], chemical)
           })
         }
@@ -141,11 +149,12 @@
       update () {
         for (let index = 0; index < this.sctBarChart.length; index++) {
           let selector = '#BarDistribute-' + index
-          this.histCharts[selector].update(this.threshold[this.barChemical])
+          this.histCharts[selector].update(this.threshold[this.barChemical[selector]])
         }
         for (let index = 0; index < this.sctBarChart.length; index++) {
           let selector = '#Bar-' + index
-          this.barCharts[selector].update(this.threshold[this.barChemical])
+          let barChemicalSelector = '#BarDistribute-' + index
+          this.barCharts[selector].update(this.threshold[this.barChemical[barChemicalSelector]])
         }
       },
       updateCurrent () {
