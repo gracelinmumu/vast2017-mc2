@@ -72,6 +72,13 @@
       dayProjectField.push({ch, s})
     })
   })
+
+  const chemicalDomainMap = {
+    'AGOC-3A': 101.10558,
+    Appluimonia: 10.14769,
+    Chlorodinine: 15.72311,
+    Methylosmolene: 100.7764
+  }
   export default {
     vuex: {
       getters: { selectedBar, timeToken, threshold, selectedDay },
@@ -114,6 +121,13 @@
       },
       selectedSensor () {
         this.update()
+      },
+      colorType () {
+        if (this.colorType === 'peak') {
+          this.switchColorType()
+        } else {
+          this.update()
+        }
       }
     },
     computed: {
@@ -220,13 +234,21 @@
               }
             })
           })
-          this.chartApril.draw(april, domainMap, this.selectedChemicals)
-          this.chartAugust.draw(august, domainMap, this.selectedChemicals)
-          this.chartDecember.draw(december, domainMap, this.selectedChemicals)
+          this.chartApril.draw(april, domainMap, this.selectedChemicals, this.colorType)
+          this.chartAugust.draw(august, domainMap, this.selectedChemicals, this.colorType)
+          this.chartDecember.draw(december, domainMap, this.selectedChemicals, this.colorType)
           this.april = april
           this.august = august
           this.december = december
+          this.domainMap = domainMap
         }
+      },
+      switchColorType () {
+        chemicalDomainMap
+        let domainMap = this.colorType === 'peak' ? chemicalDomainMap : this.domainMap
+        this.chartApril.draw(this.april, domainMap, this.selectedChemicals, this.colorType)
+        this.chartAugust.draw(this.august, domainMap, this.selectedChemicals, this.colorType)
+        this.chartDecember.draw(this.december, domainMap, this.selectedChemicals, this.colorType)
       },
       processData () {
         let data = dataByTime
@@ -268,9 +290,11 @@
             let target = map[ day ][ d ]
             target.value = +(target.value) + (v > t ? 1 : 0)
             target.time[ time ] = v
+            target.reading += +v || 0
           } else {
             map[ day ][ d ] = {
               value: v > t ? 1 : 0,
+              reading: +v || 0,
               time: {
                 [time]: v
               }

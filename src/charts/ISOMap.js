@@ -26,8 +26,8 @@ Object.keys(sensorsLoc).forEach((s) => {
   })
 })
 
-let factorySize = 6
-let sensorSize = 16
+let factorySize = 5
+let sensorSize = 12
 export default class {
   constructor (el) {
     this.el = el

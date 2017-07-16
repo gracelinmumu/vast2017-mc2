@@ -20,7 +20,7 @@ export default class {
     return this
   }
 
-  draw (data, domainMap, selectedChemicals) {
+  draw (data, domainMap, selectedChemicals, colorType) {
     this.svg.selectAll('.day').remove()
     this.domain = domainMap
 
@@ -29,7 +29,7 @@ export default class {
       let compute = d3.interpolate(safeColor, dangerColor)
       let linear = d3.scale.linear()
         .domain([0, domainMap[ch]])
-        .range([ 0, 1 ])
+        .range([0, 1])
       colorScale[ch] = {
         compute, linear
       }
@@ -42,7 +42,7 @@ export default class {
 
     let week = d3.time.format('%U')
 
-    let month = new Date(+Object.keys(data)[ 0 ]).getMonth() + 1
+    let month = new Date(+Object.keys(data)[0]).getMonth() + 1
     let weeksBefore = month === 4 ? 13 : (month === 8 ? 31 : 48)
 
     let day = this.svg.selectAll('.day')
@@ -66,7 +66,7 @@ export default class {
         .attr('height', h)
         .attr('x', index < 2 ? w * index : (chLen === 4 ? (index - 2) : 2) * w)
         .attr('y', chLen > 3 && index > 1 ? h : 0)
-        .attr('fill', d => noColor ? 'none' : this.getColor(colorS, data[d][ch].value))
+        .attr('fill', d => noColor ? 'none' : this.getColor(colorS, colorType === 'peak' ? data[d][ch].value : data[d][ch].reading))
         .attr('stroke', '#fff')
         .on('click', (d) => {
           this.clickDay(d, data[d], ch)
@@ -75,7 +75,8 @@ export default class {
           let display = {
             time: formatFunc(new Date(+d)),
             chemical: ch,
-            count: data[d][ch].value
+            count: data[d][ch].value,
+            reading: data[d][ch].reading
           }
           // chemicalOpts.forEach((c) => {
           //   display[c] = data[d][c].value
@@ -131,6 +132,7 @@ export default class {
     this[evt] = cb
     return this
   }
+
   getColor (colorScale, value) {
     return colorScale.compute(colorScale.linear(value))
   }
