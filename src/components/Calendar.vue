@@ -33,8 +33,8 @@
     <div class="container-right full-height hour-container">
       <div class="uk-flex hour-time-label" v-if="hoursData.length"><div class="item" v-for="h in hourArr">{{h}}</div></div>
       <div class="uk-width-1-1 hour-chart-item uk-flex" v-for="hour in hoursData">
-        <div class="day-label">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
-        <!--<div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>-->
+        <!--<div class="day-label">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>-->
+        <div class="day-label" :style="{'color': colorMap[hour.chemical][1]}">{{hour.display}}<i class="uk-icon-close" @click="closeHour(hour)"></i></div>
         <div class="uk-width-1-1 full-height"
              :id="'Day'+hour.day+hour.sensor"
              :draw="drawHours(hour)">

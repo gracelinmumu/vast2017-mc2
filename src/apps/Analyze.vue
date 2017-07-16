@@ -26,10 +26,10 @@
       <!--</div>-->
     </div>
     <div class="uk-width-1-1 uk-grid app-bottom clear-grid-margin" :class="{'app-bottom-top': timeLineState==='top'}">
-      <!--<div class="project uk-width-1-3 uk-panel">-->
-        <!--<project></project>-->
-      <!--</div>-->
-      <div class="time-line uk-width-1-1 uk-panel">
+      <div class="project uk-width-1-3 uk-panel">
+        <project></project>
+      </div>
+      <div class="time-line uk-width-2-3 uk-panel">
         <time-line></time-line>
       </div>
     </div>
@@ -164,12 +164,15 @@
         border-left: 1px dashed #ddd;
       }
     }
+    .project {
+      background-color: #fff;
+    }
     .app-down {
       margin-top: 8px;
       height: calc(~"39% - 20px - " @title-h);
     }
     .app-bottom-top {
-      margin-top: calc(~"-38% + 40px");
+      margin-top: calc(~"-33% + 20px");
       height: 100%;
       background: #fff;
     }

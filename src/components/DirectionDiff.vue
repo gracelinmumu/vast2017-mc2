@@ -159,13 +159,14 @@
   }
 </script>
 <style lang="less" scoped>
+  @import "../commons/base.vars.less";
   @chart-height: 50px;
   .container {
     height: 100%;
     overflow-y: scroll;
     i {
       cursor: pointer;
-      color: red;
+      color: @color-main;
     }
     .chart {
       height: @chart-height;
